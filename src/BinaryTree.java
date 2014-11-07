@@ -110,16 +110,6 @@ return its bottom-up level order traversal as:
     }
     
     
-    public static void printListOfList(List<List<Integer>> result){
-    	for(List<Integer> list : result){
-    		System.out.print("[");
-    		for(Integer i : list){
-    			System.out.print(i + ",");
-    		}
-    		System.out.println("]");
-    	}
-    }
-    
 	/**
 	 * @param args
 	 */
@@ -141,7 +131,7 @@ return its bottom-up level order traversal as:
 		
 		System.out.println(solution.maxDepth(root));
 		
-		printListOfList(solution.levelOrderBottom(root));
+		Utils.printListOfList(solution.levelOrderBottom(root));
 		
 	}
 
