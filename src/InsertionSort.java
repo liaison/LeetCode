@@ -44,6 +44,7 @@ public class InsertionSort {
 				continue;
 			} else {
 
+				// Run until the last element 
 				while (resultCur.next != null) {
 					if (elem.val > resultCur.val) {
 						resultCur = resultCur.next;
@@ -52,30 +53,18 @@ public class InsertionSort {
 					}
 				}
 				
-				// In the middle of somewhere 
-				if(resultCur.next != null){
-					// Insert the new element in front of "resultCur" (switch the values).
+				if(elem.val > resultCur.val){
+					// Put the new element in the tail, after "resultCur".
+					ListNode newNode = new ListNode(elem.val);
+					resultCur.next = newNode;
+				
+				}else{
+					// Insert the new element in front of "resultCur".
 					ListNode newNode = new ListNode(resultCur.val);
 					resultCur.val = elem.val;
 					
 					newNode.next = resultCur.next;
-					resultCur.next = newNode;
-					
-				}else{ // The last element in the result set.
-					
-					if(elem.val > resultCur.val){
-						// Put the new element in the tail, after "resultCur".
-						ListNode newNode = new ListNode(elem.val);
-						resultCur.next = newNode;
-					
-					}else{
-						// Insert the new element in front of "resultCur".
-						ListNode newNode = new ListNode(resultCur.val);
-						resultCur.val = elem.val;
-						
-						newNode.next = resultCur.next;
-						resultCur.next = newNode;	
-					}
+					resultCur.next = newNode;	
 				}
 			}
 
