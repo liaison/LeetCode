@@ -42,8 +42,8 @@ public class InsertionSort {
 				result = new ListNode(elem.val);
 				elem = elem.next;
 				continue;
+				
 			} else {
-
 				// Run until the last element 
 				while (resultCur.next != null) {
 					if (elem.val > resultCur.val) {
