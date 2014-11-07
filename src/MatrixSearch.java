@@ -21,6 +21,7 @@
  * @date   Nov 06, 2014
  *
  */
+
 public class MatrixSearch {
 
 	/**
@@ -55,6 +56,7 @@ public class MatrixSearch {
 			return false;
 		}
 	}
+	
 	
 	/**
 	 * @param args
