@@ -1,3 +1,5 @@
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -80,7 +82,8 @@ public class MergeIntervals {
 		return list;
 		
 	}
-	
+
+	/**
     public List<Interval> merge(List<Interval> intervals) {
     	
     	LinkedList<Interval> result = new LinkedList<Interval>();
@@ -91,6 +94,45 @@ public class MergeIntervals {
     	}
     	return result;
     }
+    */
+	
+	class IntervalComparator implements Comparator<Interval> {
+	    @Override
+	    public int compare(Interval a, Interval b) {
+	        if(a.start < b.start){
+	        	return -1;
+	        }else if(a.start == b.start){
+	        	return 0;
+	        }else{
+	        	return 1;
+	        }
+	    }
+	}
+
+	
+	public List<Interval> merge(List<Interval> intervals){
+		LinkedList<Interval> result = new LinkedList<Interval>();
+		
+		if(intervals.isEmpty()){
+			return result;
+		}
+		
+		Collections.sort(intervals, new IntervalComparator());
+		int l=intervals.get(0).start, r=intervals.get(0).end;
+		
+		for(Interval iter : intervals){
+			if(iter.start <= r){
+				r = Math.max(iter.end, r);
+			}else{
+				result.add(new Interval(l,r));
+				l = iter.start;
+				r = iter.end;
+			}
+		}
+		result.add(new Interval(l, r));
+		
+		return result;
+	}
     
     
     private static List<Interval> getIntervalList(int [] input){
@@ -111,18 +153,18 @@ public class MergeIntervals {
 	 */
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
-		//int input [] = {1,3,	2,6,	8,10,	15,18};
+		int input [] = {1,3,	2,6,	8,10,	15,18};
 		
 		//int input [] = {1,4,	1,4};  // expected result {1, 4}
 		
 		//int input [] = {1,4,	1,5};  // expected result {1, 5}
 		
-		//int input [] = {1,4, 	0,2};  // expected result {0, 2}
+		//int input [] = {1,4, 	0,2};  // expected result {0, 4}
 		
 		//int input [] = {1,4, 	0,0};  // expected result {0, 0,  1, 4}
 		
 		// expecte result  [[0,0],[2,3],[4,7]]
-		int input [] = {0,0,  4,5,	5,6, 5,5,  2,3,  5,7,  0,0};
+		//int input [] = {0,0,  4,5,	5,6, 5,5,  2,3,  5,7,  0,0};
 		
 		MergeIntervals solution = new MergeIntervals();
 		
