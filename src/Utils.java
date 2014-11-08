@@ -24,5 +24,11 @@ public class Utils {
     }
     
     
-    
+    public static void printIntervalList(List<Interval> list){
+    	for(Interval iter : list){
+    		System.out.print("[" + iter.start + "," + iter.end + "]\t");
+    	}
+    	
+    	System.out.println();
+    }
 }
