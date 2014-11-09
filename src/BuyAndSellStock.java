@@ -11,6 +11,12 @@
 
 public class BuyAndSellStock {
 
+	/**
+	 * One can only have one transaction, one buy and one sell, 
+	 * 	but the transaction can happen on the same day.
+	 * 
+	 * @return
+	 */
 	public int maxProfit(int[] prices) {
     
 		if(prices.length <= 1){
@@ -33,6 +39,21 @@ public class BuyAndSellStock {
 		// In the worst case, buy and sell the stock on the same day.
 		return maxProfit < 0 ? 0 : maxProfit;
     }
+	
+	
+	/**
+	 * One can have as many transactions as possible to maximize the profits.
+	 * @return
+	 */
+	public int maxProfitMultiTrans(int [] prices){
+		if(prices.length <= 1){
+			return 0;
+		}
+		
+		
+		return 0;
+	}
+	
 	
 	/**
 	 * @param args
