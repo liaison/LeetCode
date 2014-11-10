@@ -121,6 +121,7 @@ return its bottom-up level order traversal as:
   2   2
  / \ / \
 3  4 4  3
+     * 		This is a recursive solution.
      */
     public boolean isSymmetric(TreeNode root) {
     	// empty tree is considered to be symmetric 
@@ -151,6 +152,39 @@ return its bottom-up level order traversal as:
     }
     
     
+    /**
+     * Compare nodes two by two, in an iterative way.
+     */
+    public boolean isSymmetric_iter(TreeNode root){
+    	if(root == null){
+    		return true;
+    	}
+    	
+    	LinkedList<TreeNode> queue = new LinkedList<TreeNode>();
+    	queue.offer(root.left);
+    	queue.offer(root.right);
+    	while(! queue.isEmpty()){
+    		TreeNode left = queue.poll();
+    		TreeNode right = queue.poll();
+    		
+    		if(left != null && right != null){
+    			if(left.val != right.val){
+    				return false;
+    			}else{
+    				queue.offer(left.left);
+    				queue.offer(right.right);
+    				queue.offer(left.right);
+    				queue.offer(right.left);
+    			}
+    		}else if(left != null || right != null){
+    			return false;
+    		}
+    	}
+    	return true;
+    }
+    
+    
+    
 	/**
 	 * @param args
 	 */
@@ -178,7 +212,7 @@ return its bottom-up level order traversal as:
 		TreeNode a = new TreeNode(1);
 		a.left = new TreeNode(2);
 		
-		System.out.println(solution.isSymmetric(a));
+		System.out.println(solution.isSymmetric_iter(root));
 	}
 
 }
