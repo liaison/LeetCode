@@ -23,9 +23,16 @@ public class RotatedArray {
 	/**
 	 * Binary search 
 	 * 
+	 * Although this solution is recursive and more complicated than the following one, 
+	 * 	it is faster!  
+	 * 
+	 *  384 ms vs. 440 ms. 
+	 * 
 	 * @param num
 	 * @return
 	 */
+	
+	/**
 	public int findMin(int[] num) {
 		int start = 0, end = num.length-1;
     	
@@ -59,18 +66,41 @@ public class RotatedArray {
     	
     	return num[start];
     }
-    
+    */
+	
+	/**
+	 * https://oj.leetcode.com/discuss/14846/binary-search-solution-in-java
+	 *  Compare the values of the start/end boundaries, instead its neighbour.
+	 */
+	public int findMin(int [] num){
+		int l=0, h=num.length-1;
+		if(num[l] < num[h]){
+			// the array is NOT rotated.
+			return num[l];
+		}
+		
+		while(h-l > 1){
+			int m = (l+h)/2;
+			if(num[l] > num[m]){  // the rotation happens on the left side.
+				h = m;
+			}else{
+				l = m;
+			}
+		}
+		// reduce the search zone down to 2 elements at the end.
+		return Math.min(num[l], num[h]);
+	}
     
 	/**
 	 * @param args
 	 */
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
-		//int [] a = {6, 7, 0, 1, 2, 4, 5};
+		int [] a = {6, 7, 0, 1, 2, 4, 5};
 		//int [] a = {0, 1, 2, 4, 5, 6, 7};
 		//int [] a = {2, 3, 4, 5, 1};
 		
-		int [] a = {2, 1}; // expect 1; 
+		//int [] a = {2, 1}; // expect 1; 
 		
 		RotatedArray solution = new RotatedArray();
 		
