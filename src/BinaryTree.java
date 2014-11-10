@@ -110,6 +110,47 @@ return its bottom-up level order traversal as:
     }
     
     
+    /**
+     * 
+     * Given a binary tree, check whether it is a mirror of itself 
+     		(ie, symmetric around its center).
+
+	    For example, this binary tree is symmetric:
+    1
+   / \
+  2   2
+ / \ / \
+3  4 4  3
+     */
+    public boolean isSymmetric(TreeNode root) {
+    	// empty tree is considered to be symmetric 
+    	if(root == null){
+    		return true;
+    	}
+    	
+    	return isSymmetric_rec(root.left, root.right);
+    }
+    
+    
+    private boolean isSymmetric_rec(TreeNode t1, TreeNode t2){
+    	if(t1 != t2 ){
+    		if( t1 != null && t2 != null){
+    			if(t1.val != t2.val){
+    				return false;
+    			}
+    			return isSymmetric_rec(t1.left, t2.right) && 
+    				   isSymmetric_rec(t1.right, t2.left);
+    		}else if(t1 == null && t2 == null){
+    			return true;
+    		}else{
+    			return false;
+    		}
+    	}else{
+    		return true;
+    	}
+    }
+    
+    
 	/**
 	 * @param args
 	 */
@@ -117,15 +158,14 @@ return its bottom-up level order traversal as:
 		
 		TreeNode root = new TreeNode(1);
 		TreeNode left = new TreeNode(2);
-		TreeNode right = new TreeNode(3);
+		TreeNode right = new TreeNode(2);
 		root.left = left;
 		root.right = right;
 		
 		left.left = new TreeNode(4);
-		left.right = new TreeNode(5);
+		right.right = new TreeNode(4);
 		
-		left.right.right = new TreeNode(6);
-		
+		//left.right.right = new TreeNode(6);
 		
 		BinaryTree solution = new BinaryTree();
 		
@@ -133,6 +173,12 @@ return its bottom-up level order traversal as:
 		
 		Utils.printListOfList(solution.levelOrderBottom(root));
 		
+		
+		// input {1, 2}, expected result false
+		TreeNode a = new TreeNode(1);
+		a.left = new TreeNode(2);
+		
+		System.out.println(solution.isSymmetric(a));
 	}
 
 }
