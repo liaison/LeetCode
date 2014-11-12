@@ -24,6 +24,14 @@ public class Utils {
     }
     
     
+    public static void printArray(int [] array){
+    	for(int i=0; i<array.length; i++){
+    		System.out.print(array[i] + ",");
+    	}
+    	System.out.println("");
+    }
+    
+    
     public static void printIntervalList(List<Interval> list){
     	for(Interval iter : list){
     		System.out.print("[" + iter.start + "," + iter.end + "]\t");

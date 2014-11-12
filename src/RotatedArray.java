@@ -58,7 +58,6 @@ public class RotatedArray {
     		}else if(num[mid-1] > num[mid] && num[mid] < num[mid+1]){
     			return num[mid];
     		}else if(num[mid-1] < num[mid] && num[mid] < num[mid+1]){
-    			
     			return Math.min(findMin_rec(num, start, mid-1), 
     						    findMin_rec(num, mid+1, end));
     		}
