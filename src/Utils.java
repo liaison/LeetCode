@@ -39,4 +39,47 @@ public class Utils {
     	
     	System.out.println();
     }
+    
+    public static ListNode array2LinkedList(int [] num){
+    	if(num.length == 0){
+    		return null;
+    	}
+    	
+    	ListNode head = new ListNode(num[0]);
+    	ListNode iter = head;
+    	
+    	for(int i=1; i<num.length; i++){
+    		ListNode newNode = new ListNode(num[i]);
+    		iter.next = newNode;
+    		iter = newNode;
+    	}
+    	
+    	return head;
+    }
+    
+    public static void printLinkedNodeList(ListNode head){
+    	if(head == null){
+    		System.out.println("Empty List.");
+    		return;
+    	}
+    	
+    	while(head != null){
+    		System.out.print(head.val + ",");
+    		head = head.next;
+    	}
+    	
+    	System.out.println("");
+    }
+    
 }
+
+
+
+
+
+
+
+
+
+
+
