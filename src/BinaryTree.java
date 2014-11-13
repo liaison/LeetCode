@@ -1,6 +1,7 @@
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Stack;
 
 /**
  * Given a binary tree, find its maximum depth.
@@ -184,6 +185,39 @@ return its bottom-up level order traversal as:
     }
     
     
+    /**
+     * Given a binary tree, return the preorder traversal of its nodes' values.
+     * 
+     * Note: Recursive solution is trivial, could you do it iteratively?
+     * 
+     */
+    public List<Integer> preorderTraversal(TreeNode root) {
+    	
+    	Stack<TreeNode> stack = new Stack<TreeNode>();
+    	LinkedList<Integer> res = new LinkedList<Integer>();
+    	
+    	if(root == null){
+    		return res;
+    	}else{
+        	stack.push(root);
+    	}
+    	
+    	while(! stack.isEmpty()){
+    		TreeNode head = stack.pop();
+    		res.add(head.val);
+    		
+    		if(head.right != null){
+    			stack.push(head.right);
+    		}
+    		
+    		if(head.left != null){
+    			stack.push(head.left);
+    		}
+    	}
+    	
+    	return res;
+    }
+    
     
 	/**
 	 * @param args
@@ -213,6 +247,10 @@ return its bottom-up level order traversal as:
 		a.left = new TreeNode(2);
 		
 		System.out.println(solution.isSymmetric_iter(root));
+		
+		
+		Utils.printList(solution.preorderTraversal(root));
+		
 	}
 
 }
