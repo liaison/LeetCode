@@ -93,6 +93,8 @@ public class QuickSort {
 	}
 	
 	
+	
+	
 	/**
 	 * Quick sort on linked list
 	 */
@@ -104,17 +106,92 @@ public class QuickSort {
     
 	
 	/**
+	 * Quick sort on linked list
+	 */
+    public ListNode quick_sort_2(ListNode head) {
+    	
+		if(head == null){
+			return null;
+		}
+		
+		ListNode pivot = head;
+		head = head.next;
+		
+		ListNode bigHead = null, smallHead=null;
+		ListNode bigIter = null, smallIter=null;
+		
+		while(head != null){
+			ListNode iter = head.next;
+			
+			if(head.val >= pivot.val){
+				if(bigHead == null){
+					bigHead = head;
+					bigIter = bigHead;
+				}else{
+					bigIter.next = head;
+					bigIter = bigIter.next;
+				}
+			}else{
+				if(smallHead == null){
+					smallHead = head;
+					smallIter = smallHead;
+				}else{
+					smallIter.next = head;
+					smallIter = smallIter.next;
+				}
+			}
+			
+			head = iter;
+		}
+		
+		// mark the ends for the big/small sub lists.
+		if(smallIter != null){
+			smallIter.next = null;
+		}
+		
+		if(bigIter != null){
+			bigIter.next = null;	
+		}
+		
+		ListNode sortBig = quick_sort_2(bigHead);
+		ListNode sortSmall = quick_sort_2(smallHead);
+		
+		if(sortSmall == null){
+			pivot.next = sortBig;
+			return pivot;
+
+		} else {
+			smallIter = sortSmall;
+			while (smallIter.next != null) {
+				smallIter = smallIter.next;
+			}
+			
+			// reach the tail of the small sublist
+			smallIter.next = pivot;
+			// concatenate the two sublists.
+			pivot.next = sortBig;
+			
+			return sortSmall;	
+		}
+    }
+    
+    
+	
+    
+    
+	
+	/**
 	 * @param args
 	 */
 	public static void main(String[] args) {
-		//int [] A = {3, 1, 4, 2, 5 };
+		//int [] A = {3, 1, 4, 4, 5, 6};
 		int [] A = {1,3,3,1,3,1,3,3,2,3,2,2,1,1,1,3,2,2,1,1,2,2,2,3,3,1,1,2,2,2,1,2,1,1,2,3,3,2,2,3,2,3,2,2,2};
 				
 		ListNode head = Utils.array2LinkedList(A);
 		
 		QuickSort solution = new QuickSort();
 		
-		head = solution.sortList(head);
+		head = solution.quick_sort_2(head);
 		
 		Utils.printLinkedNodeList(head);
 		
