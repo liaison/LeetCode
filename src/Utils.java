@@ -23,6 +23,13 @@ public class Utils {
     	}
     }
     
+    public static void printList(List<Integer> list){
+    	for(Integer iter : list){
+    		System.out.print(iter);
+    	}
+    	System.out.println();
+    }
+    
     
     public static void printArray(int [] array){
     	for(int i=0; i<array.length; i++){
