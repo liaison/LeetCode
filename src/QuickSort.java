@@ -1,3 +1,5 @@
+import java.util.ArrayList;
+
 /**
  * 
  * Sort a linked list in O(n log n) time using constant space complexity.
@@ -14,12 +16,17 @@
 public class QuickSort {
 	
 	/**
-	 * Quick sort on linked list
+	 * Return both the head and tail of the final result.
+	 * @return
 	 */
-    public ListNode sortList(ListNode head) {
-    	
+	public ArrayList<ListNode> quick_sort(ListNode head){
+		
+		ArrayList<ListNode> res = new ArrayList<ListNode>();
+		
 		if(head == null){
-			return null;
+			res.add(null);
+			res.add(null);
+			return res;
 		}
 		
 		ListNode pivot = head;
@@ -61,26 +68,37 @@ public class QuickSort {
 			bigIter.next = null;	
 		}
 		
-		ListNode sortBig = sortList(bigHead);
-		ListNode sortSmall = sortList(smallHead);
-		
-		if(sortSmall == null){
-			pivot.next = sortBig;
-			return pivot;
+		ArrayList<ListNode> sortBig = quick_sort(bigHead);
+		ArrayList<ListNode> sortSmall = quick_sort(smallHead);
 
-		} else {
-			smallIter = sortSmall;
-			while (smallIter.next != null) {
-				smallIter = smallIter.next;
-			}
+		if(sortSmall.get(0) == null){
+			pivot.next = sortBig.get(0);
+			res.add(pivot);
 			
-			// reach the tail of the small sublist
-			smallIter.next = pivot;
-			// concatenate the two sublists.
-			pivot.next = sortBig;
-			
-			return sortSmall;	
+		}else{
+			res.add(sortSmall.get(0));
+			sortSmall.get(1).next = pivot;
+
+			pivot.next = sortBig.get(0);
 		}
+		
+		if(sortBig.get(1) == null){
+			res.add(pivot);
+		}else{
+			res.add(sortBig.get(1));
+		}
+		
+		
+		return res;
+	}
+	
+	
+	/**
+	 * Quick sort on linked list
+	 */
+    public ListNode sortList(ListNode head) {
+    	ArrayList<ListNode> res = quick_sort(head);
+    	return res.get(0);
     }
     
     
@@ -89,7 +107,9 @@ public class QuickSort {
 	 * @param args
 	 */
 	public static void main(String[] args) {
-		int [] A = {3, 1, 4, 2, 5 };
+		//int [] A = {3, 1, 4, 2, 5 };
+		int [] A = {1,3,3,1,3,1,3,3,2,3,2,2,1,1,1,3,2,2,1,1,2,2,2,3,3,1,1,2,2,2,1,2,1,1,2,3,3,2,2,3,2,3,2,2,2};
+				
 		ListNode head = Utils.array2LinkedList(A);
 		
 		QuickSort solution = new QuickSort();
