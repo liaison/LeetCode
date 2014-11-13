@@ -93,25 +93,24 @@ public class QuickSort {
 	}
 	
 	
+	/**
+	 * Quick sort on linked list
+	 
+    public ListNode sortList(ListNode head) {
+    	ArrayList<ListNode> res = quick_sort(head);
+    	return res.get(0);
+    }
+    
+    */
 	
 	
 	/**
 	 * Quick sort on linked list
 	 */
     public ListNode sortList(ListNode head) {
-    	ArrayList<ListNode> res = quick_sort(head);
-    	return res.get(0);
-    }
-    
-    
-	
-	/**
-	 * Quick sort on linked list
-	 */
-    public ListNode quick_sort_2(ListNode head) {
     	
-		if(head == null){
-			return null;
+		if(head == null || head.next == null){
+			return head;
 		}
 		
 		ListNode pivot = head;
@@ -119,11 +118,12 @@ public class QuickSort {
 		
 		ListNode bigHead = null, smallHead=null;
 		ListNode bigIter = null, smallIter=null;
+		ListNode pivotIter = pivot;
 		
 		while(head != null){
 			ListNode iter = head.next;
 			
-			if(head.val >= pivot.val){
+			if(head.val > pivot.val){
 				if(bigHead == null){
 					bigHead = head;
 					bigIter = bigHead;
@@ -131,6 +131,10 @@ public class QuickSort {
 					bigIter.next = head;
 					bigIter = bigIter.next;
 				}
+			}else if(head.val == pivot.val){
+				pivotIter.next = head;
+				pivotIter = pivotIter.next;
+				
 			}else{
 				if(smallHead == null){
 					smallHead = head;
@@ -149,15 +153,18 @@ public class QuickSort {
 			smallIter.next = null;
 		}
 		
+		pivotIter.next = null;
+		
 		if(bigIter != null){
 			bigIter.next = null;	
 		}
 		
-		ListNode sortBig = quick_sort_2(bigHead);
-		ListNode sortSmall = quick_sort_2(smallHead);
+		
+		ListNode sortBig = sortList(bigHead);
+		ListNode sortSmall = sortList(smallHead);
 		
 		if(sortSmall == null){
-			pivot.next = sortBig;
+			pivotIter.next = sortBig;
 			return pivot;
 
 		} else {
@@ -169,7 +176,7 @@ public class QuickSort {
 			// reach the tail of the small sublist
 			smallIter.next = pivot;
 			// concatenate the two sublists.
-			pivot.next = sortBig;
+			pivotIter.next = sortBig;
 			
 			return sortSmall;	
 		}
@@ -184,14 +191,16 @@ public class QuickSort {
 	 * @param args
 	 */
 	public static void main(String[] args) {
-		//int [] A = {3, 1, 4, 4, 5, 6};
-		int [] A = {1,3,3,1,3,1,3,3,2,3,2,2,1,1,1,3,2,2,1,1,2,2,2,3,3,1,1,2,2,2,1,2,1,1,2,3,3,2,2,3,2,3,2,2,2};
+		int [] A = {3, 1, 4, 4, 5, 6};
+		//int [] A = {1, 1, 1, 1, 1};
+		
+		//int [] A = {1,3,3,1,3,1,3,3,2,3,2,2,1,1,1,3,2,2,1,1,2,2,2,3,3,1,1,2,2,2,1,2,1,1,2,3,3,2,2,3,2,3,2,2,2};
 				
 		ListNode head = Utils.array2LinkedList(A);
 		
 		QuickSort solution = new QuickSort();
 		
-		head = solution.quick_sort_2(head);
+		head = solution.sortList(head);
 		
 		Utils.printLinkedNodeList(head);
 		
