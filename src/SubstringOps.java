@@ -2,6 +2,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -32,15 +33,19 @@ Note: the words in the list L do NOT have to be UNIQUE.
 public class SubstringOps {
     
 	public List<Integer> findSubstring(String S, String[] L) {
-		List<Integer> res = new LinkedList<Integer>();
 		
 		int WORD_SIZE = 0;
+		int WORD_NUM = 0;
+		int INPUT_SIZE = S.length();
 		
-		if(L.length == 0 || S.length() == 0){
-			return res;
+		if(L.length == 0 || INPUT_SIZE == 0){
+			return new LinkedList();
 		}else{
 			WORD_SIZE = L[0].length();
+			WORD_NUM = L.length;
 		}
+		
+		HashSet<Integer> res = new HashSet<Integer>();
 		
 		ArrayList<Integer> slide_window = new ArrayList<Integer>();
 		HashMap<String, Integer> last_match = new HashMap<String, Integer>();
@@ -48,7 +53,7 @@ public class SubstringOps {
 		Arrays.sort(L);
 		
 		int index = 0;
-		while(index < S.length()){
+		while(index <= INPUT_SIZE - WORD_SIZE * WORD_NUM){
 
 			boolean isMatch = true;
 			slide_window.clear();
@@ -59,12 +64,30 @@ public class SubstringOps {
 				Integer lmp = last_match.get(L[i]);
 				
 				int entry = 0;
-				
-				if(lmp != null){
+
+				if (lmp != null) {
 					// proceed to next word (WORD_SIZE), instead of letter (1)
-					entry = S.indexOf(L[i], lmp+WORD_SIZE);
-				}else{
+					entry = S.indexOf(L[i], lmp + WORD_SIZE);
+				} else {
 					entry = S.indexOf(L[i], index);
+				}
+
+				
+				// check overlapping with existing matching of words				
+				for (Integer range : slide_window) {
+					if (range <= entry && entry <= range + WORD_SIZE) {
+						// re-generate entry
+						entry = S.indexOf(L[i], range + WORD_SIZE);
+					}else if(entry == -1){
+						break;
+					}
+				}
+
+				if(entry == -1){
+					// one of the words is missing from the slide window
+					LinkedList<Integer> l = new LinkedList<Integer>();
+					l.addAll(res);
+					return l;
 				}
 				
 				slide_window.add(entry);
@@ -76,11 +99,6 @@ public class SubstringOps {
 			
 			for(Integer iter : slide_window){
 
-				if(iter == -1){
-					// one of the words is missing from the slide window
-					return res;
-				}
-				
 				if(prev == Integer.MIN_VALUE){
 					prev = iter;
 					continue;
@@ -99,7 +117,7 @@ public class SubstringOps {
 			}
 			
 			// Proceed by letter, since words can overlap! 
-			index = index + 1;
+			index = slide_window.get(0) + 1;
 		
 			// Proceed word by word, if found match, since matches can overlap!
 			//index = slide_window.get(0) + WORD_SIZE;
@@ -109,7 +127,9 @@ public class SubstringOps {
 		
 		}
 		
-		return res;
+		LinkedList<Integer> l = new LinkedList<Integer>();
+		l.addAll(res);
+		return l;
     }
 	
 	/**
@@ -117,21 +137,21 @@ public class SubstringOps {
 	 */
 	public static void main(String[] args) {
 		//String S = "barfoothefoobarman";
-		//String [] L = {"foo", "bar"};
+		//String [] L = {"foo", "bar"};		// expected {0, 9}
 		
 		// Time Limit Exceeded 
 		//String S = "lingmindraboofooowingdingbarrwingmonkeypoundcake";
-		//String [] L = {"fooo","barr","wing","ding","wing"};
+		//String [] L = {"fooo","barr","wing","ding","wing"};   // expected {13}
 		
 		// The matched word list can overlap with each other.
 		//String S = "aaa";
-		//String [] L = {"a", "a"};
+		//String [] L = {"a", "a"};			// expected {0, 1}
 		
 		//String S = "aaaaaa";
-		//String [] L = {"aaa", "aaa"};
+		//String [] L = {"aaa", "aaa"};		// expected {0}
 		
 		String S = "abaababbaba";
-		String [] L = {"ab","ba","ab","ba"};
+		String [] L = {"ab","ba","ab","ba"};  // expected {1, 3}
 		
 		
 		SubstringOps solution = new SubstringOps();
