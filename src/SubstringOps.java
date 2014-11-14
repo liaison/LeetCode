@@ -32,6 +32,7 @@ Note: the words in the list L do NOT have to be UNIQUE.
 
 public class SubstringOps {
     
+	/**
 	public List<Integer> findSubstring(String S, String[] L) {
 		
 		int WORD_SIZE = 0;
@@ -84,7 +85,8 @@ public class SubstringOps {
 				}
 
 				if(entry == -1){
-					// one of the words is missing from the slide window
+					// one of the words is missing from the slide window, 
+					//   early exit, good for performance. 
 					LinkedList<Integer> l = new LinkedList<Integer>();
 					l.addAll(res);
 					return l;
@@ -131,6 +133,79 @@ public class SubstringOps {
 		l.addAll(res);
 		return l;
     }
+	*/
+	
+	/**
+	 *  Do NOT use string.indexOf()
+	 */
+    
+	public List<Integer> findSubstring(String S, String[] L) {
+	
+		int WORD_SIZE = 0;
+		int WORD_NUM = 0;
+		int INPUT_SIZE = S.length();
+		LinkedList<Integer> res = new LinkedList<Integer>();
+		
+		if(L.length == 0 || INPUT_SIZE == 0){
+			return res;
+		}else{
+			WORD_SIZE = L[0].length();
+			WORD_NUM = L.length;
+		}
+		
+		HashMap<String, Integer> words = new HashMap<String, Integer>();
+		HashMap<String, Integer> slide_window = new HashMap<String, Integer>();
+		
+		// Build dictionary
+		for(int i=0; i<L.length; i++){
+			Integer count = words.get(L[i]);
+			if(count == null){
+				words.put(L[i], 1);
+			}else{
+				words.put(L[i], count+1);
+			}
+		}
+		
+		int index = 0;
+		while(index <= INPUT_SIZE - WORD_SIZE*WORD_NUM){
+			slide_window.clear();
+			
+			boolean isMatch = true;
+			
+			for(int p = 0; p < WORD_NUM; p++){
+				String token = S.substring(index+p*WORD_SIZE, index+(p+1)*WORD_SIZE);
+				
+				Integer wc = words.get(token);
+				if(wc == null){
+					// This slide window will NOT work
+					isMatch = false;
+					break;
+				}else{
+					Integer c = slide_window.get(token);
+					if(c == null){
+						slide_window.put(token, 1);
+					}else{
+						slide_window.put(token, c+1);
+					}
+					
+					// Not need to check the match between slide_window and words afterwards
+					if(slide_window.get(token) > words.get(token)){
+						isMatch = false;
+						break;
+					}
+				}
+			}
+			
+
+			if(isMatch){
+				res.add(index);
+			}
+			
+			index ++;
+		}
+		
+		return res;
+	}
 	
 	/**
 	 * @param args
@@ -140,8 +215,8 @@ public class SubstringOps {
 		//String [] L = {"foo", "bar"};		// expected {0, 9}
 		
 		// Time Limit Exceeded 
-		//String S = "lingmindraboofooowingdingbarrwingmonkeypoundcake";
-		//String [] L = {"fooo","barr","wing","ding","wing"};   // expected {13}
+		String S = "lingmindraboofooowingdingbarrwingmonkeypoundcake";
+		String [] L = {"fooo","barr","wing","ding","wing"};   // expected {13}
 		
 		// The matched word list can overlap with each other.
 		//String S = "aaa";
@@ -150,8 +225,8 @@ public class SubstringOps {
 		//String S = "aaaaaa";
 		//String [] L = {"aaa", "aaa"};		// expected {0}
 		
-		String S = "abaababbaba";
-		String [] L = {"ab","ba","ab","ba"};  // expected {1, 3}
+		//String S = "abaababbaba";
+		//String [] L = {"ab","ba","ab","ba"};  // expected {1, 3}
 		
 		
 		SubstringOps solution = new SubstringOps();
