@@ -31,8 +31,7 @@ where n is the total number of rows in the triangle.
 public class Triangle {
 
 	/**
-	 * dynamic programming, could be further optimized, 
-	 * 		i.e. keep just the prePath instead of dp_matrix.
+	 * dynamic programming	 
 	 */
     public int minimumTotal(List<List<Integer>> triangle) {
         
@@ -40,13 +39,11 @@ public class Triangle {
     		return 0;
     	}
     	
-    	ArrayList<List<Integer>> dp_matrix = new ArrayList<List<Integer>>();
     	List<Integer> bottom = new LinkedList<Integer>();
     	bottom.add(triangle.get(0).get(0));
-    	dp_matrix.add(bottom);
+    	List<Integer> prePath = bottom;
     	
         for(int i=1; i<triangle.size(); i++){
-        	List<Integer> prePath = dp_matrix.get(i-1);
         	List<Integer> curLevel = triangle.get(i);
         	
         	List<Integer> minPath = new LinkedList<Integer>();
@@ -65,11 +62,10 @@ public class Triangle {
         		}
             }
         	
-    		dp_matrix.add(minPath);
+        	prePath = minPath;
         }
         
-        List<Integer> finalPath = dp_matrix.get(dp_matrix.size()-1);
-        return Collections.min(finalPath);
+        return Collections.min(prePath);
     }
     
 	/**
@@ -77,7 +73,7 @@ public class Triangle {
 	 */
 	public static void main(String[] args) {
 		int [][] A = {
-		               {2},
+		                {2},
 		               {3,4},
 		              {6,5,7},
 		             {4,1,8,3}
