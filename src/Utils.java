@@ -1,3 +1,6 @@
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.LinkedList;
 import java.util.List;
 
 
@@ -23,9 +26,30 @@ public class Utils {
     	}
     }
     
+    /**
+     * 
+     * @param input
+     * @return  ArrayList<LinkedList<Integer>> 
+     */
+    public static List<List<Integer>> array2ListOfList(int [][] input){
+    	List<List<Integer>> matrix = new ArrayList<List<Integer>>();
+    	
+    	for(int i=0; i<input.length; i++){
+    		List<Integer> array = new LinkedList<Integer>();
+        	
+    		for(int j=0; j<input[i].length; j++){
+    			array.add(input[i][j]);
+    		}
+    		
+    		matrix.add(array);
+    	}
+    	
+    	return matrix;
+    }
+    
     public static void printList(List<Integer> list){
     	for(Integer iter : list){
-    		System.out.print(iter);
+    		System.out.print(iter + ",");
     	}
     	System.out.println();
     }
