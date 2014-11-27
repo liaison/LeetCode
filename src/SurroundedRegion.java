@@ -51,6 +51,7 @@ public class SurroundedRegion {
     		}
     	}
     	
+    	// Explore the space
     	while(true){
         	Iterator<Integer> iter = Oset.iterator();
         	if(!iter.hasNext()){
@@ -58,13 +59,13 @@ public class SurroundedRegion {
         	}
         	
     		int k = iter.next();
-    		LinkedList<Integer> bfs = new LinkedList<Integer>();
-    		bfs.add(k);
+    		LinkedList<Integer> explorer = new LinkedList<Integer>();
+    		explorer.add(k);
     		LinkedList<Integer> space = new LinkedList<Integer>(); 
     		
     		boolean isCaptured = true;
-    		while(! bfs.isEmpty()){
-    			int p = bfs.poll();
+    		while(! explorer.isEmpty()){
+    			int p = explorer.poll();
     			Oset.remove(p);
     			space.add(p);
     			
@@ -79,26 +80,26 @@ public class SurroundedRegion {
     			
     			// check the next element on the left
 				if(Oset.contains(p-1)){
-					bfs.add(p-1);
+					explorer.add(p-1);
 					Oset.remove(p-1);
 				}
 				
     			// check the next element on the right
 				if(Oset.contains(p+1)){
-					bfs.add(p+1);
+					explorer.add(p+1);
 					Oset.remove(p+1);
 				}
 
 				// check the element on the previous row
 				if(Oset.contains(p-columnSize)){
-					bfs.add(p-columnSize);
+					explorer.add(p-columnSize);
 					Oset.remove(p-columnSize);
 				}
 				
 				
 				// check the element on the next row
 				if(Oset.contains(p+columnSize)){
-					bfs.add(p+columnSize);
+					explorer.add(p+columnSize);
 					Oset.remove(p+columnSize);
 				}
 				
