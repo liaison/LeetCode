@@ -22,13 +22,27 @@ its corresponding outputs are in the right-hand column.
 
 public class NextPermutation {
 
-	private static void bubbleSort(int [] num, int start){
+    // This is actually the selection sort, NOT bubble sort.
+	// Each outer round, the number for the position [i] would be determined. 
+	private static void selectionSort(int [] num, int start){
 		for(int i=start; i<num.length; i++){
 			for(int j=i; j<num.length; j++){
 				if(num[i] > num[j]){
 					int temp = num[i];
 					num[i] = num[j];
 					num[j] = temp;
+				}
+			}
+		}
+	}
+	
+	private static void bubbleSort(int [] num, int start){
+		for(int i=start; i<num.length; i++){
+			for(int j=i; j<num.length-1; j++){
+				if(num[j] > num[j+1]){
+					int temp = num[j];
+					num[j] = num[j+1];
+					num[j+1] = temp;
 				}
 			}
 		}
@@ -58,7 +72,7 @@ public class NextPermutation {
 			num[i_w] = temp;
 
 			// Do the bubble sort to get the minimal number.
-			bubbleSort(num, max_i + 1);
+			selectionSort(num, max_i + 1);
 
 		}else{
 			// Did not find any solution
