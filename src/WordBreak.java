@@ -23,7 +23,7 @@ Return true because "leetcode" can be segmented as "leet code".
 public class WordBreak {
 
 	/**
-	 * recursive solution
+	 * a recursive solution
 	 * 
 	 * @param s
 	 * @param dict
@@ -61,6 +61,25 @@ public class WordBreak {
 		
 		return false;
 	}
+    
+    /**
+     * a DP solution 
+     * @param s
+     * @param dict
+     * @return
+     */
+    public boolean wordBreak_dp(String s, Set<String> dict) {
+    	
+    	for(int i=s.length()-1; i>0; i--){
+    		String slide = s.substring(i);
+    		
+    		if(dict.contains(slide)){
+    			
+    		}
+    	}
+    	
+    	return true;
+    }
     
 	/**
 	 * @param args
