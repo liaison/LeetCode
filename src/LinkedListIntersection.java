@@ -82,11 +82,24 @@ Hashset solution (O(n+m) running time, O(n) or O(m) memory):
 Traverse list A and store the address / reference to each node in a hash set. Then check every node bi in list B: if bi appears in the hash set, then bi is the intersection node.
 
 Two pointer solution (O(n+m) running time, O(1) memory):
-Maintain two pointers pA and pB initialized at the head of A and B, respectively. Then let them both traverse through the lists, one node at a time.
-When pA reaches the end of a list, then redirect it to the head of B (yes, B, that's right.); similarly when pB reaches the end of a list, redirect it the head of A.
+Maintain two pointers pA and pB initialized at the head of A and B, respectively. 
+Then let them both traverse through the lists, one node at a time.
+When pA reaches the end of a list, then redirect it to the head of B (yes, B, that's right.); 
+similarly when pB reaches the end of a list, redirect it the head of A.
 If at any point pA meets pB, then pA/pB is the intersection node.
-To see why the above trick would work, consider the following two lists: A = {1,3,5,7,9,11} and B = {2,4,9,11}, which are intersected at node '9'. Since B.length (=4) < A.length (=6), pB would reach the end of the merged list first, because pB traverses exactly 2 nodes less than pA does. By redirecting pB to head A, and pA to head B, we now ask pB to travel exactly 2 more nodes than pA would. So in the second iteration, they are guaranteed to reach the intersection node at the same time.
-If two lists have intersection, then their last nodes must be the same one. So when pA/pB reaches the end of a list, record the last element of A/B respectively. If the two last elements are not the same one, then the two lists have no intersections.
+To see why the above trick would work, consider the following two lists: A = {1,3,5,7,9,11} 
+and B = {2,4,9,11}, which are intersected at node '9'. 
+Since B.length (=4) < A.length (=6), pB would reach the end of the merged list first, 
+because pB traverses exactly 2 nodes less than pA does. 
+By redirecting pB to head A, and pA to head B, we now ask pB to travel exactly 2 more nodes than pA would.
+So in the second iteration, they are guaranteed to reach the intersection node at the same time.
+If two lists have intersection, then their last nodes must be the same one. 
+So when pA/pB reaches the end of a list, record the last element of A/B respectively. 
+If the two last elements are not the same one, then the two lists have no intersections.
+
+i.e. Put the list B ahead of A and the list A ahead of B, to make the two iterations 
+	would meet at the joint point of the two lists.
+
 	 * @param args
 	 */
 	
@@ -96,27 +109,27 @@ If two lists have intersection, then their last nodes must be the same one. So w
 		if(pA == null || pB == null)
 			return null;
 		
-		while(pA.next != null && pB.next != null){
-			pA = pA.next;
-			pB = pB.next;
-		}
-		
-		if(pA.next == null){
-			pA = pB;
-			pB = headA;
-		}else{
-			pB = pA;
-			pA = headB;
-		}
-		
-		// now pA and pB and the right starting point to meet at the joint point if there is any.
-		while(pA != null && pB != null){
+		int count = 0;
+		// set a break out
+		while(count < 3){
 			if(pA == pB){
+				// early exit.
 				return pA;
 			}
 			
 			pA = pA.next;
 			pB = pB.next;
+			
+			if(pA == null){
+				pA = headB;
+				count ++;
+			}
+			
+			if(pB == null){
+				pB = headA;
+				count ++;
+			}
+			
 		}
 		
 		return null;
@@ -136,7 +149,7 @@ If two lists have intersection, then their last nodes must be the same one. So w
 		
 		b1.next = b2;
 		
-		b2.next = a2;  // intersection a2
+		//b2.next = a1;  // intersection a2
 		
 		LinkedListIntersection solution = new LinkedListIntersection();
 		ListNode joint = solution.getIntersectionNode(a1, b1);
