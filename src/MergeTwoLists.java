@@ -48,6 +48,36 @@ public class MergeTwoLists {
     }
     
     
+    /**
+     * 
+    Given two sorted integer arrays A and B, merge B into A as one sorted array.
+
+	Note:
+	You may assume that A has enough space (size that is greater or equal to m + n) 
+		to hold additional elements from B. 
+
+	The number of elements initialized in A and B are m and n respectively.
+     */
+    public void merge(int A[], int m, int B[], int n) {
+    	int p = m+n-1, Ai = m-1, Bi = n-1;
+    	
+    	while(Ai >= 0 && Bi >= 0){
+    		if(A[Ai] > B[Bi]){
+    			A[p--] = A[Ai--];
+    		}else{
+    			A[p--] = B[Bi--];
+    		}
+    	}
+    	
+    	if(Ai < 0){
+    		// copy the rest of B to A 
+    		while(Bi >= 0){
+    			A[p--] = B[Bi--];
+    		}
+    	}// else Bi < 0, the rest of A is already in order.
+    }
+    
+    
 	/**
 	 * @param args
 	 */
@@ -61,6 +91,18 @@ public class MergeTwoLists {
 		MergeTwoLists solution = new MergeTwoLists();	
 		ListNode res = solution.mergeTwoLists(l1, l2);
 		Utils.printLinkedNodeList(res);
+		
+		
+		int [] A = new int[10];
+		A[0] = 1; 
+		A[1] = 3; 
+		A[2] = 5;
+		int [] B = {2, 4, 6, 8};
+		solution.merge(A, 3, B, 4);
+		
+		for(int a : A){
+			System.out.println(a);
+		}
 	}
 
 }
