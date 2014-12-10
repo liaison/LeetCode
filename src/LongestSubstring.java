@@ -123,7 +123,7 @@ public class LongestSubstring {
 			Integer lastIndex = lastSeen.get(c);
 			
 			if(lastIndex != null){
-				start = lastIndex > start ? lastIndex : start;
+				start = lastIndex > start ? lastIndex+1 : start;
 			}
 			
 			lastSeen.put(c, i);
@@ -138,9 +138,10 @@ public class LongestSubstring {
 	 * @param args
 	 */
 	public static void main(String[] args) {
-		//String s = "abcabcbb";
+		String s = "abcabcbb";
 		//String s = "bbbbb";
-		String s = "wlrbbmqbhcdarzowkkyhiddqscdxrjmowfrxsjybldbefsarcbynecdyggxxpklorellnmpapqfwkhopkmco";
+		//String s = "wlbrbmqrbhcdarzowkkyhiddqscdxrjmowfrxsjybldbefsarcbynecdyggxxpklorellnmpapqfwkhopkmco";
+		
 		LongestSubstring solution = new LongestSubstring();
 		
 		System.out.println(solution.lengthOfLongestSubstring_dp(s));
