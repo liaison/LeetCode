@@ -56,6 +56,7 @@ public class LongestSubstring {
     	dict.add(String.valueOf(s.charAt(0)));
     	int count = 1;
     	
+    	// Initialize the dictionary 
     	for(int j=1; j<end; j++){
     		String k = String.valueOf(s.charAt(j));
     		
@@ -66,7 +67,6 @@ public class LongestSubstring {
     			count ++;
     		}
 		}
-    	
     	pre_max_value = count;
     	max_size = pre_max_value;
 		
@@ -75,6 +75,7 @@ public class LongestSubstring {
     		return max_size;
     	}
     	
+    	// Go through the rest of the elements one by one. 
     	for(int i=1; i < end; i++){
     		String preK = String.valueOf(s.charAt(i-1));
     		dict.remove(preK);
@@ -101,8 +102,7 @@ public class LongestSubstring {
     		// early return;
     		if(pre_max_value + i == end){
     			break;
-    		}
-    		
+    		}	
     	}
     	
     	return max_size;
