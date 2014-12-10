@@ -113,7 +113,7 @@ i.e. Put the list B ahead of A and the list A ahead of B, to make the two iterat
 		// set a break out
 		while(count < 3){
 			if(pA == pB){
-				// early exit.
+				// early exit. Has to put it here, otherwise time limit exceeds
 				return pA;
 			}
 			
