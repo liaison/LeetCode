@@ -1,3 +1,5 @@
+import java.util.Stack;
+
 
 
 /**
@@ -17,6 +19,7 @@ getMin() -- Retrieve the minimum element in the stack.
 
 public class MinStack {
 	
+	/*
 	class ListNode {
 		int val;
 		int so_far_min;
@@ -65,6 +68,56 @@ public class MinStack {
     		return -1;
     	}
     }
+    */
+    
+ 
+	/**
+	 * A smart solution inspired by
+	 * https://oj.leetcode.com/discuss/15679/share-my-java-solution-with-only-one-stack
+	 * 
+	 */
+	// the value would overflow/underflow, so need to store the long instead of integer
+	Stack<Long> diffStack = new Stack<Long>();
+	private long min_value = 0;
+	
+    public void push(int x) {
+    	if(diffStack.isEmpty())
+    		this.min_value = x;
+    	
+        diffStack.push(x-min_value);
+        if(x < min_value)
+        	min_value = x;
+    }
+
+    public void pop() {
+    	if(diffStack.isEmpty())
+    		return;
+    	
+    	long top = diffStack.pop();
+    	if(top < 0){
+    		// recover the previous min value
+    		min_value = min_value - top;
+    	}
+    	
+    }
+
+    public int top() {
+        long top = diffStack.peek();
+        long res;
+        
+        if(top < 0){
+        	res = min_value;
+        }else{
+        	res = min_value + top;
+        }
+        
+        return (int)res;
+    }
+
+    public int getMin() {
+    	return (int)this.min_value;
+    }
+    
     
     
 	public static void main(String[] args) {
