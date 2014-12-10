@@ -108,15 +108,42 @@ public class LongestSubstring {
     	return max_size;
 	}
     
+	
+	/**
+	 * A solution inspired by 
+	 * 	https://oj.leetcode.com/discuss/13336/shortest-o-n-dp-solution-with-explanations
+	 */
+	public int lengthOfLongestSubstring_dp(String s) {
+		// A table maintains the last-seen index of each ASCII character in the string.
+		HashMap<Character, Integer> lastSeen = new HashMap<Character, Integer>();
+		int start = -1;
+		int max_size = 0;
+		for(int i=0; i<s.length(); i++){
+			Character c = s.charAt(i);
+			Integer lastIndex = lastSeen.get(c);
+			
+			if(lastIndex != null){
+				start = lastIndex > start ? lastIndex : start;
+			}
+			
+			lastSeen.put(c, i);
+			max_size = Math.max(i-start, max_size);
+
+		}
+		return max_size;
+	}
+	
+	
 	/**
 	 * @param args
 	 */
 	public static void main(String[] args) {
 		//String s = "abcabcbb";
-		String s = "bbbbb";
+		//String s = "bbbbb";
+		String s = "wlrbbmqbhcdarzowkkyhiddqscdxrjmowfrxsjybldbefsarcbynecdyggxxpklorellnmpapqfwkhopkmco";
 		LongestSubstring solution = new LongestSubstring();
 		
-		System.out.println(solution.lengthOfLongestSubstring(s));
+		System.out.println(solution.lengthOfLongestSubstring_dp(s));
 	}
 
 }
