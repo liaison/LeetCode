@@ -21,35 +21,34 @@ public class MaximumSubarray {
 	 * 	but also returning the subarray that has the maximum sum.  
 	 */
     public int maxSubArray(int[] A) {
+    	if(A.length == 0){
+    		return 0;
+    	}
+    	
     	if(A.length == 1){
     		return A[0];
     	}
     	
-        int max_i = 0, max_j = 0;
         int max_sum = Integer.MIN_VALUE;
         
-        int [][] dp_matrix = new int[A.length][A.length]; 
+        int [] dp_array = new int[A.length]; 
     	
         for(int i=A.length-1; i>=0; i--){
-        	dp_matrix[i][i] = A[i];
+        	dp_array[i] = A[i];
             
-        	if(dp_matrix[i][i] > max_sum){
-        		max_sum = dp_matrix[i][i]; 
-        		max_i = max_j = i;
+        	if(dp_array[i] > max_sum){
+        		max_sum = dp_array[i]; 
         	}
         	
     		for(int j=i-1; j>=0; j--){
-    			dp_matrix[i][j] = dp_matrix[i][j+1] + A[j];
+    			dp_array[j] = dp_array[j+1] + A[j];
     			 
-    			if(dp_matrix[i][j] > max_sum){
-    				max_sum = dp_matrix[i][j];
-    				max_i = i;
-    				max_j = j;
+    			if(dp_array[j] > max_sum){
+    				max_sum = dp_array[j];
     			}
     		}
     	}
         
-        System.out.println(max_i + "," + max_j);
         return max_sum;
     	 
     }
@@ -60,7 +59,7 @@ public class MaximumSubarray {
 	 */
 	public static void main(String[] args) {
 		int [] A = {-2,1,-3,4,-1,2,1,-5,4};
-		//int [] A = {1};
+		//int [] A = {};
 		MaximumSubarray solution = new MaximumSubarray();
 		
 		System.out.println(solution.maxSubArray(A));
