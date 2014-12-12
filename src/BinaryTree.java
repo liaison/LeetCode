@@ -218,6 +218,67 @@ return its bottom-up level order traversal as:
     	return res;
     }
     
+    /**
+     * Given a singly linked list where elements are sorted in ascending order, 
+     * 		convert it to a height balanced BST
+     * @return
+    
+    public TreeNode sortedListToBST(ListNode head) {
+        int size = 0;
+        while(head )
+    }
+     */
+    
+    /**
+	Given a binary tree and a sum, determine if the tree has a root-to-leaf path such that 
+		adding up all the values along the path equals the given sum.
+
+	For example:
+	Given the below binary tree and sum = 22,
+              5
+             / \
+            4   8
+           /   / \
+          11  13  4
+         /  \      \
+        7    2      1
+
+	return true, as there exist a root-to-leaf path 5->4->11->2 which sum is 22.
+    
+     */
+
+	public boolean hasPathSum(TreeNode root, int sum) {
+
+		if (root == null) {
+			return false;
+		}
+
+		sum = sum - root.val;
+
+		if (root.left == null && root.right == null) {
+			if (sum == 0) {
+				return true;
+			}
+		}
+		
+		// To see if there is a path in the left subtree 
+		//		that satisfy the constraint.
+		if (root.left != null) {
+			if (hasPathSum(root.left, sum)) {
+				return true;
+			}
+		}
+
+		// Try the right tree.
+		if (root.right != null) {
+			if (hasPathSum(root.right, sum)) {
+				return true;
+			}
+		}
+		
+		// both left and right substree do not satisfy the constraint.
+		return false;
+	}
     
 	/**
 	 * @param args
@@ -251,6 +312,8 @@ return its bottom-up level order traversal as:
 		
 		Utils.printList(solution.preorderTraversal(root));
 		
+		
+		System.out.println(solution.hasPathSum(a, 3));
 	}
 
 }
