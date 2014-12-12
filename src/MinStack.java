@@ -77,7 +77,7 @@ public class MinStack {
 	 * 
 	 */
 	// the value would overflow/underflow, so need to store the long instead of integer
-	Stack<Long> diffStack = new Stack<Long>();
+	private Stack<Long> diffStack = new Stack<Long>();
 	private long min_value = 0;
 	
     public void push(int x) {
