@@ -219,6 +219,73 @@ return its bottom-up level order traversal as:
     }
     
     
+    /**
+     * 
+Given a binary tree, return the postorder traversal of its nodes' values.
+
+For example:
+Given binary tree {1,#,2,3},
+   1
+    \
+     2
+    /
+   3
+return [3,2,1].
+
+     * @param root
+     * @return
+     */
+    public List<Integer> postorderTraversal(TreeNode root) {
+    	Stack<TreeNode> traversal = new Stack<TreeNode>();
+    	List<Integer> res = new LinkedList<Integer>();
+    	
+    	if(root == null)
+    		return res;
+    	
+    	traversal.push(root);
+    	while(!traversal.isEmpty()){
+    		TreeNode top = traversal.pop();
+    		res.add(0, top.val);
+    		
+    		if(top.left != null){
+    			traversal.push(top.left);
+    		}
+    		
+    		if(top.right != null){
+    			traversal.push(top.right);
+    		}
+    	}
+    	return res;
+    }
+   
+   
+    public List<Integer> inorderTraversal(TreeNode root) {
+    	Stack<TreeNode> stack = new Stack<TreeNode>();
+    	List<Integer> res = new LinkedList<Integer>();
+    	
+    	if(root == null)
+    		return res;
+    	    	
+    	stack.push(root);
+    	
+    	while(!stack.isEmpty()){
+    		TreeNode top = stack.pop();
+
+    		res.add(0, top.val);
+    	    		
+    		if(top.left != null){
+    			stack.push(top.left);
+    		}
+	
+    		if(top.right != null){
+    			stack.push(top.right);
+    		}
+    	}
+    	return res;
+        
+    }
+    
+    
 	/**
 	 * @param args
 	 */
@@ -250,6 +317,15 @@ return its bottom-up level order traversal as:
 		
 		
 		Utils.printList(solution.preorderTraversal(root));
+		
+		
+		TreeNode postOrderRoot = new TreeNode(1);
+		TreeNode postOrderRight = new TreeNode(2);
+		TreeNode postOrderLeft = new TreeNode(3);
+		postOrderRoot.right = postOrderRight;
+		postOrderRight.left = postOrderLeft;
+		
+		Utils.printList(solution.postorderTraversal(postOrderRoot));
 		
 	}
 
