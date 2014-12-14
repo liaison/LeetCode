@@ -347,6 +347,48 @@ return [3,2,1].
     }
     
     
+    private class BalanceResult {
+    	boolean isBalanced; 
+    	int size;
+    	
+    	BalanceResult(boolean b, int s){
+    		isBalanced = b;
+    		size = s;
+    	}
+    }
+    
+    private BalanceResult isBalanced_rec(TreeNode root){
+    	if(root == null){
+    		return new BalanceResult(true, 0);
+    	}
+    	
+    	BalanceResult left = isBalanced_rec(root.left);
+    	BalanceResult right = isBalanced_rec(root.right);
+    
+    	if(!left.isBalanced || !right.isBalanced){
+    		return new BalanceResult(false, -1);
+    	}else{
+    		if(Math.abs(left.size - right.size) > 1){
+    			return new BalanceResult(false, -1);
+    		}else{
+    			int newSize = Math.max(left.size, right.size)+1;
+    			return new BalanceResult(true, newSize);
+    		}
+    	}
+    }
+    
+    /**
+     * 
+     * Given a binary tree, determine if it is height-balanced.
+		For this problem, a height-balanced binary tree is defined as a binary tree 
+		in which the depth of the two subtrees of every node never differ by more than 1.
+     */
+    public boolean isBalanced(TreeNode root) {
+    	return isBalanced_rec(root).isBalanced;
+    }
+    
+    
+    
 	/**
 	 * @param args
 	 */
@@ -364,6 +406,8 @@ return [3,2,1].
 		//left.right.right = new TreeNode(6);
 		
 		BinaryTree solution = new BinaryTree();
+		
+		System.out.println(solution.isBalanced(root));
 		
 		System.out.println(solution.maxDepth(root));
 		
