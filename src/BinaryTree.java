@@ -388,6 +388,25 @@ return [3,2,1].
     }
     
     
+    public int minDepth(TreeNode root) {
+    	if(root == null){
+    		return 0;
+    	}
+    	
+    	if(root.left == null && root.right == null){
+    		return 1;
+    	}
+    	
+    	if(root.left == null){
+    		return minDepth(root.right)+1;
+    	}else if(root.right == null){
+    		return minDepth(root.left)+1;
+    	}else{
+    		return Math.min(minDepth(root.left), minDepth(root.right))+1;
+    	}
+    }
+    
+    
     
 	/**
 	 * @param args
@@ -411,6 +430,8 @@ return [3,2,1].
 		
 		System.out.println(solution.maxDepth(root));
 		
+		System.out.println(solution.minDepth(root));
+		
 		Utils.printListOfList(solution.levelOrderBottom(root));
 		
 		
@@ -433,6 +454,8 @@ return [3,2,1].
 		Utils.printList(solution.postorderTraversal(postOrderRoot));
 		
 		System.out.println(solution.hasPathSum(a, 3));
+		
+		System.out.println(solution.minDepth(postOrderRoot));
 	}
 
 }
