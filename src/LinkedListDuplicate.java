@@ -26,6 +26,8 @@ public class LinkedListDuplicate {
 		while (next != null) {
 
 			if (iter.val == next.val) {
+				// Do not move the Iter pointer just yet, 
+				//	since there could be a triple duplicates.
 				next = next.next;
 				iter.next = next;
 			} else {
