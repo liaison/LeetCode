@@ -58,6 +58,70 @@ public class BitOps {
 		return (int)ans;
 	}
 	
+	
+	/**
+	 * Given two binary strings, return their sum (also a binary string).
+
+	For example,
+		a = "11"
+		b = "1"
+		Return "100".
+
+	 */
+    public String addBinary(String a, String b) {
+        int s_a = a.length();
+        int s_b = b.length();
+        
+        int size = Math.max(s_a, s_b);
+        int diff = Math.abs(s_a - s_b);
+        
+        int carry = 0;
+        StringBuffer res = new StringBuffer();
+        
+        
+        for(int i=size-1; i>=0; i--){
+        	int cal = 0;
+        	
+        	if( s_a > s_b ){
+            	cal = a.charAt(i) - '0';
+            	if(i-diff >= 0){
+            		cal = cal + (b.charAt(i-diff) - '0');
+            	}
+        	}else{
+        		cal = b.charAt(i) - '0';
+            	if(i-diff >= 0){
+            		cal = cal + (a.charAt(i-diff) - '0');
+            	}	
+        	}
+        	
+        	cal = cal + carry;
+        	
+        	switch(cal){
+        		case 0:
+        			res.append("0");
+        			carry = 0;
+        			break;
+        		case 1:
+        			res.append("1");
+        			carry = 0;
+        			break;
+        		case 2:
+        			res.append("0");
+        			carry = 1;
+        			break;
+        		case 3:
+        			res.append("1");
+        			carry = 1;
+        			break;
+        	}
+        }
+        
+        if(carry == 1)
+        	res.append("1");
+        
+        return res.reverse().toString();
+    }
+    
 
 	/**
 	 * @param args
@@ -75,6 +139,15 @@ public class BitOps {
 		long elapsedTime = endTime - startTime;
 		
 		System.out.println("Time: " + elapsedTime);
+		
+		
+		String a = "11";
+		String b = "110001";
+		//String a = "1010";
+		//String b = "1011";
+		
+		System.out.println(solution.addBinary(a, b));
+		
 	}
 
 }
