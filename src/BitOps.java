@@ -68,7 +68,7 @@ public class BitOps {
 		Return "100".
 
 	 */
-    public String addBinary(String a, String b) {
+	public String addBinary(String a, String b) {
         int s_a = a.length();
         int s_b = b.length();
         
@@ -96,24 +96,9 @@ public class BitOps {
         	
         	cal = cal + carry;
         	
-        	switch(cal){
-        		case 0:
-        			res.append("0");
-        			carry = 0;
-        			break;
-        		case 1:
-        			res.append("1");
-        			carry = 0;
-        			break;
-        		case 2:
-        			res.append("0");
-        			carry = 1;
-        			break;
-        		case 3:
-        			res.append("1");
-        			carry = 1;
-        			break;
-        	}
+        	res.append(cal % 2);
+        	carry = cal / 2;
+        	
         }
         
         if(carry == 1)
