@@ -15,6 +15,15 @@ import java.util.List;
 public class Utils {
 
 	
+	public static void printListOfStringArray(List<String[]> res){
+		for(String [] array : res){
+			for(int i=0; i<array.length; i++){
+				System.out.println(array[i]);
+			}
+			System.out.println("====");
+		}
+	}
+	
     public static void printListOfList(List<List<Integer>> result){
     
     	for(List<Integer> list : result){
