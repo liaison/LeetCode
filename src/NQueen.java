@@ -39,7 +39,6 @@ There exist two distinct solutions to the 4-queens puzzle:
 public class NQueen {
 
 	private int N;	
-	private LinkedList<String []> res = new LinkedList<String []>();
 	private boolean [] stripMap  = null;
 	private boolean [] columnMap = null;
 	
@@ -48,20 +47,39 @@ public class NQueen {
 	//   and the value at the index is the column index. 
 	private int [] colPosition = null;
 	
-
+	private boolean needOutput = false;
+	private int totalCount = 0;
+	private LinkedList<String []> res = new LinkedList<String []>();
+	
     public List<String[]> solveNQueens(int n) {
     	this.N = n;
     	this.stripMap = new boolean[4*this.N];
     	this.columnMap = new boolean[this.N];
     	this.colPosition = new int[this.N+1];
+    	this.needOutput = true;
+    	this.totalCount = 0;
     	
     	backtrack(0, 0);
     	return res;
     }
     
+    public int totalNQueens(int n) {
+    	this.N = n;
+    	this.stripMap = new boolean[4*this.N];
+    	this.columnMap = new boolean[this.N];
+    	this.colPosition = new int[this.N+1];
+    	this.totalCount = 0;
+    	
+    	backtrack(0, 0);
+    	return this.totalCount;
+    }
+    
 	private void backtrack(int curRow, int count){
 		if(count == N){
-			addResult();
+			if(needOutput)
+				addResult();
+			
+			totalCount ++;
 			return;
 		}
 		
@@ -112,6 +130,8 @@ public class NQueen {
 		columnMap[col] = false;
 	}
 	
+	
+	
 	private void addResult(){
 		String [] newSchema = new String[this.N];
 		StringBuffer rowStr = new StringBuffer(this.N);
@@ -137,6 +157,8 @@ public class NQueen {
 		int n = 4;
 		
 		Utils.printListOfStringArray(solution.solveNQueens(n));
+		
+		System.out.println(solution.totalNQueens(n));
 	}
 
 }
