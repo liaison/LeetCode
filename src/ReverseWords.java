@@ -86,28 +86,26 @@ For example,
     public int lengthOfLastWord(String s) {
     	s = s.trim();
     	int size = s.length();
+    	int count = 0;
     	
-    	StringBuffer word = new StringBuffer();
-		
-    	for(int i=0; i<size; i++){
+    	for(int i=size-1; i>=0; i--){
 			char c = s.charAt(i);
-			if(c == ' '){
-				if(word.length() > 0){
-					word.delete(0, word.length());
-				}
+			
+			if(c != ' '){
+				count ++;
 			}else{
-				word.append(c);
+				return count;
 			}
 		}
 		
-    	return word.length();
+    	return count;
     }
     
 	
 	public static void main(String[] args) {
 		//String s = "the sky is blue";
 		//String s = " ";
-		String s = "Hello World";
+		String s = "World ";
 		
 		ReverseWords solution = new ReverseWords();
 		System.out.println(solution.reverseWords(s));
