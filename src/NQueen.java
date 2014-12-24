@@ -91,6 +91,10 @@ public class NQueen {
 	
 	private void placeQueue(int row, int col){
 		// marker the strip in the north-east direction.
+		// Pattern: the cells laying in the same strip 
+		//	share the same values of (row+col) and row+(N-col).
+		// Assume the indice of rows start from top to bottom, 
+		//  and the indice of columns start from left to right. 
 		stripMap[row+col] = true;
 		stripMap[row+(N-col) + 2*N-2] = true;
 		

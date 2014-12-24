@@ -67,12 +67,53 @@ public class ReverseWords {
     }
     
     
+	/**
+	 * 
+Given a string s consists of upper/lower-case alphabets and empty space characters ' ', 
+	return the length of last word in the string.
+
+If the last word does not exist, return 0.
+
+Note: A word is defined as a character sequence consists of non-space characters only.
+
+For example, 
+	Given s = "Hello World",
+	return 5.
+
+	 * @param s
+	 * @return
+	 */
+    public int lengthOfLastWord(String s) {
+    	s = s.trim();
+    	int size = s.length();
+    	
+    	StringBuffer word = new StringBuffer();
+		
+    	for(int i=0; i<size; i++){
+			char c = s.charAt(i);
+			if(c == ' '){
+				if(word.length() > 0){
+					word.delete(0, word.length());
+				}
+			}else{
+				word.append(c);
+			}
+		}
+		
+    	return word.length();
+    }
+    
+	
 	public static void main(String[] args) {
-		String s = "the sky is blue";
+		//String s = "the sky is blue";
 		//String s = " ";
+		String s = "Hello World";
 		
 		ReverseWords solution = new ReverseWords();
 		System.out.println(solution.reverseWords(s));
+	
+		
+		System.out.println(solution.lengthOfLastWord(s));
 	}
 
 }
