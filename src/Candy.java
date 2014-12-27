@@ -48,6 +48,7 @@ public class Candy {
     }
     */
 	
+	/**
 	public int candy(int[] ratings) {
 		int [] candys = new int[ratings.length];
 		candys[0] = 1;
@@ -82,6 +83,34 @@ public class Candy {
 		
 		return total;
 	}
+	*/
+	public int candy(int[] ratings) {
+		int [] candys = new int[ratings.length];
+		int total = 0;
+		
+		candys[0] = 1;
+		for(int i=1; i<ratings.length; i++){
+			
+			if(ratings[i] > ratings[i-1]){
+				candys[i] = candys[i-1] + 1;
+			}else{
+				candys[i] = 1;
+			}
+		}
+		
+		for(int i=ratings.length-1; i>0; i--){
+			if(ratings[i-1] > ratings[i]){
+				candys[i-1] = Math.max(candys[i] + 1, candys[i-1]);
+			}
+		}
+		
+		for(int i=0; i<candys.length; i++){
+			total += candys[i];
+		}
+		
+		return total;
+	}
+	
 	
 	
 	public static void main(String[] args) {
@@ -92,7 +121,10 @@ public class Candy {
 		
 		//int [] num = {1, 2, 2};  // expect 4;
 		
-		int [] num = {2, 2, 1};  // expect 4;
+		//int [] num = {2, 2, 1};  // expect 4;
+		
+		int [] num = {1, 2, 3, 4, 5}; // expect 15;
+		//int [] num = {5, 4, 3, 2, 1}; // expect 15;
 		
 		
 		Candy solution = new Candy();
