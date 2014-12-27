@@ -20,6 +20,18 @@ Note:
 public class ReverseLinkedList {
 
 	
+	private ListNode reverse_rec(ListNode start, int count){
+		if(count == 0 || start == null)
+			return start;
+	
+		ListNode newTail = reverse_rec(start.next, count-1);
+		newTail.next = start;
+		start.next = null;
+		
+		return start;
+	}
+	
+	
 	private ListNode reverse(ListNode start, int count){
 		if(start == null || count <= 0)
 			return start;
@@ -78,8 +90,10 @@ public class ReverseLinkedList {
         	newTail = preNewTail.next;
         }
         
-        newHead = this.reverse(newTail, count);
-
+        //this.reverse(newTail, count);
+        this.reverse_rec(newTail, count);
+        
+        
         newTail.next = postNewHead;
         
         if(preNewTail != null){
@@ -97,7 +111,7 @@ public class ReverseLinkedList {
 		
 		ReverseLinkedList solution = new ReverseLinkedList();
 		
-		ListNode newHead = solution.reverseBetween(head, 2, 6);
+		ListNode newHead = solution.reverseBetween(head, 2, 4);
 		Utils.printLinkedNodeList(newHead);
 	}
 
