@@ -48,42 +48,50 @@ public class Candy {
     }
     */
 	
+	private int slope(int n){
+		return (1+n)*n/2;
+	}
+	
 	/**
+	 * https://oj.leetcode.com/discuss/13841/easy-understand-solution-with-comments-constant-space-pass
+	 */
 	public int candy(int[] ratings) {
-		int [] candys = new int[ratings.length];
-		candys[0] = 1;
-		int total = candys[0];
+		int up = 0, down = 0;
+		int total = 0;
+		int oldsign=0, newsign;
 		
-		for(int i=1; i<ratings.length; i++){
+		for(int i=0; i<ratings.length-1; i++){
 			
-			if(ratings[i] > ratings[i-1]){
-				candys[i] = candys[i-1] + 1;
+			newsign = (ratings[i] < ratings[i+1]) ? 1: 
+					  (ratings[i] > ratings[i+1]) ? -1: 0;
 			
-			}else if(ratings[i] == ratings[i-1]){
-				candys[i] = 1;
-			
-			}else{
-				candys[i] = 1;
-				int j = i - 1;
-				while(j >= 0){
-					if(ratings[j] > ratings[j+1] && 
-					    candys[j] <= ratings[j+1]){
-						candys[j] ++;
-						total ++;
-						
-					}else{
-						break;
-					}				
-					j --;
-				}
+			if((oldsign > 0 && newsign == 0) || 
+			   (oldsign < 0 && newsign >= 0)){
+				
+				total += slope(up) + slope(down) + Math.max(up, down);
+				up = 0;
+				down = 0;
 			}
 			
-			total += candys[i];
+			if(newsign > 0){
+				up ++;
+			
+			}else if(newsign < 0){
+				down++;
+				
+			}else{
+				total += 1;
+			}
+			
+			oldsign = newsign;
 		}
+		
+		total += slope(up) + slope(down) + Math.max(up, down)+1;
 		
 		return total;
 	}
-	*/
+	
+	/**
 	public int candy(int[] ratings) {
 		int [] candys = new int[ratings.length];
 		int total = 0;
@@ -110,7 +118,7 @@ public class Candy {
 		
 		return total;
 	}
-	
+	*/
 	
 	
 	public static void main(String[] args) {
@@ -123,6 +131,7 @@ public class Candy {
 		
 		//int [] num = {2, 2, 1};  // expect 4;
 		
+		//int [] num = {1, 2, 4, 4, 3}; // expect 9;
 		int [] num = {1, 2, 3, 4, 5}; // expect 15;
 		//int [] num = {5, 4, 3, 2, 1}; // expect 15;
 		
