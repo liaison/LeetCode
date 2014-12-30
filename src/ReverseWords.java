@@ -35,25 +35,24 @@ public class ReverseWords {
 		
 		int sp, ep;
 		sp = ep = n;
-		for(int i=n-1; i>=0; --i){
-			if(s.charAt(i) == ' '){
+		for(int i=n-1; i>=-1; --i){
+			if(i == -1 || s.charAt(i) == ' '){
 				// begin or end of a word
 				if(sp < ep){
-					res.append(s.substring(sp, ep) + ' ');
+					if(res.length() > 0){
+						// add separator " " before appending a new word.
+						res.append(" ");
+					}
+					res.append(s.substring(sp, ep));
 				}
-				sp = ep = i;
 				
+				sp = ep = i;
 			}else{
 				--sp;
 			}
 		}
 		
-		if(sp < ep){
-			// the beginning word
-			res.append(s.substring(sp, ep));	
-		}
-		
-		return res.toString().trim();
+		return res.toString();
 	}
 	
 	/**
@@ -131,8 +130,8 @@ For example,
 	
 	public static void main(String[] args) {
 		//String s = " the sky is blue ";
-		String s = " 1";
-		//String s = "World ";
+		//String s = " 1";
+		String s = "Hello World! ";
 		
 		ReverseWords solution = new ReverseWords();
 		System.out.println(solution.reverseWords(s) + "#");
