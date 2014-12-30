@@ -29,7 +29,34 @@ How about multiple spaces between two words?
 
 public class ReverseWords {
     
+	public String reverseWords(String s) {
+		int n = s.length();
+		StringBuffer res = new StringBuffer();
+		
+		int sp, ep;
+		sp = ep = n;
+		for(int i=n-1; i>=0; --i){
+			if(s.charAt(i) == ' '){
+				// begin or end of a word
+				if(sp < ep){
+					res.append(s.substring(sp, ep) + ' ');
+				}
+				sp = ep = i;
+				
+			}else{
+				--sp;
+			}
+		}
+		
+		if(sp < ep){
+			// the beginning word
+			res.append(s.substring(sp, ep));	
+		}
+		
+		return res.toString().trim();
+	}
 	
+	/**
 	public String reverseWords(String s) {
 		int size = s.length();
 		if(size == 0)
@@ -65,7 +92,7 @@ public class ReverseWords {
 		
 		return res.toString();
     }
-    
+    */
     
 	/**
 	 * 
@@ -103,12 +130,12 @@ For example,
     
 	
 	public static void main(String[] args) {
-		//String s = "the sky is blue";
-		//String s = " ";
-		String s = "World ";
+		//String s = " the sky is blue ";
+		String s = " 1";
+		//String s = "World ";
 		
 		ReverseWords solution = new ReverseWords();
-		System.out.println(solution.reverseWords(s));
+		System.out.println(solution.reverseWords(s) + "#");
 	
 		
 		System.out.println(solution.lengthOfLastWord(s));
