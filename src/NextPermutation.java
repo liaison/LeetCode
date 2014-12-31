@@ -37,8 +37,11 @@ public class NextPermutation {
 	}
 	
 	private static void bubbleSort(int [] num, int start){
-		for(int i=start; i<num.length; i++){
-			for(int j=i; j<num.length-1; j++){
+		int count = num.length - start + 1;
+		
+		for(int i=0; i<count; ++i){
+			// for each iteration, the biggest element sinks to the bottom.
+			for(int j=start; j<num.length-i-1; ++j){
 				if(num[j] > num[j+1]){
 					int temp = num[j];
 					num[j] = num[j+1];
@@ -72,28 +75,27 @@ public class NextPermutation {
 			num[i_w] = temp;
 
 			// Do the bubble sort to get the minimal number.
-			selectionSort(num, max_i + 1);
+			bubbleSort(num, max_i+1);
 
 		}else{
 			// Did not find any solution
 			Arrays.sort(num);
 		}
-}
+    }
 
 	/**
 	 * @param args
 	 */
 	public static void main(String[] args) {
-		int[] A = {1, 2, 3};	// expected result: {1, 3, 2}
+		//int[] A = {1, 2, 3};	// expected result: {1, 3, 2}
 		//int[] A = {3, 2, 1};	// expected result: {1, 2, 3}
 		//int[] A = {1, 1, 5};  	// expected result: {1, 5, 1}
 		
 		//int [] A = {1, 2}; 		// expected answer {2, 1};
-		//int [] A = {2, 3, 1};  	// expected {3, 1, 2};
+		int [] A = {2, 3, 1};  	// expected {3, 1, 2};
 		
 		//int [] A = {4,2,0,2,3,2,0}; // expected result: {4,2,0,3,0,2,2}
 
-		
 		Utils.printArray(A);
 		
 		NextPermutation solution = new NextPermutation();
