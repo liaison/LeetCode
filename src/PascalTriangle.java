@@ -33,9 +33,32 @@ public class PascalTriangle {
 
 		Note:
 			Could you optimize your algorithm to use only O(k) extra space?
-	 * @param rowIndex
-	 * @return
+
+	 * The nth row of pascal triangle will have the following format: 
+	 * 	1 a(1) a(2) ... a(n) here we have 
+	 *  a(1) = n; 
+	 *  a(k+1) = a(k) * (n-k)/(k+1).
+	 *  
 	 */
+	public List<Integer> getRow(int rowIndex) {
+		List<Integer> res = new ArrayList<Integer>(rowIndex+1);
+		res.add(1);
+		if(rowIndex <= 0)
+			return res; // early exit.
+		
+		res.add(rowIndex);
+		int k=1;
+		while(k < rowIndex){
+			long ak = res.get(k);
+			long next = ak * (rowIndex-k)/(k+1);
+			res.add((int)next);
+			++k;
+		}
+		
+		return res;
+	}
+	
+	/*
     public List<Integer> getRow(int rowIndex) {
     	ArrayList<Integer> res = new ArrayList<Integer>();
 		ArrayList<Integer> preLevel = null;
@@ -53,7 +76,7 @@ public class PascalTriangle {
         }
     	
     	return preLevel;
-    }
+    }*/
 	
     
     public List<List<Integer>> generate(int numRows) {
@@ -90,7 +113,7 @@ public class PascalTriangle {
 		Utils.printListOfList(solution.generate(numRows));
 		
 		System.out.println("getRow");
-		Utils.printList(solution.getRow(0));
+		Utils.printList(solution.getRow(30));
 	}
 
 }
