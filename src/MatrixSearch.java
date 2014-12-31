@@ -35,26 +35,22 @@ public class MatrixSearch {
 		
 		int begin = 0, end = row_num * col_num - 1;
 		
-		while(begin < end){
+		while(begin <= end){
 			int mid = (begin + end) / 2;
+			int mid_value = matrix[mid/col_num][mid%col_num];
 			
-			if(matrix[mid/col_num][mid%col_num] == target){
+			if( mid_value == target){
 				return true;
 			
-			}else if(matrix[mid/col_num][mid%col_num] < target){
+			}else if(mid_value < target){
 				//Should move a bit further, otherwise dead loop.
 				begin = mid+1;
 			}else{
-				end = mid;
+				end = mid-1;
 			}
 		}
 		
-		// Deal with the input {{1}} when begin == end
-		if(matrix[begin/col_num][begin%col_num] == target){
-			return true;
-		}else{	
-			return false;
-		}
+		return false;
 	}
 	
 	
@@ -64,18 +60,17 @@ public class MatrixSearch {
 	public static void main(String[] args) {
 		MatrixSearch ms = new MatrixSearch();
 		
-		/**
 		int [][] matrix = 
 			{
 				{1,   3,  5,  7},
 	  			{10, 11, 16, 20},
 	  			{23, 30, 34, 50} 
 	  		};
-		*/
 		
-		int [] [] matrix = {{1}};
 		
-		System.out.println(ms.searchMatrix(matrix, 3));
+		//int [] [] matrix = {{1}};
+		
+		System.out.println(ms.searchMatrix(matrix, 13));
 		
 	}
 
