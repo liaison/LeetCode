@@ -25,6 +25,7 @@ public class MaximumGap {
     	return max_gap;
     }
     
+    // another solution would be bucket sort. 
     
 	public static void main(String[] args) {
 		int [] num = {1, 4, 5, 3};
