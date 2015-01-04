@@ -3,8 +3,6 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
-import java.util.Map.Entry;
-
 
 /**
  * Two words are anagram, if they contain the same set and number of characters.
@@ -25,7 +23,7 @@ public class Anagram {
         HashMap<String, ArrayList<Integer>> hashmap = 
         		new HashMap<String, ArrayList<Integer>>();
         ArrayList<String> res = new ArrayList<String>();
-        // build a hash, with the "unique" string form as the key
+        // build a hash table, with the "unique" string form as the key
         for(int i=0; i<strs.length; ++i){
         	char [] charArray = strs[i].toCharArray();
         	Arrays.sort(charArray);
@@ -41,9 +39,8 @@ public class Anagram {
         	}
         }
         
-        // extract the anagram from the hash table.
-        Iterator<String> iter 
-        	= hashmap.keySet().iterator();
+        // extract anagrams from the hash table.
+        Iterator<String> iter = hashmap.keySet().iterator();
         while(iter.hasNext()){
         	ArrayList<Integer> indexList = 
         			(ArrayList<Integer>) hashmap.get(iter.next());
