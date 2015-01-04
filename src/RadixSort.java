@@ -68,8 +68,8 @@ public class RadixSort {
 		}
 		
 		this.radixSort(num);
-		int max_gap = Integer.MIN_VALUE;
 		
+		int max_gap = Integer.MIN_VALUE;
 		for(int i=1; i<num.length; i++){
 			int gap = num[i]-num[i-1];
 			max_gap = gap > max_gap ? gap : max_gap; 
