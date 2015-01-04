@@ -11,6 +11,34 @@
 public class BitOps {
 	
 	
+	
+	public double pow(double x, int n) {
+		if(n == 0){
+			return 1;
+		}else if(x == 0 || n == 1){
+			return x;
+		}else{
+			if(n < 0){
+				return 1 / pow_rec(x, -n);
+			}else{
+				return pow_rec(x, n);
+			}
+		}
+	}
+	
+	private double pow_rec(double x, int n) {
+		double res = 1;
+		while(n > 0){
+			if((n & 1) == 1){
+				res *= x;
+			}
+			x *= x;
+			n >>= 1;
+		}
+		
+		return res;
+	}
+	
 	/**
 	 *	Implement int sqrt(int x).
    	 *	Compute and return the square root of x.
@@ -42,8 +70,8 @@ public class BitOps {
 	 * https://oj.leetcode.com/discuss/8897/share-my-o-log-n-solution-using-bit-manipulation
 	 */
 	public int bsqrt(int x){
-		long ans = 0;
-		long bit = 1l << 16;
+		long ans = 0;         // long is necessary, due to overflow of ans * ans
+		long bit = 1l << 16;  // 1L one in long. 
 		
 		while(bit > 0){
 			ans |= bit;	
@@ -132,6 +160,9 @@ public class BitOps {
 		//String b = "1011";
 		
 		System.out.println(solution.addBinary(a, b));
+		
+		
+		System.out.println(solution.pow(2, -3));
 		
 	}
 
