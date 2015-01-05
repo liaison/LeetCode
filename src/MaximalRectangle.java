@@ -1,5 +1,7 @@
 
 /**
+ * Given a 2D binary matrix filled with 0's and 1's, 
+ * 	find the largest rectangle containing all ones and return its area.
  * 
  * @author Lisong Guo <lisong.guo@me.com>
  * @date   Jan 05, 2015
@@ -21,7 +23,6 @@ public class MaximalRectangle {
 					break;
 				}
 			}
-			
 			// calculate the area of every possible rectangle
 			area = Math.max(area, (ma-i+1) * (na-j));
 		}
@@ -34,7 +35,7 @@ public class MaximalRectangle {
     	for(int i=0; i<matrix.length; ++i){
     		for(int j=0; j<matrix[0].length; ++j){
     			if(matrix[i][j] == '1'){
-    				// max rectange starting from this point
+    				//the max rectangle starting from this point
     				//  expanding to the right and bottom. 
     				max_area = Math.max(max_area, this.maxArea(matrix, i, j));
     			}
