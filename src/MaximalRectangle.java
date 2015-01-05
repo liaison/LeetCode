@@ -22,7 +22,7 @@ public class MaximalRectangle {
 				}
 			}
 			
-			// check the area of each rectangle
+			// calculate the area of every possible rectangle
 			area = Math.max(area, (ma-i+1) * (na-j));
 		}
 		return area;

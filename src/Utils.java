@@ -14,6 +14,16 @@ import java.util.List;
 
 public class Utils {
 
+	public static char [][] string2matrix(String [] input){
+		char [][] res = new char[input.length][];
+		int i = 0;
+		for(String s : input){
+			res[i] = input[i].toCharArray();
+			++i;
+		}
+		
+		return res;
+	}
 	
 	public static void printListOfStringArray(List<String[]> res){
 		for(String [] array : res){
