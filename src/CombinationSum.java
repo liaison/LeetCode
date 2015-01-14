@@ -56,13 +56,80 @@ public class CombinationSum {
     	this.combinationSum(candidates, vec, 0, target);
     	return res;
     }
+
+	private void combinationSum2(int[] candidates, LinkedList<Integer> vec,
+			int start, int target) {
+		// Found the combination
+		if(target == 0){
+			LinkedList<Integer> newVec = new LinkedList<Integer>();
+			newVec.addAll(vec);
+			res.add(newVec);
+			return;
+		}
+		
+		for (int i = start; i < candidates.length; ++i) {
+			if(candidates[i] > target){
+				// No need to continue
+				break;
+			}else{  // candidates[i] <= target
+				LinkedList<Integer> newVec = new LinkedList<Integer>();
+				newVec.addAll(vec);
+				
+				// Find the starting point of next group
+				int j = i+1;
+				while(j < candidates.length && candidates[j] == candidates[i]){
+					++j;
+				}
+				
+				if (candidates[i] < target) {
+					int newTarget = target;
+					for(int k=0; k<j-i; ++k){
+						newVec.add(candidates[i]);
+						// Try a new combination.
+						newTarget = newTarget - candidates[i];
+						combinationSum2(candidates, newVec, j, newTarget);
+					}
+				} else if (candidates[i] == target) {
+					// Find a combination
+					newVec.add(candidates[i]);
+					res.add(newVec);
+				}
+				
+				// start from next group
+				i = j-1;
+			}
+		}
+	}
+    
+    public List<List<Integer>> combinationSum2(int[] num, int target) {
+    	Arrays.sort(num);
+    	
+    	LinkedList<Integer> vec = new LinkedList<Integer>();
+    	this.combinationSum2(num, vec, 0, target);
+    	return res;    
+    }
     
     public static void main(String[] args) {
-    	int [] candidates = {2, 3, 6, 7};
-    	int target = 7;
+    	//int [] candidates = {2, 3, 6, 7};
+    	//int target = 7;
+    	
+    	//int [] candidates = {10,1,2,7,6,1,5};
+    	//int target = 8;
+    	// expected: [1, 7] [1, 2, 5] [2, 6] [1, 1, 6]
+    	
+    	//int [] candidates = {1, 1};
+    	//int target = 1;  // expected: {1}
+    	
+    	//int [] candidates = {1, 1};
+    	//int target = 2;  // expected: {1, 1}
+    	
+    	int [] candidates = {2, 2, 2};
+    	int target = 4;
+    	// expected: [2, 2]
+    	
     	
     	CombinationSum solution = new CombinationSum();
-    	Utils.printListOfList(solution.combinationSum(candidates, target));
+    	Utils.printListOfList(solution.combinationSum2(candidates, target));
 	}
 
 }
