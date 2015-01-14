@@ -90,7 +90,7 @@ public class CombinationSum {
 						combinationSum2(candidates, newVec, j, newTarget);
 					}
 				} else if (candidates[i] == target) {
-					// Find a combination
+					// Found a combination
 					newVec.add(candidates[i]);
 					res.add(newVec);
 				}
@@ -101,6 +101,9 @@ public class CombinationSum {
 		}
 	}
     
+	/**
+	 * https://oj.leetcode.com/problems/combination-sum-ii/
+	 */
     public List<List<Integer>> combinationSum2(int[] num, int target) {
     	Arrays.sort(num);
     	
