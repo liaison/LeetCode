@@ -1,3 +1,5 @@
+import java.util.Arrays;
+
 
 /**
  * 
@@ -11,6 +13,7 @@ The digits are stored such that the most significant digit is at the head of the
  */
 public class PlusOne {
 
+	/**
     public int[] plusOne(int[] digits) {
     	int size = digits.length;
     	int carry = 1;
@@ -34,10 +37,35 @@ public class PlusOne {
     		return newRes;
     	}
     }
-    
+    */
+	
+	/**
+	 * A solution inspired by the code handbook.
+	 */
+    public int[] plusOne(int[] digits) {
+    	int size = digits.length;
+    	int i = size;
+    	
+    	while(--i >= 0) {
+    		// Find the fist non-9 digit
+    		if(digits[i] < 9){
+    			digits[i] ++;
+    			return digits;
+    		}else{
+    			digits[i] = 0;
+    		}
+    	}
+    	
+		// all digits are 9, otherwise return in above cycle
+		int[] newRes = new int[size + 1];
+		Arrays.fill(newRes, 0);
+		newRes[0] = 1;
+		return newRes;
+	}
     
 	public static void main(String[] args) {
-		int [] digits = {9, 1, 9};
+		//int [] digits = {9, 1, 9}; // expected 920
+		int [] digits = {9, 1, 9}; // expected 1000
 		
 		PlusOne solution = new PlusOne();
 		Utils.printArray(solution.plusOne(digits));
