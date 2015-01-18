@@ -45,12 +45,85 @@ public class LinkedListCycle {
         return false;
     }
     
+    /**
+     * Given a linked list, return the node where the cycle begins. 
+     * If there is no cycle, return null.
+     * 
+     * Distance from the head to the joint point, K 
+     * First K steps: 
+     * 		slow:  K    fast: 2K 
+            distance of fast behind slow: D = (RING_SIZE - K) mod RING_SIZE
+       
+       Next D steps: (fast catches up the slow)
+       	    distance of fast/slow to the joint point:  
+       	    	(RING_SIZE - D) 
+       		    = (RING_SIZE - (RING_SIZE-K) mod RING_SIZE)) 
+       		
+       		if RING_SIZE > K 
+       			K 
+       			
+       			
+       	    if RING_SIZE < K 
+       	    	D = RING_SIZE - (K mod RING_SIZE)
+       	    	
+       	    	RING_SIZE - D
+       	       = K mod RING_SIZE	
+       		    
+       
+		Follow up:
+			Can you solve it without using extra space?
+     */
+    public ListNode detectCycle(ListNode head) {
+    	ListNode fast = head, slow = head;
+    	
+    	while(fast != null && fast.next != null){
+    		fast = fast.next.next;
+    		slow = slow.next;
+    		
+    		if(fast == slow)
+    			break;
+    	}
+    	
+    	// no loop
+    	if(fast == null || fast.next == null){
+    		return null;
+    	}
+    	
+    	// Fast and slow pointers meet at the 
+    	//	(RING_SIZE-K) position to the joint point 
+    	// Move the slow pointer to the head, and keep 
+    	//  the fast pointer at the same pace as slow, 
+    	//  they would meet at the joint point. 
+    	slow = head;
+    	while(slow != fast){
+    		slow = slow.next;
+    		fast = fast.next;
+    	}
+    	
+    	return slow;
+    }
+    
 	/**
 	 * @param args
 	 */
 	public static void main(String[] args) {
-		// TODO Auto-generated method stub
-
+		ListNode n1 = new ListNode(1);
+		ListNode n2 = new ListNode(2);
+		ListNode n3 = new ListNode(3);
+		
+		n1.next = n2;
+		n2.next = n3;
+		
+		n3.next = n2; // a loop with n2 and n3;
+		
+		LinkedListCycle solution = new LinkedListCycle();
+		ListNode joint = solution.detectCycle(n1);
+		
+		System.out.println(joint.val);
 	}
 
 }
+
+
+
+
