@@ -62,8 +62,42 @@ public class Palindrome {
 	        }
 	        return true;
 	 }
-	 
-	 
+
+	/**
+	 * Determine whether an integer is a palindrome. 
+	 * 	
+	 * Note: negative number is not considered to be palindrome.
+	 * 
+	 * Do this without extra space.
+	 */
+	public boolean isPalindrome(int x) {
+		long rdiv = 1;
+		long ldiv = 10; // overflow! the highest position in x.
+		if(x < 0)
+			return false;
+		else if(x < 10)
+			return true;
+		
+		while( (x/ldiv) > 9 ){
+			ldiv *= 10;
+		}
+		
+		while(ldiv > 9){
+			// extract digits based on the divisions, 
+			//		without changing the value of x.
+			int l = (int)(x/ldiv)%10;
+			int r = (int)(x/rdiv)%10;
+			
+			if(l != r)
+				return false;
+			// shift two digits
+			ldiv /= 10;
+			rdiv *= 10;
+		}
+		
+		return true;
+	}
+	
 	/**
 	 * @param args
 	 */
@@ -77,6 +111,18 @@ public class Palindrome {
 		Palindrome solution = new Palindrome();
 		
 		System.out.println(solution.isPalindrome(a));
+	
+		//int x = 10; //expected false
+		//int x = 1; // expected true;
+		//int x = 11211; 
+		//int x = -2147483648; // overflow? expected false
+		//int x = 1000021;     // tricky case, expected false
+		int x = 1002001;     // tricky case, expected true
+		
+		//int x = -212; 
+		
+		System.out.println(String.valueOf(x) + ":" + 
+							solution.isPalindrome(x));
 	}
 
 }
