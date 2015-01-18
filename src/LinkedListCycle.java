@@ -103,10 +103,50 @@ public class LinkedListCycle {
     	return slow;
     }
     
-	/**
-	 * @param args
-	 */
-	public static void main(String[] args) {
+    
+    /**
+     * You are given two linked lists representing two non-negative numbers. 
+     * The digits are stored in reverse order and each of their nodes contain a single digit. 
+     * Add the two numbers and return it as a linked list.
+
+		Input: (2 -> 4 -> 3) + (5 -> 6 -> 4)
+		Output: 7 -> 0 -> 8
+     */
+    public ListNode addTwoNumbers(ListNode l1, ListNode l2) {
+    	int carry = 0;
+    	ListNode pseudoHead = new ListNode(0);
+    	ListNode iter = pseudoHead;
+    	int sum = 0;
+    	while(l1 != null && l2 != null){
+    		sum = l1.val + l2.val + carry;
+    		ListNode digit = new ListNode(sum % 10);
+    		carry = sum / 10;
+    		iter.next = digit;
+    		
+    		iter = digit;
+    		l1 = l1.next;
+    		l2 = l2.next;
+    	}
+    	
+    	l1 = (l1 == null) ? l2 : l1;
+    	while(l1 != null){
+    		sum = l1.val + carry;
+    		ListNode digit = new ListNode(sum % 10);
+    		carry = sum / 10;
+    		iter.next = digit;
+    		
+    		iter = iter.next;
+    		l1 = l1.next;
+    	}
+    	
+    	if(carry != 0)
+    		iter.next = new ListNode(1);  //mark the end;
+    	
+    	return pseudoHead.next;
+    }
+    
+    
+    public static void main(String[] args) {
 		ListNode n1 = new ListNode(1);
 		ListNode n2 = new ListNode(2);
 		ListNode n3 = new ListNode(3);
@@ -120,6 +160,11 @@ public class LinkedListCycle {
 		ListNode joint = solution.detectCycle(n1);
 		
 		System.out.println(joint.val);
+		
+
+		ListNode l1 = Utils.array2LinkedList(new int[]{5});
+		ListNode l2 = Utils.array2LinkedList(new int[]{5});
+		Utils.printLinkedNodeList(solution.addTwoNumbers(l1, l2));
 	}
 
 }
