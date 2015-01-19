@@ -14,7 +14,11 @@ import java.util.PriorityQueue;
 
 public class MergeKSortedList {
 	
-	/**
+	/**  Complexity:  
+	 * 		each element needs to iterator K times over the lists. 
+	 * 	      There are n * K elements in total. 
+	 * 		Therefore, the complexity n * K * K. 
+	 * 	
     public ListNode mergeKLists(List<ListNode> lists) {
     	if(lists.size() == 1){
     		return lists.get(0);
@@ -78,7 +82,9 @@ public class MergeKSortedList {
 	
 	/**
 	 * Solution from the code handbook, with priority queue
-	 
+	   Complexity: the complexity of the insertion of each element is logK. 
+	   Therefore, the overall complexity is n * K * logK.
+	   
     public ListNode mergeKLists(List<ListNode> lists) {
     	if(lists == null || lists.size() == 0){
     		return null;
