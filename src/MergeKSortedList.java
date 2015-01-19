@@ -6,16 +6,19 @@
  * @date   Jan 19, 2015
  *
  */
-
-import java.util.ArrayList;
 import java.util.List;
+import java.util.ArrayList;
+
+import java.util.Comparator;
+import java.util.PriorityQueue;
 
 public class MergeKSortedList {
 	
+	/**
     public ListNode mergeKLists(List<ListNode> lists) {
-    	//if(lists.size() == 1){
-    	//	return lists.get(0);
-    	//}
+    	if(lists.size() == 1){
+    		return lists.get(0);
+    	}
     	
     	List<ListNode> pointerList = new ArrayList<ListNode>();
     	for(ListNode head : lists){
@@ -59,6 +62,50 @@ public class MergeKSortedList {
     	}
     	
     	iter.next = next;
+    	
+    	return pseudoHead.next;
+    }
+    */
+    
+    
+	class NodeComparator implements Comparator<ListNode> {
+
+		@Override
+		public int compare(ListNode n1, ListNode n2) {
+			return n1.val - n2.val;
+		}
+	}
+	
+	/**
+	 * Solution from the code handbook, with priority queue
+	 */
+    public ListNode mergeKLists(List<ListNode> lists) {
+    	if(lists == null || lists.size() == 0){
+    		return null;
+    	}
+    	
+    	NodeComparator nodeComparator = new NodeComparator();
+    	PriorityQueue<ListNode> heap = 
+    		new PriorityQueue<ListNode>(lists.size(), nodeComparator);
+    	for(ListNode node : lists){
+    		if(node != null){
+        		heap.add(node);	
+    		}
+    	}
+    	
+    	ListNode pseudoHead = new ListNode(0);
+    	ListNode p = pseudoHead;
+    	
+    	while(!heap.isEmpty()){
+    		ListNode next = heap.poll();
+    		p.next = next;
+    		
+    		if(next.next != null){
+    			// add new element into the heap.
+    			heap.add(next.next);
+    		}
+    		p = next;
+    	}
     	
     	return pseudoHead.next;
     }
