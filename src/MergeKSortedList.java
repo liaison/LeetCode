@@ -11,9 +11,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class MergeKSortedList {
-
 	
     public ListNode mergeKLists(List<ListNode> lists) {
+    	//if(lists.size() == 1){
+    	//	return lists.get(0);
+    	//}
+    	
     	List<ListNode> pointerList = new ArrayList<ListNode>();
     	for(ListNode head : lists){
     		pointerList.add(head);
@@ -45,8 +48,8 @@ public class MergeKSortedList {
     			}
     		}
     		
-    		if(nullCount == size){
-    			break; // Reach all tails of the lists.
+    		if(nullCount == size-1 || next == null){
+    			break; // Reach all tails of the lists but one.
     		}
     		
     		iter.next = next;
@@ -55,18 +58,22 @@ public class MergeKSortedList {
 			pointerList.set(min_i, next.next); // move on
     	}
     	
+    	iter.next = next;
+    	
     	return pseudoHead.next;
     }
     
     public static void main(String[] args) {
-    	ListNode l1 = Utils.array2LinkedList(new int[]{1, 3, 4, 6});
-    	ListNode l2 = Utils.array2LinkedList(new int[]{2, 5, 7, 10});
-    	ListNode l3 = Utils.array2LinkedList(new int[]{9, 11});
+    	ListNode l1 = Utils.array2LinkedList(new int[]{});
+    	
+    	//ListNode l1 = Utils.array2LinkedList(new int[]{1, 3, 4, 6});
+    	//ListNode l2 = Utils.array2LinkedList(new int[]{2, 5, 7, 10});
+    	//ListNode l3 = Utils.array2LinkedList(new int[]{9, 11});
     	
     	List<ListNode> lists = new ArrayList<ListNode>();
     	lists.add(l1);
-    	lists.add(l2);
-    	lists.add(l3);
+    	//lists.add(l2);
+    	//lists.add(l3);
     	
     	MergeKSortedList solution = new MergeKSortedList();
     	
