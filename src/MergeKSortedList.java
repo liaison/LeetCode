@@ -78,7 +78,7 @@ public class MergeKSortedList {
 	
 	/**
 	 * Solution from the code handbook, with priority queue
-	 */
+	 
     public ListNode mergeKLists(List<ListNode> lists) {
     	if(lists == null || lists.size() == 0){
     		return null;
@@ -109,18 +109,76 @@ public class MergeKSortedList {
     	
     	return pseudoHead.next;
     }
+    */
+    
+	/**
+	 * Iterative merging, with the MergeTwoLists function. 
+	 */
+    public ListNode mergeKLists(List<ListNode> lists) {
+    	if(lists == null || lists.size() == 0){
+    		return null;
+    	}
+    	
+    	int begin = 0, end = lists.size() - 1;
+    	
+    	while(end > 0){
+    		begin = 0;
+    		while(begin < end){
+    			lists.set(begin, 
+    					mergeTwoLists(lists.get(begin), lists.get(end)));
+    			++begin;
+    			--end;
+    		}
+    	}
+    	return lists.get(0);
+    }
+    
+    public ListNode mergeTwoLists(ListNode l1, ListNode l2) {
+    	
+    	if(l1 == null)
+    		return l2;
+    	if(l2 == null)
+    		return l1;
+    	
+    	ListNode l1_iter = l1, l2_iter = l2;
+    
+    	ListNode pyseudoHead = new ListNode(0);
+    	ListNode res_iter = pyseudoHead;
+    	
+    	while(l1_iter != null && l2_iter != null){
+    		
+    		if(l1_iter.val < l2_iter.val){
+    			res_iter.next = l1_iter;
+    			res_iter = l1_iter;
+    			l1_iter = l1_iter.next;
+    		}else{
+        		res_iter.next = l2_iter;
+        		res_iter = l2_iter;
+        		l2_iter = l2_iter.next;
+    		}
+    	}
+    	
+    	if(l1_iter == null){
+    		res_iter.next = l2_iter;
+    	}else{
+    		res_iter.next = l1_iter;
+    	}
+    	
+    	return pyseudoHead.next;
+    }
+    
     
     public static void main(String[] args) {
-    	ListNode l1 = Utils.array2LinkedList(new int[]{});
+    	//ListNode l1 = Utils.array2LinkedList(new int[]{});
     	
-    	//ListNode l1 = Utils.array2LinkedList(new int[]{1, 3, 4, 6});
-    	//ListNode l2 = Utils.array2LinkedList(new int[]{2, 5, 7, 10});
-    	//ListNode l3 = Utils.array2LinkedList(new int[]{9, 11});
+    	ListNode l1 = Utils.array2LinkedList(new int[]{1, 3, 4, 6});
+    	ListNode l2 = Utils.array2LinkedList(new int[]{2, 5, 7, 10});
+    	ListNode l3 = Utils.array2LinkedList(new int[]{9, 11});
     	
     	List<ListNode> lists = new ArrayList<ListNode>();
     	lists.add(l1);
-    	//lists.add(l2);
-    	//lists.add(l3);
+    	lists.add(l2);
+    	lists.add(l3);
     	
     	MergeKSortedList solution = new MergeKSortedList();
     	
