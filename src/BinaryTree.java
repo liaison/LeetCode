@@ -124,34 +124,32 @@ return its bottom-up level order traversal as:
 3  4 4  3
      * 		This is a recursive solution.
      */
-    public boolean isSymmetric(TreeNode root) {
-    	// empty tree is considered to be symmetric 
-    	if(root == null){
-    		return true;
-    	}
-    	
-    	return isSymmetric_rec(root.left, root.right);
-    }
-    
-    
-    private boolean isSymmetric_rec(TreeNode t1, TreeNode t2){
-    	if(t1 != t2 ){
-    		if( t1 != null && t2 != null){
-    			if(t1.val != t2.val){
-    				return false;
-    			}
-    			return isSymmetric_rec(t1.left, t2.right) && 
-    				   isSymmetric_rec(t1.right, t2.left);
-    		}else if(t1 == null && t2 == null){
-    			return true;
-    		}else{
-    			return false;
-    		}
-    	}else{
-    		return true;
-    	}
-    }
-    
+	public boolean isSymmetric(TreeNode root) {
+		// empty tree is considered to be symmetric
+		if (root == null) {
+			return true;
+		}
+
+		return isSymmetric_rec(root.left, root.right);
+	}
+
+	private boolean isSymmetric_rec(TreeNode t1, TreeNode t2) {
+		if (t1 != t2) {
+			if (t1 != null && t2 != null) {
+				if (t1.val != t2.val) {
+					return false;
+				}
+				return isSymmetric_rec(t1.left, t2.right)
+				    && isSymmetric_rec(t1.right, t2.left);
+			} else if (t1 == null && t2 == null) {
+				return true;
+			} else {
+				return false;
+			}
+		} else {
+			return true;
+		}
+	}
     
     /**
      * Compare nodes two by two, in an iterative way.
@@ -184,34 +182,31 @@ return its bottom-up level order traversal as:
     	return true;
     }
     
-    /**
-     * Given two binary trees, write a function to check if they are equal or not.
-		Two binary trees are considered equal if they are structurally identical and 
-		the nodes have the same value.
-     */
-    public boolean isSameTree(TreeNode p, TreeNode q) {
-    	if(p == null && q == null){
-    		return true;
-    	
-    	}else if(p == null && q != null  ||
-    			 p != null && q == null){
-    	
-    		return false;
-    	}else{
-    		// neither p nor q is NULL, check both left and right subtree
-        	
-    		if(p.val != q.val){
-    			return false;
-    		}
-    		
-    		if(isSameTree(p.left, q.left)){
-            	return isSameTree(p.right, q.right);
-    		}else{
-    			return false;
-    		}
-    	}
-    }
-    
+	/**
+	 * Given two binary trees, write a function to check if they are equal or
+	 * not. Two binary trees are considered equal if they are structurally
+	 * identical and the nodes have the same value.
+	 */
+	public boolean isSameTree(TreeNode p, TreeNode q) {
+		if (p == null && q == null) {
+			return true;
+
+		} else if (p == null && q != null || p != null && q == null) {
+			return false;
+			
+		} else {
+			// neither p nor q is NULL, check both left and right subtree
+			if (p.val != q.val) {
+				return false;
+			}
+
+			if (isSameTree(p.left, q.left)) {
+				return isSameTree(p.right, q.right);
+			} else {
+				return false;
+			}
+		}
+	}
     
     /**
      * Given a binary tree, return the preorder traversal of its nodes' values.
@@ -473,53 +468,47 @@ return [3,2,1].
     }
     
     
-	/**
-	 * @param args
-	 */
 	public static void main(String[] args) {
-		
+
 		TreeNode root = new TreeNode(1);
 		TreeNode left = new TreeNode(2);
 		TreeNode right = new TreeNode(2);
 		root.left = left;
 		root.right = right;
-		
+
 		left.left = new TreeNode(4);
 		right.right = new TreeNode(4);
-		
-		//left.right.right = new TreeNode(6);
-		
+
+		// left.right.right = new TreeNode(6);
+
 		BinaryTree solution = new BinaryTree();
-		
+
 		System.out.println(solution.isBalanced(root));
-		
+
 		System.out.println(solution.maxDepth(root));
-		
+
 		System.out.println(solution.minDepth(root));
-		
+
 		Utils.printListOfList(solution.levelOrderBottom(root));
-		
-		
+
 		// input {1, 2}, expected result false
 		TreeNode a = new TreeNode(1);
 		a.left = new TreeNode(2);
-		
+
 		System.out.println(solution.isSymmetric_iter(root));
-		
-		
+
 		Utils.printList(solution.preorderTraversal(root));
-		
-		
+
 		TreeNode postOrderRoot = new TreeNode(1);
 		TreeNode postOrderRight = new TreeNode(2);
 		TreeNode postOrderLeft = new TreeNode(3);
 		postOrderRoot.right = postOrderRight;
 		postOrderRight.left = postOrderLeft;
-		
+
 		Utils.printList(solution.postorderTraversal(postOrderRoot));
-		
+
 		System.out.println(solution.hasPathSum(a, 3));
-		
+
 		System.out.println(solution.minDepth(postOrderRoot));
 	}
 
