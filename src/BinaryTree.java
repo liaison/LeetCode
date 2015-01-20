@@ -435,6 +435,40 @@ return [3,2,1].
     }
     
     
+    private TreeNode prevNode = null;
+    
+    private boolean isMonotonicIncrease(TreeNode cur){
+    	if(cur == null) return true;
+    	
+    	if(! isMonotonicIncrease(cur.left)){
+        	return false;
+    	}
+    	
+    	if(cur.val > prevNode.val){
+    		return false;
+    	}
+    	
+    	prevNode = cur;
+    	return isMonotonicIncrease(cur.right);
+    }
+    
+    
+    private boolean isValid(TreeNode cur, Integer low, Integer high){
+    	if(cur == null) return true;
+    	
+    	return     (low == null || low < cur.val) 
+    		   && (high == null || high > cur.val)
+    		   && isValid(cur.left, low, cur.val)
+    		   && isValid(cur.right, cur.val, high);
+    }
+    
+    /**
+     * Given a binary tree, determine if it is a valid binary search tree (BST).
+     */
+    public boolean isValidBST(TreeNode root) {
+    	return isValid(root, null, null);
+    }
+    
     
 	/**
 	 * @param args
