@@ -246,21 +246,33 @@ return its bottom-up level order traversal as:
      * 		convert it to a height balanced BST
      * @return
      */
+    
+    private ListNode head;
+    
+    private TreeNode sortedListToBST(int start, int end) {
+    	if(start > end)	return null;
+    	
+    	int mid = (start + end) / 2;
+    	TreeNode left = sortedListToBST(start, mid-1);
+
+    	TreeNode root = new TreeNode(head.val);
+    	head = head.next;
+    	
+    	root.left = left;
+    	root.right = sortedListToBST(mid+1, end);
+    	return root;
+    }
+    
     public TreeNode sortedListToBST(ListNode head) {
         ListNode iter = head;
         int count = 0;
         while(iter != null) {
         	count ++;
-        }
-        int [] array = new int[count];
-        
-        iter = head;
-        count = 0;
-        while(iter != null) {
-        	array[count++] = iter.val;
+        	iter = iter.next;
         }
         
-        return this.sortedArrayToBST(array);
+        this.head = head;
+        return sortedListToBST(0, count-1);
     }
     
     
