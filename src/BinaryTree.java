@@ -252,6 +252,34 @@ return its bottom-up level order traversal as:
     }
      */
     
+    
+    private TreeNode arrayToBST(int [] num, int start, int end){
+    	if(start >= num.length || start > end ){
+    		return null;
+    	}else if(start == end){
+    		return (new TreeNode(num[start]));
+    	}
+    	
+    	int mid = (start+end)/2;
+    	
+    	TreeNode root = new TreeNode(num[mid]);
+    	root.left = arrayToBST(num, start, mid-1);
+    	root.right = arrayToBST(num, mid+1, end);
+    	
+    	return root;
+    }
+    
+    /**
+     * Given an array where elements are sorted in ascending order, 
+     * 		convert it to a height balanced BST.
+     */
+    public TreeNode sortedArrayToBST(int[] num) {
+        if(num == null || num.length == 0)
+        	return null;
+    	return arrayToBST(num, 0, num.length);
+    }
+    
+    
     /**
 	Given a binary tree and a sum, determine if the tree has a root-to-leaf path such that 
 		adding up all the values along the path equals the given sum.
@@ -510,6 +538,13 @@ return [3,2,1].
 		System.out.println(solution.hasPathSum(a, 3));
 
 		System.out.println(solution.minDepth(postOrderRoot));
+		
+		
+		// sortedArrayToBST 
+		int [] sortedNum = {1, 2, 3};
+		TreeNode treeRoot = solution.sortedArrayToBST(sortedNum);
+		Utils.printListOfList(solution.levelOrderBottom(treeRoot));
+		
 	}
 
 }
