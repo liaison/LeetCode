@@ -245,23 +245,30 @@ return its bottom-up level order traversal as:
      * Given a singly linked list where elements are sorted in ascending order, 
      * 		convert it to a height balanced BST
      * @return
-    
-    public TreeNode sortedListToBST(ListNode head) {
-        int size = 0;
-        while(head )
-    }
      */
+    public TreeNode sortedListToBST(ListNode head) {
+        ListNode iter = head;
+        int count = 0;
+        while(iter != null) {
+        	count ++;
+        }
+        int [] array = new int[count];
+        
+        iter = head;
+        count = 0;
+        while(iter != null) {
+        	array[count++] = iter.val;
+        }
+        
+        return this.sortedArrayToBST(array);
+    }
     
     
     private TreeNode arrayToBST(int [] num, int start, int end){
-    	if(start >= num.length || start > end ){
+    	if( start > end ){
     		return null;
-    	}else if(start == end){
-    		return (new TreeNode(num[start]));
     	}
-    	
     	int mid = (start+end)/2;
-    	
     	TreeNode root = new TreeNode(num[mid]);
     	root.left = arrayToBST(num, start, mid-1);
     	root.right = arrayToBST(num, mid+1, end);
@@ -274,9 +281,7 @@ return its bottom-up level order traversal as:
      * 		convert it to a height balanced BST.
      */
     public TreeNode sortedArrayToBST(int[] num) {
-        if(num == null || num.length == 0)
-        	return null;
-    	return arrayToBST(num, 0, num.length);
+    	return arrayToBST(num, 0, num.length-1);
     }
     
     
@@ -544,6 +549,8 @@ return [3,2,1].
 		int [] sortedNum = {1, 2, 3};
 		TreeNode treeRoot = solution.sortedArrayToBST(sortedNum);
 		Utils.printListOfList(solution.levelOrderBottom(treeRoot));
+		
+		solution.sortedListToBST(null);
 		
 	}
 
