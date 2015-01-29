@@ -249,6 +249,7 @@ return its bottom-up level order traversal as:
     
     private ListNode head;
     
+    // preOrder traverse !!!  similar with the isMonotonicIncrease(). 
     private TreeNode sortedListToBST(int start, int end) {
     	if(start > end)	return null;
     	
@@ -296,6 +297,32 @@ return its bottom-up level order traversal as:
     	return arrayToBST(num, 0, num.length-1);
     }
     
+    
+    public TreeNode buildTree(int [] preorder, int [] inorder, 
+    					      int ps, int pe,  int is, int ie) {
+    	
+    	if(is > ie || is >= inorder.length) return null;
+    	
+    	TreeNode root = new TreeNode(inorder[is]);
+    	int leftBound = ps;
+    	while(leftBound <= pe && preorder[leftBound] != inorder[is]) {
+    		++leftBound;
+    	}
+    	
+    	root.left = buildTree(preorder, inorder, ps, leftBound-1,  is+1, is+(leftBound-ps));
+    	root.right = buildTree(preorder, inorder, leftBound+1, pe, is+(leftBound-ps)+1, ie);
+    	
+    	return root;
+    }
+    
+    /**
+     * Given preorder and inorder traversal of a tree, 
+     * 		construct the binary tree.
+     */
+    public TreeNode buildTree(int[] preorder, int[] inorder) {
+    	return buildTree(preorder, inorder, 
+    			0, preorder.length-1, 0, inorder.length-1);
+    }
     
     /**
 	Given a binary tree and a sum, determine if the tree has a root-to-leaf path such that 
@@ -455,7 +482,7 @@ return [3,2,1].
     	return isBalanced_rec(root).isBalanced;
     }
     
-    
+    /**
     public int minDepth(TreeNode root) {
     	if(root == null){
     		return 0;
@@ -472,6 +499,40 @@ return [3,2,1].
     	}else{
     		return Math.min(minDepth(root.left), minDepth(root.right))+1;
     	}
+    }
+    */
+    
+    /**
+     * Breath-first traverse, which is more optimized in the case where 
+     * 		the tree is not well balanced. 
+     * The worst case complexity is still O(N), but on average, it should
+     * 	be better than the Depth-first traverse which in any case, 
+     * 	the complexity is O(N).
+     */
+    public int minDepth(TreeNode root) {
+    	if(root == null) return 0;
+    	
+    	LinkedList<TreeNode> queue = new LinkedList<TreeNode>();
+    	queue.add(root);
+    	
+    	TreeNode rightMost = root;
+    	int level = 0;
+    	while(! queue.isEmpty()) {
+    		TreeNode curr = queue.poll();
+    		
+    		if(curr.left != null)  queue.add(curr.left);
+    		if(curr.right != null) queue.add(curr.right);
+    		
+    		// Early exit! Find the first leaf node;
+    		if(curr.left == null && curr.right == null) break;
+    		
+    		if(curr == rightMost) {
+    			++level;
+    			rightMost = queue.peekLast();
+    		}
+    	}
+    	
+    	return level+1;
     }
     
     
@@ -563,8 +624,21 @@ return [3,2,1].
 		Utils.printListOfList(solution.levelOrderBottom(treeRoot));
 		
 		solution.sortedListToBST(null);
+	
 		
+		//int [] preorder = {1, 2, 3, 4, 5, 6};
+		//int [] inorder  = {4, 2, 1, 3, 5, 6}; 
+		
+		int [] preorder = {1, 2};
+		int [] inorder  = {2, 1};
+		
+		//int [] preorder = {1, 2, 3};
+		//int [] inorder  = {2, 3, 1};
+		
+		TreeNode reconstructTree = solution.buildTree(preorder, inorder);
+		Utils.printTree(reconstructTree);
 	}
+	
 
 }
 
