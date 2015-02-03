@@ -101,6 +101,12 @@ public class Utils {
     	System.out.println();
     }
     
+    public static void printStringList(List<String> list){
+    	for(String str : list){
+    		System.out.println(str);
+    	}
+    }
+    
     public static ListNode array2LinkedList(int [] num){
     	if(num.length == 0){
     		return null;
@@ -132,6 +138,37 @@ public class Utils {
     	System.out.println("");
     }
     
+    public static void printTree(TreeNode root){
+        if(root == null){
+        	return;
+        }
+    	
+        TreeNode lastLevel = root;
+        LinkedList<TreeNode> queue = new LinkedList<TreeNode>();
+        queue.offer(root);
+                
+        StringBuffer levelStr = new StringBuffer();
+        while(! queue.isEmpty()){
+        	
+        	TreeNode curr = queue.poll();
+        	
+        	String str = (curr == null)? "#" : String.valueOf(curr.val);
+        	
+        	levelStr.append(str);
+        	
+        	if(curr != null){
+        		queue.offer(curr.left);
+            	queue.offer(curr.right);
+        	}
+        	
+        	if(curr == lastLevel){
+        		lastLevel = queue.peekLast();
+        		System.out.println(levelStr.toString());
+        		levelStr.delete(0, levelStr.length());
+        	}
+        }
+    
+    }
 }
 
 
