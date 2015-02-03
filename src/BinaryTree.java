@@ -266,18 +266,15 @@ return its bottom-up level order traversal as:
     	
     	if(root.left == null && root.right == null) {
     		return root;
-    	
     	}else if(root.left == null) {
-    		
     		return flatten_rec(root.right);
-    		
     	}else if(root.right == null) {
     		root.right = root.left;
     		root.left = null;
-    		return flatten_rec(root.right); 
+    		return flatten_rec(root.right);
     	}
     	
-    	// flat the left tree
+    	// Flat the left tree and chain up the flattened trees 
     	TreeNode bottom = flatten_rec(root.left);
     	
     	bottom.right = root.right;
@@ -292,6 +289,48 @@ return its bottom-up level order traversal as:
     public void flatten(TreeNode root) {
     	flatten_rec(root);
     }
+    
+    
+    /**
+     * Given n, how many structurally unique BST's 
+      	(binary search trees) that store values 1...n?
+
+	For example,
+		Given n = 3, there are a total of 5 unique BST's.
+
+   1         3     3      2      1
+    \       /     /      / \      \
+     3     2     1      1   3      2
+    /     /       \                 \
+   2     1         2                 3
+   
+   
+     *  dynamic programming: 
+     *   1...n 
+     *   G(n): number of BST for a sequence of length n 
+     *   F(i): number of BST where i is the root 
+     *   
+     *   F(i) = G(i-1) * G(n-i)   1 <= i <= n 
+     *   G(n) = F(1) + F(2) + ... F(n) 
+     *   
+     *   G(0) = 1, G(1) = 1
+     *   G(n) ? 
+     */
+    public int numTrees(int n) {
+        int [] G = new int[n+1]; 
+        G[0] = 1;
+        G[1] = 1;
+        
+        for(int i=2; i<=n; ++i) {
+        	
+        	for(int j=1; j<=i; ++j) {
+        		G[i] += G[j-1] * G[i-j];
+        	}
+        }
+        
+        return G[n];
+    }
+    
     
     /**
      * Given a singly linked list where elements are sorted in ascending order, 
@@ -700,6 +739,8 @@ return [3,2,1].
 		flatten_root.right = flatten_right;
 		solution.flatten(flatten_root);
 		Utils.printTree(flatten_root);
+		
+		System.out.println("Num of Unique BST: " + solution.numTrees(2));
 	}
 	
 
