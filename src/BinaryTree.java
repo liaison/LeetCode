@@ -9,6 +9,21 @@ import java.util.Stack;
  * The maximum depth is the number of nodes along the longest path from 
  *   the root node down to the farthest leaf node.
  * 
+ * OJ's Binary Tree Serialization:
+	The serialization of a binary tree follows a level order traversal, 
+		where '#' signifies a path terminator where no node exists below.
+
+	Here's an example:
+   1
+  / \
+ 2   3
+    /
+   4
+    \
+     5
+
+	The above binary tree is serialized as "{1,2,3,#,#,4,#,#,5}".
+ * 
  * @author Lisong Guo <lisong.guo@inria.fr>
  * @date   Nov 06, 2014
  */
@@ -239,6 +254,43 @@ return its bottom-up level order traversal as:
     	}
     	
     	return res;
+    }
+    
+    /**
+     * Given a binary tree, flatten it to a linked list in-place.
+     * Hint: pre-order traverse, no need to create new nodes
+     */
+    private TreeNode flatten_rec(TreeNode root) {
+    	if(root == null)
+    		return root;
+    	
+    	if(root.left == null && root.right == null) {
+    		return root;
+    	
+    	}else if(root.left == null) {
+    		
+    		return flatten_rec(root.right);
+    		
+    	}else if(root.right == null) {
+    		root.right = root.left;
+    		root.left = null;
+    		return flatten_rec(root.right); 
+    	}
+    	
+    	// flat the left tree
+    	TreeNode bottom = flatten_rec(root.left);
+    	
+    	bottom.right = root.right;
+    	root.right = root.left;
+    	
+    	root.left = null;
+    	bottom.left = null;
+    	
+    	return flatten_rec(bottom.right);
+    }
+    
+    public void flatten(TreeNode root) {
+    	flatten_rec(root);
     }
     
     /**
@@ -612,7 +664,7 @@ return [3,2,1].
 		postOrderRight.left = postOrderLeft;
 
 		Utils.printList(solution.postorderTraversal(postOrderRoot));
-
+		
 		System.out.println(solution.hasPathSum(a, 3));
 
 		System.out.println(solution.minDepth(postOrderRoot));
@@ -635,8 +687,19 @@ return [3,2,1].
 		//int [] preorder = {1, 2, 3};
 		//int [] inorder  = {2, 3, 1};
 		
+		/**
 		TreeNode reconstructTree = solution.buildTree(preorder, inorder);
 		Utils.printTree(reconstructTree);
+		 * 
+		 */
+		
+		TreeNode flatten_root = new TreeNode(1);
+		TreeNode flatten_left = new TreeNode(2);
+		TreeNode flatten_right = new TreeNode(3);
+		flatten_root.left = flatten_left;
+		flatten_root.right = flatten_right;
+		solution.flatten(flatten_root);
+		Utils.printTree(flatten_root);
 	}
 	
 
