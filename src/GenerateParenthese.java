@@ -15,13 +15,26 @@ import java.util.List;
 
 public class GenerateParenthese {
 	
-	private List<String> generateParenthesis_rec(int n) {
-		LinkedList<String> res = new LinkedList<String>();
+	/**
+	 * The recursive solution is based on the following formulas: 
+
+		F(n) = “(“ + F(i) + “)” + F(n-i-1) 
+
+		where F(n) is the desired function that 
+			returns a list of combination with the specified number of parenthesis. 
+
+		The formula says that the result can be obtained by the “divide-and-conquer” principle, 
+			in this case, the combinations can be obtained by dividing the string into two parts, 
+			the left part would be embraced by a pair of parenthesis, 
+			and then appended with the right right without parenthesis, 
+			we get a combination. 
+	 */
+    public List<String> generateParenthesis(int n) {
+    	LinkedList<String> res = new LinkedList<String>();
 		
 		if (n == 0){
 			res.add("");
 			return res;
-			
 		} else if (n == 1){
 			res.add("()");
 			return res;
@@ -32,7 +45,6 @@ public class GenerateParenthese {
         	List<String> r = generateParenthesis(n-i-1);
         	
         	for(String l_str : l){
-        		
         		for(String r_str : r){
             		res.add("(" + l_str + ")" + r_str);
         		}
@@ -40,11 +52,6 @@ public class GenerateParenthese {
         }
         
         return res;
-	}
-	
-	
-    public List<String> generateParenthesis(int n) {
-    	return generateParenthesis_rec(n);
     }
     
 	public static void main(String[] args) {
@@ -52,7 +59,6 @@ public class GenerateParenthese {
 		List<String> res = solution.generateParenthesis(3);
 		
 		Utils.printStringList(res);
-		
 	}
 
 }
