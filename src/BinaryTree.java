@@ -342,29 +342,32 @@ return its bottom-up level order traversal as:
 		return generateSubtrees(1, n);
 	}
 
-    private List<TreeNode> generateSubtrees(int s, int e) {
-    	List<TreeNode> res = new LinkedList<TreeNode>();
-    	if(s > e) {
-    		res.add(null); // empty tree
-    		return res;
-    	}
-    	
-    	for(int i=s; i<=e; ++i) {
-    		List<TreeNode> leftSubtrees = generateSubtrees(s, i-1);
-    		List<TreeNode> rightSubtrees = generateSubtrees(i+1, e);
-    		
-    		for(TreeNode left : leftSubtrees) {
-    			for(TreeNode right : rightSubtrees) {
-    				TreeNode root = new TreeNode(i);
-    				root.left = left;
-    				root.right = right;
-    				res.add(root);
-    			}
-    		}
-    	}
-    	return res;
-    }
-    
+	private List<TreeNode> generateSubtrees(int s, int e) {
+		List<TreeNode> res = new LinkedList<TreeNode>();
+		if (s > e) {
+			res.add(null); // empty tree, should an empty element as a placeholder.
+			return res;
+		}
+
+		for (int i = s; i <= e; ++i) {
+			// Using the number "i" as the root, 
+			//	   and construct its left branch with its right subsequence, 
+			//     the same applied to its right subsequence. 
+			// The combination result is then the cartesian product of the two subtree lists. 
+			List<TreeNode> leftSubtrees = generateSubtrees(s, i - 1);
+			List<TreeNode> rightSubtrees = generateSubtrees(i + 1, e);
+
+			for (TreeNode left : leftSubtrees) {
+				for (TreeNode right : rightSubtrees) {
+					TreeNode root = new TreeNode(i);
+					root.left = left;
+					root.right = right;
+					res.add(root);
+				}
+			}
+		}
+		return res;
+	}    
     
     /**
      * Given a singly linked list where elements are sorted in ascending order, 
