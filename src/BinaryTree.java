@@ -1,8 +1,3 @@
-import java.util.ArrayList;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Stack;
-
 /**
  * Given a binary tree, find its maximum depth.
  *
@@ -27,6 +22,10 @@ import java.util.Stack;
  * @author Lisong Guo <lisong.guo@inria.fr>
  * @date   Nov 06, 2014
  */
+import java.util.ArrayList;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Stack;
 
 public class BinaryTree {
 
@@ -321,8 +320,7 @@ return its bottom-up level order traversal as:
      */
     public int numTrees(int n) {
         int [] G = new int[n+1];
-        G[0] = 1;
-        G[1] = 1;
+        G[0] = G[1] = 1;
         
         for(int i=2; i<=n; ++i) {
         	for(int j=1; j<=i; ++j) {
@@ -331,6 +329,40 @@ return its bottom-up level order traversal as:
         }
         
         return G[n];
+    }
+    
+    
+    /**
+     * Given n, generate all structurally unique BST's 
+     * 		(binary search trees) that store values 1...n.
+     * 
+     * Divide and conquer 
+     */
+	public List<TreeNode> generateTrees(int n) {
+		return generateSubtrees(1, n);
+	}
+
+    private List<TreeNode> generateSubtrees(int s, int e) {
+    	List<TreeNode> res = new LinkedList<TreeNode>();
+    	if(s > e) {
+    		res.add(null); // empty tree
+    		return res;
+    	}
+    	
+    	for(int i=s; i<=e; ++i) {
+    		List<TreeNode> leftSubtrees = generateSubtrees(s, i-1);
+    		List<TreeNode> rightSubtrees = generateSubtrees(i+1, e);
+    		
+    		for(TreeNode left : leftSubtrees) {
+    			for(TreeNode right : rightSubtrees) {
+    				TreeNode root = new TreeNode(i);
+    				root.left = left;
+    				root.right = right;
+    				res.add(root);
+    			}
+    		}
+    	}
+    	return res;
     }
     
     
@@ -743,6 +775,9 @@ return [3,2,1].
 		Utils.printTree(flatten_root);
 		
 		System.out.println("Num of Unique BST: " + solution.numTrees(2));
+		
+		solution.generateTrees(0);
+		
 	}
 	
 
