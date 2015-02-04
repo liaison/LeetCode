@@ -28,7 +28,7 @@ If S = [1,2,3], a solution is:
 import java.util.Arrays;
 import java.util.List;
 import java.util.ArrayList;
-
+import java.util.LinkedList;
 
 public class Subsets {
 
@@ -36,10 +36,10 @@ public class Subsets {
 	 *  Divide and conquer 
 	 */
 	private List<List<Integer>> rec_subsets(int []S, int begin){
-		List<List<Integer>> result = new ArrayList<List<Integer>>();
+		List<List<Integer>> result = new LinkedList<List<Integer>>();
     	
 		if(S.length == 0 || begin >= S.length){
-			List<Integer> emptyList = new ArrayList<Integer>();
+			List<Integer> emptyList = new LinkedList<Integer>();
 			result.add(emptyList);
 			return result;
 		}
@@ -50,10 +50,9 @@ public class Subsets {
 		result.addAll(rest);
 		
 		for(List<Integer> elem : rest){
-			ArrayList<Integer> newComb = new ArrayList<Integer>();
-			newComb.addAll(elem);		
-			elem.add(0, S[begin]);
-			
+			LinkedList<Integer> newComb = new LinkedList<Integer>();
+			newComb.add(S[begin]);
+			newComb.addAll(elem);
 			result.add(newComb);
 		}
 		
@@ -130,8 +129,8 @@ public class Subsets {
 	public static void main(String[] args) {
 		Subsets solution = new Subsets();	
 		
-		//int [] S = {1};
-		//Utils.printListOfList(solution.subsets(S));
+		int [] S = {1, 2, 3};
+		Utils.printListOfList(solution.subsets(S));
 		
 		int [] num = {1, 2, 2};
 		Utils.printListOfList(solution.subsetsWithDup(num));
