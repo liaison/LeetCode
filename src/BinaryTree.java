@@ -315,14 +315,16 @@ return its bottom-up level order traversal as:
      *   
      *   G(0) = 1, G(1) = 1
      *   G(n) ? 
+     *   
+     *   My detailed explanation on Leetcode. 
+     *   https://oj.leetcode.com/discuss/24282/dp-solution-in-7-lines-f-i-g-i-1-g-n-i
      */
     public int numTrees(int n) {
-        int [] G = new int[n+1]; 
+        int [] G = new int[n+1];
         G[0] = 1;
         G[1] = 1;
         
         for(int i=2; i<=n; ++i) {
-        	
         	for(int j=1; j<=i; ++j) {
         		G[i] += G[j-1] * G[i-j];
         	}
