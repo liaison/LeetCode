@@ -25,9 +25,8 @@ If S = [1,2,3], a solution is:
  *
  */
 
-import java.util.Arrays;
 import java.util.List;
-import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.LinkedList;
 
 public class Subsets {
@@ -88,10 +87,10 @@ public class Subsets {
     }
     
 	private List<List<Integer>> rec_subsetsWithDup(int []num, int begin){
-		List<List<Integer>> result = new ArrayList<List<Integer>>();
+		List<List<Integer>> result = new LinkedList<List<Integer>>();
     	
 		if(num.length == 0 || begin >= num.length){
-			List<Integer> emptyList = new ArrayList<Integer>();
+			List<Integer> emptyList = new LinkedList<Integer>();
 			result.add(emptyList);
 			return result;
 		}
@@ -104,16 +103,15 @@ public class Subsets {
 		// Add the result from the rest of the problem.
 		result.addAll(rest);
 
-		List<Integer> dupSet = new ArrayList<Integer>();
+		List<Integer> dupSet = new LinkedList<Integer>();
 		
 		for (int j = begin; j < next; ++j) {
 			dupSet.add(num[begin]);
 			
 			for (List<Integer> elem : rest) {
-				ArrayList<Integer> newComb = new ArrayList<Integer>();
+				LinkedList<Integer> newComb = new LinkedList<Integer>();
 				newComb.addAll(dupSet);
 				newComb.addAll(elem);
-			
 				result.add(newComb);
 			}
 		}
