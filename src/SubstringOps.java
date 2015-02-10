@@ -189,7 +189,7 @@ public class SubstringOps {
 					}
 					
 					// Not need to check the match between slide_window and words afterwards
-					if(slide_window.get(token) > words.get(token)){
+					if(slide_window.get(token) > wc){
 						isMatch = false;
 						break;
 					}
