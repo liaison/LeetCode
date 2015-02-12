@@ -21,6 +21,7 @@ In other words, how many combination are there in sequence S that can form the s
  * @author Lisong Guo <lisong.guo@me.com>
  * @date   Dec 28, 2014
  */
+import java.util.Hashtable;
 import java.util.List;
 import java.util.LinkedList;
 
@@ -121,31 +122,42 @@ public class Subsequences {
 	 */
     public List<String> findRepeatedDnaSequences(String s) {
         List<String> res = new LinkedList<String>();
+        Hashtable<String, Integer> nonPattern = new Hashtable<String, Integer>();
         
         int n = s.length();
         for(int i=0; i<n-20; ++i) {
         	int j = i+10;
         	
+        	// First, check whether the pattern has been searched before.
+        	if(nonPattern.contains(s.substring(i, i+10))){
+        		continue;
+        	}
+        	
         	// Try to find at least a pattern
         	while(j < n-10){
-        		int k = j;
         		
-        		for(; k<j+10; ++k) {
+        		// Check if the substring starting from j forms a pattern
+        		int k = j+9;
+        		for(; k>=j; --k) {
             		if(s.charAt(i+k-j) != s.charAt(k)) {
             			break; // no matching
             		}
             	}
             	
-            	if(k == j+10) {
+            	if(k == j-1) {
             		// Found a pattern
             		res.add(s.substring(j, j+10));
             		break; // stop search for pattern for the starting point j
             	}
             	
-            	// keep on searching next one
+            	// keep on searching next one until finding a pattern.
             	++j;
         	}
         	
+        	// There is no pattern for the substring starting from i
+        	if(j == n-10) {
+        		nonPattern.put(s.substring(i, i+10), i);
+        	}
         }
         
         return res;
@@ -161,6 +173,7 @@ public class Subsequences {
     	
     	String DNA = "AAAAACCCCCAAAAACCCCCCAAAAAGGGTTT";
     	Utils.printStringList(solution.findRepeatedDnaSequences(DNA));
+    	
     }
 
 }
