@@ -1,4 +1,3 @@
-
 /**
 
 Given a string S and a string T, count the number of distinct subsequences of T in S.
@@ -22,6 +21,9 @@ In other words, how many combination are there in sequence S that can form the s
  * @author Lisong Guo <lisong.guo@me.com>
  * @date   Dec 28, 2014
  */
+import java.util.List;
+import java.util.LinkedList;
+
 
 public class Subsequences {
 	
@@ -66,6 +68,8 @@ public class Subsequences {
 			}	
 		}
 		
+		Utils.printMatrix(dp);
+		
 		return dp[tl][sl];
 	}
     
@@ -98,13 +102,66 @@ public class Subsequences {
 	}
     
 	
+	/**
+	 * 
+	 * All DNA is composed of a series of nucleotides abbreviated as A, C, G, and T, 
+	 * 
+	 * for example: "ACGAATTCCG". When studying DNA, it is sometimes useful to 
+	 * 		identify repeated sequences within the DNA.
+
+		Write a function to find all the 10-letter-long sequences (substrings) 
+		that occur more than once in a DNA molecule.
+
+		For example,
+
+			Given s = "AAAAACCCCCAAAAACCCCCCAAAAAGGGTTT",
+
+			Return:
+				["AAAAACCCCC", "CCCCCAAAAA"].
+	 */
+    public List<String> findRepeatedDnaSequences(String s) {
+        List<String> res = new LinkedList<String>();
+        
+        int n = s.length();
+        for(int i=0; i<n-20; ++i) {
+        	int j = i+10;
+        	
+        	// Try to find at least a pattern
+        	while(j < n-10){
+        		int k = j;
+        		
+        		for(; k<j+10; ++k) {
+            		if(s.charAt(i+k-j) != s.charAt(k)) {
+            			break; // no matching
+            		}
+            	}
+            	
+            	if(k == j+10) {
+            		// Found a pattern
+            		res.add(s.substring(j, j+10));
+            		break; // stop search for pattern for the starting point j
+            	}
+            	
+            	// keep on searching next one
+            	++j;
+        	}
+        	
+        }
+        
+        return res;
+    }
+	
+    
     public static void main(String[] args) {
     	String S = "rabbbit";
     	String T = "rabbit";
 
     	Subsequences solution = new Subsequences();
-    	System.out.println(solution.numDistinct_sdp(S, T));    			
-	}
+    	System.out.println(solution.numDistinct(S, T));
+    	
+    	String DNA = "AAAAACCCCCAAAAACCCCCCAAAAAGGGTTT";
+    	Utils.printStringList(solution.findRepeatedDnaSequences(DNA));
+    }
 
 }
 
