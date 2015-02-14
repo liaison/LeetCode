@@ -11,8 +11,9 @@ public class ReorderList {
 
 		For example,
 			Given {1,2,3,4}, reorder it to {1,4,2,3}.
-	 */
-    public void reorderList(ListNode head) {
+	 
+	 	Note: there is a O(N) time complexity and O(1) space complexity solution.
+	public void reorderList(ListNode head) {
         if(head == null) return;
         
     	ArrayList<ListNode> array = new ArrayList<ListNode>();
@@ -34,9 +35,50 @@ public class ReorderList {
         // mark the end of the new linked list.   
         array.get(hd).next = null;
     }
+	 */
+	
+	/**
+	 *  1). Find the mid point and cut the list into halves
+	 *  2). Reverse the second half of the list 
+	 *  3). Merge the two half lists.  
+	 */
+	public void reorderList(ListNode head) {
+		if(head == null || head.next == null) return;
+		
+		// Find the mid point in the list.
+		ListNode slow = head, fast = head.next;
+		while(fast != null && fast.next != null) {
+			slow = slow.next;
+			fast = fast.next.next;
+		}
+		
+		
+		// Reverse the second half of the original list.
+		ListNode mid = slow, iter = slow.next;
+		mid.next = null;  // Cut the list into two.
+		
+		while(iter != null) {
+			ListNode temp = iter.next;
+			iter.next = mid;
+			mid = iter;
+			iter = temp;
+		}
+		
+		// Merge the two sublists. 
+		ListNode pre = head, post = mid;
+		while(pre != null && post != null) {
+			ListNode nextPre = pre.next;
+			ListNode nextPost = post.next;
+			pre.next = post;
+			post.next = nextPre;
+			
+			pre = nextPre;
+			post = nextPost;
+		}
+	}
     
     public static void main(String [] args) {
-    	int [] num = {1, 2, 3, 4, 5};
+    	int [] num = {1, 2, 3};
     	ListNode head = Utils.array2LinkedList(num);
     	
     	ReorderList solution = new ReorderList();
