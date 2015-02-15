@@ -35,7 +35,8 @@ public class GreyCode {
     public List<Integer> grayCode(int n) {
     	List<Integer> res = new ArrayList<Integer>();
     	if(n == 0) {
-    		res.add(0); // expected by the online judge, instead of an empty list.
+    		// expected by the online judge, instead of an empty list.
+    		res.add(0); 
     		return res;
     	}
     	
@@ -46,7 +47,7 @@ public class GreyCode {
     	int shift = 1;
     	while(shift < n) {
     		int size = res.size();
-    		// Create symmetric codes of the current grey code, except the highly bit.
+    		// Create symmetric codes of the current grey code, except the highest bit.
     		for(int j=size-1; j>=0; --j) {
     			int newCode = res.get(j) | (1 << shift); 
     			res.add(newCode);
