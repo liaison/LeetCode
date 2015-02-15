@@ -1,3 +1,7 @@
+import java.util.Collections;
+import java.util.LinkedList;
+import java.util.List;
+
 /**
  * 
  * @author Lisong Guo <lisong.guo@me.com>
@@ -61,7 +65,65 @@ public class GasStation {
 		return tank < 0 ? -1 : res;
 	}
 	
+	class GasLeft implements Comparable<GasLeft>{
+		int index;
+		int left;
+		
+		public int compareTo(GasLeft o) {
+			return this.left > o.left ? 1 : -1;
+		}
+	}
 	
+	private List<Integer> startPoints(int[] gas, int[] cost) {
+		List<GasLeft> res = new LinkedList<GasLeft>();
+		
+		int tank = 0;
+		int length = gas.length;
+		int count = length;
+		int i = 0;
+		while(count > 0) {
+			int left = gas[i] - cost[i];
+			if(left >= 0) {
+				GasLeft entry = new GasLeft();
+				entry.index = i;
+				entry.left = left;
+				res.add(entry);
+			}
+			
+			tank += left;
+			i = (i+1) % length;
+			-- count;
+        }
+        
+		if(tank < 0) return null;
+		
+		Collections.sort(res);
+		
+		List<Integer> indexList = new LinkedList<Integer>();
+		for(GasLeft e : res) {
+			indexList.add(e.index);
+		}
+		
+		return indexList;
+	}
+	
+	public int canCompleteCircuit(int[] gas, int[] cost) {
+	    int length = gas.length;
+        int res = -1;
+        
+        List<Integer> startList = this.startPoints(gas, cost);
+        if(startList == null) return -1;
+        
+        for(Integer start : startList) {
+			if(this.canReach(start, (start+1)%length, 0, gas, cost)){
+				return start;
+			}
+        }
+        return res;
+    
+	}
+	
+	/**
     public int canCompleteCircuit(int[] gas, int[] cost) {
         int length = gas.length;
         int res = -1;
@@ -79,7 +141,7 @@ public class GasStation {
         }
         return res;
     }
-    
+    */
     
 	public static void main(String[] args) {
 		int gas[]  = {6,1,4,3,5};
