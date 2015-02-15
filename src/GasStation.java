@@ -25,6 +25,9 @@ import java.util.List;
  */
 public class GasStation {
 
+	/** 
+	 *  Time complexity O(N^2) would fail the online judge with TLE (Time Limit Exceeds)
+	 */
 	private boolean canReach(int start, int next, int tank, 
 							 int[] gas, int[] cost) {
 		// return to the start point.
@@ -107,6 +110,7 @@ public class GasStation {
 		return indexList;
 	}
 	
+	/**
 	public int canCompleteCircuit(int[] gas, int[] cost) {
 	    int length = gas.length;
         int res = -1;
@@ -122,6 +126,7 @@ public class GasStation {
         return res;
     
 	}
+	*/
 	
 	/**
     public int canCompleteCircuit(int[] gas, int[] cost) {
@@ -143,9 +148,40 @@ public class GasStation {
     }
     */
     
+	/**
+	 * https://oj.leetcode.com/discuss/25341/fully-commented-solution-enabled-single-observation-mine
+	 */
+	public int canCompleteCircuit(int[] gas, int[] cost) {
+		int iter = 0, step;
+		int length = gas.length;
+		
+		for(; iter < length; iter += step) {
+			int gas_left = 0;
+			
+			for(step=1; step <= length; ++step) {
+				int index = (iter+step-1) % length;
+				gas_left += gas[index] - cost[index];
+				if(gas_left < 0) {
+					break;
+				}
+			}
+			
+			if(step > length) {
+				// Return to the original point
+				return iter;
+			}
+		}
+		
+		return -1;
+	}
+	
 	public static void main(String[] args) {
-		int gas[]  = {6,1,4,3,5};
-		int cost[] = {3,8,2,4,2};  // expected 2;
+		//int gas[]  = {6,1,4,3,5};
+		//int cost[] = {3,8,2,4,2};  // expected 2;
+		
+		int gas[]  = {4};
+		int cost[] = {5};  // expected -1;
+		
 		
 		GasStation solution = new GasStation();
 		System.out.println(solution.canCompleteCircuit(gas, cost));
