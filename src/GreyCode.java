@@ -23,45 +23,36 @@
  *
  */
 import java.util.List;
-import java.util.LinkedList;
+import java.util.ArrayList;
 
 public class GreyCode {
 	
+	/**
+	 * 
+     * https://oj.leetcode.com/discuss/25375/recursive-solution-c-6-ms-with-explaination
+	 * The sequence of grey code is symmetric.
+	 */
     public List<Integer> grayCode(int n) {
-    	List<Integer> res = new LinkedList<Integer>();
-   
+    	List<Integer> res = new ArrayList<Integer>();
     	if(n == 0) {
-    		res.add(0);
-    		return res;
-    	} else if(n == 1) {
-    		res.add(0);
-    		res.add(1);
-    		return res;
-    	} else if(n == 2) {
-    		res.add(0);
-    		res.add(1);
-    		res.add(3);
-    		res.add(2);
+    		res.add(0); // expected by the online judge, instead of an empty list.
     		return res;
     	}
     	
-    	int size = 1 << (n-2);
-    	int [] index = {0, 1, 3, 2, 2, 3, 1, 0};
-    	int count = 0;
+    	// n = 1, bottom case / starting point.
+    	res.add(0);
+    	res.add(1);
     	
-    	int base_i = 0;
-    	int offset_i = 0;
-    	
-    	while(count < size) {
-    		
-    		for(int i=0; i<4; ++i) {
-    			res.add(4 * index[base_i] + index[offset_i] + (count < 4 ? 0 : count/4) * 16);
-        		offset_i = (offset_i+1) % 8;
+    	int shift = 1;
+    	while(shift < n) {
+    		int size = res.size();
+    		// Create symmetric codes of the current grey code, except the highly bit.
+    		for(int j=size-1; j>=0; --j) {
+    			int newCode = res.get(j) | (1 << shift); 
+    			res.add(newCode);
     		}
     		
-    		base_i = (base_i+1) % 8;
-    		
-    		++ count;
+    		++shift;
     	}
     	
     	return res;
@@ -70,7 +61,7 @@ public class GreyCode {
 	public static void main(String[] args) {
 		
 		GreyCode solution = new GreyCode();
-		Utils.printList(solution.grayCode(6));
+		Utils.printList(solution.grayCode(4));
 		// n = 2, expected:  0,1,3,2,6,7,5,4
 		// n = 3, expected:  0,1,3,2,6,7,5,4,12,13,15,14,10,11,9,8
 		// n = 4, expected: 
