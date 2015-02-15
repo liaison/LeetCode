@@ -1,6 +1,11 @@
 import java.util.ArrayList;
 
-
+/**
+ * 
+ * @author Lisong Guo <lisong.guo@me.com>
+ * @date   Feb 14, 2015
+ *
+ */
 public class ReorderList {
 
 	/**
