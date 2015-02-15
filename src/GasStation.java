@@ -41,41 +41,49 @@ public class GasStation {
 	
 	private int bestStartPoint(int[] gas, int[] cost) {
 		int max_gas_left = Integer.MIN_VALUE;
-		int res = 0;
 		int i = 0, count = gas.length;
+		int res = -1;
+		
+		int tank = 0;
+		int left = 0;
+		
 		while(count > 0) {
-			if(gas[i] - cost[i] > max_gas_left) {
-				max_gas_left = gas[i] - cost[i];
+			left = gas[i] - cost[i];
+			if(left > max_gas_left) {
+				max_gas_left = left;
 				res = i;
 			}
+			tank += left;
 			i = (i+1) % gas.length;
 			-- count;
 		}
 		
-		return res;
+		return tank < 0 ? -1 : res;
 	}
+	
 	
     public int canCompleteCircuit(int[] gas, int[] cost) {
         int length = gas.length;
-        int start = bestStartPoint(gas, cost);
+        int res = -1;
         
-        //System.out.println("Best Start Point:" + start);
+        int i = this.bestStartPoint(gas, cost);
+        if(i == -1) return -1;
         
-        int i = start, count = gas.length;
+        int count = gas.length;
 		while(count > 0) {
-			if(canReach(i, (i+1) % length, 0, gas, cost)) {
-        		return i;
-        	}
+			if(this.canReach(i, (i+1)%length, 0, gas, cost)){
+				return i;
+			}
 			i = (i+1) % length;
 			-- count;
         }
-        return -1;
+        return res;
     }
     
     
 	public static void main(String[] args) {
-		int gas[]  = {8, 20, 15};
-		int cost[] = {10, 17, 9};
+		int gas[]  = {6,1,4,3,5};
+		int cost[] = {3,8,2,4,2};  // expected 2;
 		
 		GasStation solution = new GasStation();
 		System.out.println(solution.canCompleteCircuit(gas, cost));
