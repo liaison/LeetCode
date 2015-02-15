@@ -155,9 +155,10 @@ public class GasStation {
 		int iter = 0, step;
 		int length = gas.length;
 		
-		for(; iter < length; iter += step) {
+		while(iter < length) {
 			int gas_left = 0;
 			
+			// Start from the starting point 'iter', reach as far as possible
 			for(step=1; step <= length; ++step) {
 				int index = (iter+step-1) % length;
 				gas_left += gas[index] - cost[index];
@@ -167,8 +168,11 @@ public class GasStation {
 			}
 			
 			if(step > length) {
-				// Return to the original point
+				// The previous loop reaches the original point
 				return iter;
+			} else {
+				// Jump to the next station after the farthest station that reached before.
+				iter += step;
 			}
 		}
 		
