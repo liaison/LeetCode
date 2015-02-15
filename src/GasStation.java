@@ -38,21 +38,44 @@ public class GasStation {
 			return canReach(start, (next+1) % length, tank, gas, cost); 
 	}
 	
+	
+	private int bestStartPoint(int[] gas, int[] cost) {
+		int max_gas_left = Integer.MIN_VALUE;
+		int res = 0;
+		int i = 0, count = gas.length;
+		while(count > 0) {
+			if(gas[i] - cost[i] > max_gas_left) {
+				max_gas_left = gas[i] - cost[i];
+				res = i;
+			}
+			i = (i+1) % gas.length;
+			-- count;
+		}
+		
+		return res;
+	}
+	
     public int canCompleteCircuit(int[] gas, int[] cost) {
         int length = gas.length;
+        int start = bestStartPoint(gas, cost);
         
-    	for(int i=0; i<length; ++i) {
-        	if(canReach(i, (i+1) % length, 0, gas, cost)) {
+        //System.out.println("Best Start Point:" + start);
+        
+        int i = start, count = gas.length;
+		while(count > 0) {
+			if(canReach(i, (i+1) % length, 0, gas, cost)) {
         		return i;
         	}
+			i = (i+1) % length;
+			-- count;
         }
         return -1;
     }
     
     
 	public static void main(String[] args) {
-		int gas[]  = {8, 20, 9};
-		int cost[] = {10, 17, 15};
+		int gas[]  = {8, 20, 15};
+		int cost[] = {10, 17, 9};
 		
 		GasStation solution = new GasStation();
 		System.out.println(solution.canCompleteCircuit(gas, cost));
