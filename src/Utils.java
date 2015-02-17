@@ -1,5 +1,4 @@
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -16,10 +15,8 @@ public class Utils {
 
 	public static char [][] string2matrix(String [] input){
 		char [][] res = new char[input.length][];
-		int i = 0;
-		for(String s : input){
+		for(int i = 0; i<input.length; ++i) {
 			res[i] = input[i].toCharArray();
-			++i;
 		}
 		
 		return res;
