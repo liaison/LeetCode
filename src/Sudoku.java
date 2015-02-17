@@ -31,6 +31,9 @@ public class Sudoku {
 	 * Note:
 	 * 		A valid Sudoku board (partially filled) is not necessarily solvable. 
 	 * 		Only the filled cells need to be validated.
+	 * 
+	 * Another reference solution, exchange space with simplicity. 
+	 * 		https://oj.leetcode.com/discuss/23901/my-short-solution-by-c-o-n2
      */
     public boolean isValidSudoku(char[][] board) {
         
@@ -56,7 +59,6 @@ public class Sudoku {
         
         // Check the sub-blocks within the grid
         for(int i=0; i<9; ++i) {
-        	
         	for(int j=0; j<3; ++j) {
         		for(int k=0; k<3; ++k) {
         			block[j*3+k] = board[(i/3)*3+j][k+(i%3)*3];
