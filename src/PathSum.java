@@ -46,14 +46,12 @@ public class PathSum {
 		if (cur.right != null) {
 			pathSum_rec(path, cur.right, sum);
 		} 
-				
-		if (cur.left ==  null && cur.right == null) {
-			// Reach leave, check if the sum is also reached.
-			if (sum == 0) {
-				List<Integer> newPath = new LinkedList<Integer>();
-				newPath.addAll(path);
-				res.add(newPath);
-			}
+		
+		// Reach leave, check if the sum is also reached.	
+		if (cur.left ==  null && cur.right == null && sum == 0) {
+			List<Integer> newPath = new LinkedList<Integer>();
+			newPath.addAll(path);
+			res.add(newPath);
 		}
 		
 		// pop out this node out of the path
