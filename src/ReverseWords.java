@@ -1,4 +1,4 @@
-import java.util.Stack;
+
 
 
 /**
@@ -33,11 +33,11 @@ public class ReverseWords {
 		int n = s.length();
 		StringBuffer res = new StringBuffer();
 		
-		int sp, ep;
+		int sp, ep; // indice for the start and end of a word.
 		sp = ep = n;
 		for(int i=n-1; i>=-1; --i){
 			if(i == -1 || s.charAt(i) == ' '){
-				// begin or end of a word
+				// the start or end of a word
 				if(sp < ep){
 					if(res.length() > 0){
 						// add separator " " before appending a new word.

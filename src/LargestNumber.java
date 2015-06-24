@@ -44,13 +44,25 @@ public class LargestNumber {
 	    }
 	}
 	
+	class CombinationComparator implements Comparator<String> {
+	    @Override
+	    public int compare(String a, String b) {
+	        String ab = a + b;
+	        String ba = b + a;
+	        
+	        // Compare directly two options of combination.
+	    	return ab.compareTo(ba);
+	    }
+	}
+	
+	
 	public String largestNumber(int[] num) {
 		ArrayList<String> nums = new ArrayList<String>();
 		for(int i : num){
 			nums.add(String.valueOf(i));
 		}
 		
-		Collections.sort(nums, new NumberComparator());
+		Collections.sort(nums, new CombinationComparator());
 		
 		StringBuffer res = new StringBuffer();
 		
@@ -68,9 +80,9 @@ public class LargestNumber {
     
     
     public static void main(String[] args) {
-    	int [] num = {30, 3, 34, 9, 5};  // expected 9 5 34 3 30
+    	//int [] num = {30, 3, 34, 9, 5};  // expected 9 5 34 3 30
     	//int [] num = {0, 0};               // expected 0, instead of 00
-    	//int [] num = {824,938,1399,5607,6973,5703,9609,4398,8247};
+    	int [] num = {824,938,1399,5607,6973,5703,9609,4398,8247};
     		// expected "9609 938 824 8247 6973 5703 5607 4398 1399"
     	
     	LargestNumber solution = new LargestNumber();

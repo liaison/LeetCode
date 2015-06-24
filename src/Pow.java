@@ -26,8 +26,8 @@ public class Pow {
     		res = x;
     	}
     	
-    	double half = pow(x, n/2);
-    	res = res * half * half;
+    	double half = pow(x*x, n/2);
+    	res = res * half;
     	
     	if(isNeg){
     		return 1/res;

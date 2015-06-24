@@ -1,4 +1,6 @@
 
+
+
  /** 
   * 
   * Definition for singly-linked list.
@@ -42,7 +44,14 @@ public class ListNode {
 		head.next = null; // end the list
 		return preIter;
 	}
+	    
 }
+
+
+
+
+
+
 
 
 

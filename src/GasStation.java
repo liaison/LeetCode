@@ -72,6 +72,7 @@ public class GasStation {
 		int index;
 		int left;
 		
+		@Override
 		public int compareTo(GasLeft o) {
 			return this.left > o.left ? 1 : -1;
 		}

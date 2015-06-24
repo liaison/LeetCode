@@ -135,12 +135,37 @@ public class LongestSubstring {
 	
 	
 	/**
+	public int lengthOfLongestSubstring_dp(String s) {
+		// A table maintains the last-seen index of each ASCII character in the string.
+		int [] lastSeen = new int[256];
+		Arrays.fill(lastSeen, -1);
+		
+		int start = -1;
+		int max_size = 0;
+		for(int i=0; i<s.length(); i++){
+			int c = s.charAt(i);
+			int lastIndex = lastSeen[c];
+			
+			if(lastIndex != -1){
+				start = lastIndex > start ? lastIndex+1 : start;
+			}
+			
+			lastSeen[c] = i;
+			max_size = Math.max(i-start, max_size);
+
+		}
+		return max_size;
+	}
+	*/
+	
+	/**
 	 * @param args
 	 */
 	public static void main(String[] args) {
-		String s = "abcabcbb";
+		//String s = "abcabcbb";
 		//String s = "bbbbb";
 		//String s = "wlbrbmqrbhcdarzowkkyhiddqscdxrjmowfrxsjybldbefsarcbynecdyggxxpklorellnmpapqfwkhopkmco";
+		String s = "hnwnkuewhsqmgbbuqcljjivswmdkqtbxixmvtrrbljptnsnfwzqfjmafadrrwsofsbcnuvqhffbsaqxwpqcac"; // expect 12
 		
 		LongestSubstring solution = new LongestSubstring();
 		

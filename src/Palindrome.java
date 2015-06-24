@@ -73,16 +73,19 @@ public class Palindrome {
 	public boolean isPalindrome(int x) {
 		long rdiv = 1;
 		long ldiv = 10; // overflow! the highest position in x.
+
+		// Assume negative number is NOT palindrome
 		if(x < 0)
 			return false;
 		else if(x < 10)
 			return true;
 		
+		// Find the position of left division
 		while( (x/ldiv) > 9 ){
 			ldiv *= 10;
 		}
 		
-		while(ldiv > 9){
+		while(ldiv > rdiv){
 			// extract digits based on the divisions, 
 			//		without changing the value of x.
 			int l = (int)(x/ldiv)%10;

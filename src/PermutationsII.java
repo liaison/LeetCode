@@ -22,6 +22,7 @@ tag:  backtracking
 
 public class PermutationsII {
 	
+	/**
 	private List<List<Integer>> permList = new LinkedList<List<Integer>>();
 	
 	private void permutation_rec(
@@ -62,8 +63,51 @@ public class PermutationsII {
     	
     	return permList;
     }
+    */
+	
+	/**
+	 * An inspired solution from codereview.stackexchange.com
+	 */
+	
+	private void permute_rec(int[] num, int currIndex, List<List<Integer>> permList){
+		if(currIndex == num.length - 1){
+			ArrayList<Integer> onePerm = new ArrayList<Integer>();
+			for(int i : num) onePerm.add(i);
+			permList.add(onePerm);
+			return;
+		}
+		
+		permute_rec(num, currIndex+1, permList);
+		
+		for(int i=currIndex+1; i<num.length; i++){
+			
+			if(i == num.length -1){
+				
+				int swap = num[i-1];
+				num[i-1] = num[currIndex];
+				num[currIndex] = swap;
+				
+				permute_rec(num, currIndex+1, permList);
+				break;
+			}
+			
+			int swap = num[i];
+			num[i] = num[currIndex];
+			num[currIndex] = swap;
+			
+			permute_rec(num, currIndex+1, permList);
+		}
+	}
+	
+	public List<List<Integer>> permute(int[] num){
+		List<List<Integer>> permList = new ArrayList<List<Integer>>();
+		permute_rec(num, 0, permList);
+		return permList;
+	}
     
-    
+	
+	private List<List<Integer>> permList = new LinkedList<List<Integer>>();
+
 	private void permutationUnique_rec(
 			int [] num, boolean [] bitMap, Integer [] res, int k){
 		
@@ -123,10 +167,10 @@ public class PermutationsII {
 	 */
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
-		int [] num = {1, 1, 1, 2};
+		int [] num = {1, 2, 3};
 		PermutationsII solution = new PermutationsII();
 		
-		List<List<Integer>> permList = solution.permuteUnique(num);
+		List<List<Integer>> permList = solution.permute(num);
 		
 		Utils.printListOfList(permList);
 	}

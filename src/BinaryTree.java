@@ -336,7 +336,8 @@ return its bottom-up level order traversal as:
      * Given n, generate all structurally unique BST's 
      * 		(binary search trees) that store values 1...n.
      * 
-     * Divide and conquer 
+     * Divide and conquer
+     * https://oj.leetcode.com/discuss/24305/divide-and-conquer-f-i-g-i-1-g-n-i
      */
 	public List<TreeNode> generateTrees(int n) {
 		return generateSubtrees(1, n);
@@ -502,6 +503,7 @@ return its bottom-up level order traversal as:
 		// both left and right substree do not satisfy the constraint.
 		return false;
 	}
+    
     
     /**
      * 

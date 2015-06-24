@@ -1,6 +1,4 @@
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
 
 
 /**
@@ -41,7 +39,7 @@ public class RadixSort {
 		while(bit_num-- > 0){
 			
 			for(Integer n : sortBuffer){
-				boolean eb = ((int)n & mask) == 0 ? 
+				boolean eb = (n & mask) == 0 ? 
 					bucket0.add(n) : bucket1.add(n);
 			}
 			mask <<= 1;

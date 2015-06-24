@@ -43,7 +43,7 @@ public class Anagram {
         Iterator<String> iter = hashmap.keySet().iterator();
         while(iter.hasNext()){
         	ArrayList<Integer> indexList = 
-        			(ArrayList<Integer>) hashmap.get(iter.next());
+        			hashmap.get(iter.next());
         	if(indexList.size() > 1){
         		for(Integer i : indexList){
             		res.add(strs[i]);

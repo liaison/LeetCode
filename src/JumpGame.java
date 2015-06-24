@@ -6,7 +6,8 @@
 Given an array of non-negative integers, 
 you are initially positioned at the first index of the array.
 
-Each element in the array represents your "maximum" jump length at that position, the play can take less steps.
+Each element in the array represents your "maximum" jump length at that position, 
+the play can take less steps.
 
 Determine if you are able to reach the last index.
 
@@ -23,9 +24,7 @@ A = [3,2,1,0,4], return false.
 
 public class JumpGame {
 
-	
 		
-	
 	public boolean canJump_start_at(int [] A, int start){
 
     	int curr = start;
