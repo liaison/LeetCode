@@ -23,34 +23,41 @@ and to take course 0 you should also have finished course 1. So it is impossible
 import static org.junit.Assert.*;
 import org.junit.Test;
 
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Vector;
 
 
 public class CourseSchedule {
 
-
-    private boolean isCyclic(final Vector<Vector<Integer>> graph,
+    /**
+     * Check if there is a cycle starting from a given node and existing trace.
+     */
+    private boolean isCyclic(HashMap<Integer, Vector<Integer>> graph,
                              int nodeIndex,
                              HashSet<Integer> parcours) {
 
         Vector<Integer> neighbours = graph.get(nodeIndex);
+        // The bottom case, we reach a node that does not have any outbound links.
         if(neighbours == null){
             return false;
         }
 
         for(Integer node : neighbours) {
-
+            // If we've seen the node in the trace, then there is a cycle.
             if(parcours.contains(node)) {
                 return true;
             }
 
+            // Add this neighbour into the trace, and check starting from
+            //  this neighbour if there is a cycle.
             parcours.add(node);
-
             if(isCyclic(graph, node, parcours)) {
                 return true;
             }
 
+            // There is no cycle starting from this neighbour,
+            //   remove it from the trace and try another one.
             parcours.remove(node);
         }
 
@@ -59,22 +66,22 @@ public class CourseSchedule {
 
 
     public boolean canFinish(int numCourses, int[][] prerequisites) {
+        HashMap<Integer, Vector<Integer>> graph =
+                new HashMap<Integer, Vector<Integer>>();
 
-        Vector<Vector<Integer>> graph = new Vector<Vector<Integer>>();
-        graph.setSize(numCourses);
-
+        // Construct a linked array to represent the dependency graph of courses.
         for(int [] pair : prerequisites) {
             // pair[1] proceeds (-->) pair[0]
             Vector<Integer> node = graph.get(pair[1]);
             if(node == null) {
                 node = new Vector<Integer>();
-                graph.set(pair[1], node);
+                graph.put(pair[1], node);
             }
             node.add(pair[0]);
         }
 
         HashSet<Integer> parcours = new HashSet<Integer>();
-
+        // Iterate all nodes to see if there is any cycle starting from any node.
         for(int nodeIndex = 0; nodeIndex < numCourses; nodeIndex++) {
             parcours.clear();
             if(isCyclic(graph, nodeIndex, parcours)) {
