@@ -22,10 +22,14 @@
  * @author Lisong Guo <lisong.guo@inria.fr>
  * @date   Nov 06, 2014
  */
+import static org.junit.Assert.*;
+
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Stack;
+
+import org.junit.Test;
 
 public class BinaryTree {
 
@@ -124,6 +128,58 @@ return its bottom-up level order traversal as:
         return result;
     }
     
+    /**
+     * Invert a binary tree.
+
+     4
+   /   \
+  2     7
+ / \   / \
+1   3 6   9
+
+to
+
+     4
+   /   \
+  7     2
+ / \   / \
+9   6 3   1
+
+     */
+    public TreeNode invertTree(TreeNode root) {
+        // base case
+        if(root == null)
+            return null;
+
+        // swap the children nodes, and invert each of them respectively.
+        TreeNode temp = root.left;
+        root.left = root.right;
+        root.right = temp;
+        invertTree(root.left);
+        invertTree(root.right);
+        return root;
+    }
+
+    @Test
+    public void testInvertTree() {
+        BinaryTree bt = new BinaryTree();
+        int[] nums = {1, 2, 3, 4, 6, 7, 9};
+        TreeNode root = bt.sortedArrayToBST(nums);
+        List<Integer> list = bt.preorderTraversal(root);
+
+        int[] origin_list = {4, 2, 1, 3, 7, 6, 9};
+        for(int i = 0; i<origin_list.length; ++i) {
+            assertEquals(origin_list[i], list.get(i).intValue());
+        }
+
+        root = bt.invertTree(root);
+
+        int [] invert_list = {4, 7, 9, 6, 2, 3, 1};
+        list = bt.preorderTraversal(root);
+        for(int i = 0; i<invert_list.length; ++i) {
+            assertEquals(invert_list[i], list.get(i).intValue());
+        }
+    }
     
     /**
      * 
