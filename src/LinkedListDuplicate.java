@@ -1,3 +1,5 @@
+import org.junit.Test;
+
 
 /**
  * 
@@ -38,7 +40,45 @@ public class LinkedListDuplicate {
 
     	return head;
     }
-	
+    
+    
+    /**
+     * Remove all elements from a linked list of integers that have value val.
+
+		Example
+			Given:  1 --> 2 --> 6 --> 3 --> 4 --> 5 --> 6, val = 6
+			Return: 1 --> 2 --> 3 --> 4 --> 5
+     */
+    public ListNode removeElements(ListNode head, int val) {
+        ListNode pseudoHead = new ListNode(0);
+        pseudoHead.next = head;
+        
+    	ListNode iter = pseudoHead;
+
+        while(iter.next != null) {
+        	
+        	// The next node match the value.
+        	if (iter.next.val == val) {
+        		// remove the next node.
+        		iter.next = iter.next.next;
+        	} else {
+        		iter = iter.next;
+        	}
+        }
+        
+        return pseudoHead.next;
+    }
+    
+    @Test
+    public void testRemoveElement() {
+    	int [] input = {1, 1, 2, 3, 3};
+    	ListNode head = Utils.array2LinkedList(input);
+    	ListNode newHead = new LinkedListDuplicate().removeElements(head, 3);
+    	
+    	Utils.printLinkedNodeList(newHead);
+    }
+    
+    
 	public static void main(String[] args) {
 		int [] i = {1, 1, 2, 3, 3};
 		//int [] i = {1, 1, 1};
