@@ -69,6 +69,32 @@ public class LinkedListDuplicate {
         return pseudoHead.next;
     }
     
+    /**
+     * Write a function to delete a node (except the tail) in a singly linked list,
+        given only access to that node.
+
+        Supposed the linked list is 1 -> 2 -> 3 -> 4 and
+        you are given the third node with value 3,
+        the linked list should become 1 -> 2 -> 4 after calling your function.
+     */
+    public void deleteNode(ListNode node) {
+        // node won't be the tail, therefore no need to check node.next != null.
+        node.val = node.next.val;
+        node.next = node.next.next;
+    }
+
+    @Test
+    public void testDeleteNode() {
+        int [] input = {1, 1, 2, 3, 3};
+        ListNode head = Utils.array2LinkedList(input);
+
+        ListNode node2 = head.next.next;
+        new LinkedListDuplicate().deleteNode(node2);
+
+        Utils.printLinkedNodeList(head);
+    }
+
+
     @Test
     public void testRemoveElement() {
     	int [] input = {1, 1, 2, 3, 3};
