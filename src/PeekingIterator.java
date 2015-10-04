@@ -4,11 +4,12 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.NoSuchElementException;
 
-import org.junit.Test;
 
-
-// Java Iterator interface reference:
-// https://docs.oracle.com/javase/8/docs/api/java/util/Iterator.html
+/**
+ *  Java Iterator interface reference:
+ *  https://docs.oracle.com/javase/8/docs/api/java/util/Iterator.html
+ * @author Lisong
+ */
 public class PeekingIterator implements Iterator<Integer> {
 	
 	private Iterator<Integer> _iter;
@@ -24,14 +25,16 @@ public class PeekingIterator implements Iterator<Integer> {
 	    }   
 	}
 
-	
-    // Returns the next element in the iteration without advancing the iterator.
+    /**
+     *  Returns the next element in the iteration without advancing the iterator.
+     */
 	public Integer peek() {
         return _nextValue;
 	}
 
-	// hasNext() and next() should behave the same as in the Iterator interface.
-	// Override them if needed.
+	/**
+	 *  hasNext() and next() should behave the same as in the Iterator interface.
+	 */
 	@Override
 	public Integer next() {
 		if(_nextValue == null)
@@ -55,9 +58,9 @@ public class PeekingIterator implements Iterator<Integer> {
 	
 	@Override
 	public void remove() {
-		// TODO Auto-generated method stub
-		
+		// TODO Auto-generated method stub	
 	}
+
 
 	public static void main(String[] args) {
 		
@@ -71,25 +74,18 @@ public class PeekingIterator implements Iterator<Integer> {
 		PeekingIterator pk = new PeekingIterator(iter);
 		
 		assertTrue(pk.peek() == 1);
-	
-		System.out.println(pk.peek());
-		
+
 		assertTrue(pk.next() == 1);
-		
+
 		assertTrue(pk.peek() == 2);
-		
+
 		assertTrue(pk.next() == 2);
-		
+
 		assertTrue(pk.hasNext());
 		assertTrue(pk.next() == 3);
-		
+
 		assertFalse(pk.hasNext());
 	}
 
 }
-
-
-
-
-
 
