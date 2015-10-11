@@ -20,9 +20,11 @@ public class Anagram {
 	   Note: All inputs will be in lower-case.
 	 */
     public List<String> anagrams(String[] strs) {
-        HashMap<String, ArrayList<Integer>> hashmap = 
+        
+    	HashMap<String, ArrayList<Integer>> hashmap = 
         		new HashMap<String, ArrayList<Integer>>();
         ArrayList<String> res = new ArrayList<String>();
+
         // build a hash table, with the "unique" string form as the key
         for(int i=0; i<strs.length; ++i){
         	char [] charArray = strs[i].toCharArray();
@@ -57,7 +59,7 @@ public class Anagram {
     
 	public static void main(String[] args) {
 		String [] strs = {"tim", "mit", "abc", "c"};
-		
+
 		Anagram solution = new Anagram();
 		List<String> res = solution.anagrams(strs);
 		for(int i=0; i<res.size(); ++i){
