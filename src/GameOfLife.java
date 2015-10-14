@@ -42,6 +42,20 @@ Follow up:
 public class GameOfLife {
 
 	@Test
+	public void testGameOfLife_case_1() {
+		int [][] board = {{1, 1},
+				          {1, 0}};
+		
+		// Expected: 
+		// {1, 1} {1, 1}
+		GameOfLife gol = new GameOfLife();
+		
+		gol.gameOfLife(board);
+		
+		Utils.printMatrix(board);
+	}
+	
+	
 	public void testGameOfLife() {
 		int [][] board = {{0, 0, 0, 0, 0},
 		     			  {0, 1, 1, 0, 0},
@@ -75,12 +89,15 @@ public class GameOfLife {
     				up = 0;
     				upleft = 0;
     				upright = 0;
-    			} else if (r+1 >= rows) {
+    			} else {
+    				up  = board[r-1][c];
+    			}
+    			
+    			if (r+1 >= rows) {
     				down = 0;
     				downleft = 0;
     				downright = 0;
     			} else {
-    				up   = board[r-1][c];
     				down = board[r+1][c];
     			}
     			
@@ -88,12 +105,15 @@ public class GameOfLife {
     				upleft = 0;
     				left = 0;
     				downleft = 0;
-    			} else if (c+1 >= cols) {
+    			} else {
+    				left  = board[r][c-1];	
+    			}
+    			
+    			if (c+1 >= cols) {	
     				upright = 0;
     				right = 0;
     				downright = 0;
     			} else {
-    				left  = board[r][c-1];
     				right = board[r][c+1];
     			}
     			
