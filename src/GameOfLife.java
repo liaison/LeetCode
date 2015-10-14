@@ -55,6 +55,13 @@ public class GameOfLife {
 		Utils.printMatrix(board);
 	}
 	
+	public void testGameOfLife_case_2() {
+		/*
+		input = [[0,0,0,0,0],[0,0,1,0,0],[0,0,1,0,0],[0,0,1,0,0],[0,0,0,0,0]]
+		Output= [[0,0,0,0,0],[0,0,0,0,0],[0,0,0,0,0],[0,0,0,0,0],[0,0,0,0,0]]
+		Expected = [[0,0,0,0,0],[0,0,0,0,0],[0,1,1,1,0],[0,0,0,0,0],[0,0,0,0,0]]
+		*/
+	}
 	
 	public void testGameOfLife() {
 		int [][] board = {{0, 0, 0, 0, 0},
