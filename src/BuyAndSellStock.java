@@ -11,33 +11,34 @@
 
 public class BuyAndSellStock {
 
-	/**
-	 * One can only have one transaction, one buy and one sell, 
-	 * 	but the transaction can happen on the same day.
-	 * 
-	 * @return
-	 */
-	public int maxProfit(int[] prices) {
+
+    /**
+     * One can only have one transaction, one buy and one sell, 
+     * 	but the transaction can happen on the same day.
+     * 
+     * @return
+     */
+    public int maxProfit(int[] prices) {
     
-		if(prices.length <= 1){
-			return 0;
-		}
+        if(prices.length <= 1){
+	    return 0;
+        }
 		
-		int curLow = prices[0];
-		int maxProfit = Integer.MIN_VALUE;
-		
-		for(int i=1; i<prices.length; i++){
-			int newProfit = prices[i] - curLow;
+        int curLow = prices[0];
+        int maxProfit = Integer.MIN_VALUE;
+
+        for(int i=1; i<prices.length; i++){
+            int newProfit = prices[i] - curLow;
 			
-			maxProfit = (maxProfit < newProfit) ? newProfit : maxProfit;
+            maxProfit = (maxProfit < newProfit) ? newProfit : maxProfit;
 			
-			if(prices[i] < curLow){
-				curLow = prices[i];
-			}
-		}
+            if(prices[i] < curLow){
+	        curLow = prices[i];
+	    }
+        }
 		
-		// In the worst case, buy and sell the stock on the same day.
-		return maxProfit < 0 ? 0 : maxProfit;
+        // In the worst case, buy and sell the stock on the same day.
+        return maxProfit < 0 ? 0 : maxProfit;
     }
 	
 	
@@ -54,19 +55,18 @@ public class BuyAndSellStock {
 		return 0;
 	}
 	
-	
-	/**
-	 * @param args
-	 */
-	public static void main(String[] args) {
-		//int [] prices = {5, 4, 3, 2, 1};
-		int [] prices = {2, 1};  // expect 0 
-		
-		BuyAndSellStock solution = new BuyAndSellStock();
-		
-		System.out.println(solution.maxProfit(prices));
-		
-	}
+
+    /**
+     * @param args
+     */
+    public static void main(String[] args) {
+        //int [] prices = {5, 4, 3, 2, 1};
+        int [] prices = {2, 1};  // expect 0
+
+        BuyAndSellStock solution = new BuyAndSellStock();
+
+	System.out.println(solution.maxProfit(prices));		
+    }
 
 }
 
