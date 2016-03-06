@@ -73,18 +73,17 @@ public class Candy {
 	public void testCandy_one_pass() {
 	    Candy candy = new Candy();
 
-	    int [] num1 = {1, 2, 4, 4, 3}; // expect 9;
-        int [] num2 = {1, 2, 3, 4, 5}; // expect 15;
-        int [] num3 = {5, 4, 3, 2, 1}; // expect 15;
+            int [] num1 = {1, 2, 4, 4, 3}; // expect 9;
+            int [] num2 = {1, 2, 3, 4, 5}; // expect 15;
+            int [] num3 = {5, 4, 3, 2, 1}; // expect 15;
 
-        assertEquals(candy.candy(num1), 9);
-        assertEquals(candy.candy(num2), 15);
-        assertEquals(candy.candy(num3), 15);
+            assertEquals(candy.candy(num1), 9);
+            assertEquals(candy.candy(num2), 15);
+            assertEquals(candy.candy(num3), 15);
 	}
 
-
 	private int slope(int n){
-		return (1+n)*n/2;
+            return (1+n)*n/2;
 	}
 
 	/**
