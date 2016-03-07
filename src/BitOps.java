@@ -105,7 +105,7 @@ public class BitOps {
                 Return "100".
 
          */
-        public String addBinary(String a, String b) {
+    public String addBinary(String a, String b) {
         int s_a = a.length();
         int s_b = b.length();
 
@@ -117,68 +117,67 @@ public class BitOps {
 
 
         for(int i=size-1; i>=0; i--){
-                int cal = 0;
+            int cal = 0;
 
-                if( s_a > s_b ){
+            if( s_a > s_b ){
                 cal = a.charAt(i) - '0';
                 if(i-diff >= 0){
-                        cal = cal + (b.charAt(i-diff) - '0');
+                    cal = cal + (b.charAt(i-diff) - '0');
                 }
-                }else{
-                        cal = b.charAt(i) - '0';
+            } else {
+                cal = b.charAt(i) - '0';
                 if(i-diff >= 0){
                         cal = cal + (a.charAt(i-diff) - '0');
                 }
-                }
+            }
 
-                cal = cal + carry;
+            cal = cal + carry;
 
-                res.append(cal % 2);
-                carry = cal / 2;
-
+            res.append(cal % 2);
+            carry = cal / 2;
         }
 
         if(carry == 1)
-                res.append("1");
+            res.append("1");
 
         return res.reverse().toString();
     }
 
-        @Test
-        public void testAddBinary() {
-            BitOps bto = new BitOps();
-            assertEquals(bto.addBinary("11", "1"), "100");
-        }
+    @Test
+    public void testAddBinary() {
+        BitOps bto = new BitOps();
+        assertEquals(bto.addBinary("11", "1"), "100");
+    }
 
-        /**
-         * @param args
-         */
-        public static void main(String[] args) {
-                // TODO Auto-generated method stub
-                int x = 8;
-                BitOps solution = new BitOps();
+    /**
+     * @param args
+     */
+    public static void main(String[] args) {
+        
+        int x = 8;
+        BitOps solution = new BitOps();
 
-                long startTime = System.currentTimeMillis();
+        long startTime = System.currentTimeMillis();
 
-                System.out.println(solution.bsqrt(x));
+        System.out.println(solution.bsqrt(x));
 
-                long endTime = System.currentTimeMillis();
-                long elapsedTime = endTime - startTime;
+        long endTime = System.currentTimeMillis();
+        long elapsedTime = endTime - startTime;
 
-                System.out.println("Time: " + elapsedTime);
-
-
-                String a = "11";
-                String b = "110001";
-                //String a = "1010";
-                //String b = "1011";
-
-                System.out.println(solution.addBinary(a, b));
+        System.out.println("Time: " + elapsedTime);
 
 
-                System.out.println(solution.pow(2, -3));
+        String a = "11";
+        String b = "110001";
+        //String a = "1010";
+        //String b = "1011";
 
-        }
+        System.out.println(solution.addBinary(a, b));
+
+
+        System.out.println(solution.pow(2, -3));
+
+    }
 
 }
 
