@@ -22,39 +22,39 @@ import java.util.PriorityQueue;
  */
 class MedianFinder {
 
-	/**
-	 * A comparator to have a descending order.
-	 */
-	class Descend implements Comparator<Integer>
-	{	
-		public int compare(Integer A, Integer B) {
-			return B - A;
-		}
-	}
+        /**
+         * A comparator to have a descending order.
+         */
+        class Descend implements Comparator<Integer>
+        {       
+                public int compare(Integer A, Integer B) {
+                        return B - A;
+                }
+        }
 
-	private static final Integer INIT_CAPACITY = 1000;
+        private static final Integer INIT_CAPACITY = 1000;
 
-	//! Maintain the first half list in the descending order, so that 
-	//   we could benefit from the O(nlgn) operators peek() and poll().
-	private PriorityQueue<Integer> firstHalf =
-			new PriorityQueue<Integer>(INIT_CAPACITY, new Descend());
-	
-	//! Use the default (ascending) order for the second half list.
-	private PriorityQueue<Integer> secondHalf =
-			new PriorityQueue<Integer>(INIT_CAPACITY);
-	
-	private double median = Double.MAX_VALUE;
+        //! Maintain the first half list in the descending order, so that 
+        //   we could benefit from the O(nlgn) operators peek() and poll().
+        private PriorityQueue<Integer> firstHalf =
+                        new PriorityQueue<Integer>(INIT_CAPACITY, new Descend());
+        
+        //! Use the default (ascending) order for the second half list.
+        private PriorityQueue<Integer> secondHalf =
+                        new PriorityQueue<Integer>(INIT_CAPACITY);
+        
+        private double median = Double.MAX_VALUE;
 
-	
+        
     /**
      *  Attribute the incoming data and update the median.
      * @param num
      */
     public void addNum(int num) {
         if(num < median) {
-        	firstHalf.add(num);
+                firstHalf.add(num);
         } else {
-        	secondHalf.add(num);
+                secondHalf.add(num);
         }
         
         updateMedian();
@@ -65,36 +65,36 @@ class MedianFinder {
      *    | size(firstHalf) - size(secondHalf) | <= 1
      */
     private void updateMedian() {
-    	int firstHalfSize = firstHalf.size();
-    	int secondHalfSize = secondHalf.size();
+        int firstHalfSize = firstHalf.size();
+        int secondHalfSize = secondHalf.size();
 
-    	// The lists are balanced.
-    	if(firstHalfSize == secondHalfSize) {
-    		median = (firstHalf.peek() + secondHalf.peek())/2.0;	
+        // The lists are balanced.
+        if(firstHalfSize == secondHalfSize) {
+                median = (firstHalf.peek() + secondHalf.peek())/2.0;    
 
-    	} else if(firstHalfSize > secondHalfSize) {
-        	// The lists are still balanced.
-			if(firstHalfSize - secondHalfSize == 1) {
-				median = firstHalf.peek();
-			} else {
-				// re-balancing by moving last element from the first half to second.
-				int last_firstHalf = firstHalf.poll();
-				secondHalf.offer(last_firstHalf);
-				// recursively rebalancing the lists.
-				// The recursion would not exceeds twice though.
-				updateMedian();
-			}
+        } else if(firstHalfSize > secondHalfSize) {
+                // The lists are still balanced.
+                        if(firstHalfSize - secondHalfSize == 1) {
+                                median = firstHalf.peek();
+                        } else {
+                                // re-balancing by moving last element from the first half to second.
+                                int last_firstHalf = firstHalf.poll();
+                                secondHalf.offer(last_firstHalf);
+                                // recursively rebalancing the lists.
+                                // The recursion would not exceeds twice though.
+                                updateMedian();
+                        }
 
-    	} else {
-    		// firstHalfSize < secondHalfSize
-			if(secondHalfSize - firstHalfSize == 1) {
-				median = secondHalf.peek();
-			} else {
-				int first_secondHalf = secondHalf.poll();
-				firstHalf.offer(first_secondHalf);
-				updateMedian();
-			}
-		}
+        } else {
+                // firstHalfSize < secondHalfSize
+                        if(secondHalfSize - firstHalfSize == 1) {
+                                median = secondHalf.peek();
+                        } else {
+                                int first_secondHalf = secondHalf.poll();
+                                firstHalf.offer(first_secondHalf);
+                                updateMedian();
+                        }
+                }
     }
 
     /**
@@ -104,23 +104,23 @@ class MedianFinder {
         return median;
     }
 
-	public void addList(int [] list) {
-		for(int num : list) {
-			this.addNum(num);
-		}
-	}
+        public void addList(int [] list) {
+                for(int num : list) {
+                        this.addNum(num);
+                }
+        }
 
     public static void main(String[] args) {
-    	
-    	MedianFinder mf = new MedianFinder();
-    	
-    	int [] nums = {6, 10, 2, 6, 5, 0};
-		
-    	mf.addList(nums);
+        
+        MedianFinder mf = new MedianFinder();
+        
+        int [] nums = {6, 10, 2, 6, 5, 0};
+                
+        mf.addList(nums);
 
-    	System.out.println(mf.findMedian());
-	}
-	
+        System.out.println(mf.findMedian());
+        }
+        
 };
 
 
