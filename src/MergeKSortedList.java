@@ -120,22 +120,22 @@ public class MergeKSortedList {
 	 * Iterative merging, with the MergeTwoLists function. 
 	 */
     public ListNode mergeKLists(List<ListNode> lists) {
-    	if(lists == null || lists.size() == 0){
-    		return null;
-    	}
-    	
+        if(lists == null || lists.size() == 0){
+            return null;
+        }
+
     	int begin = 0, end = lists.size() - 1;
-    	
+
     	while(end > 0){
-    		begin = 0;
-    		while(begin < end){
-    			lists.set(begin, 
-    					mergeTwoLists(lists.get(begin), lists.get(end)));
-    			++begin;
-    			--end;
-    		}
-    	}
-    	return lists.get(0);
+            begin = 0;
+            while(begin < end){
+                lists.set(begin,
+                          mergeTwoLists(lists.get(begin), lists.get(end)));
+                ++begin;
+                --end;
+            }
+        }
+        return lists.get(0);
     }
     
     public ListNode mergeTwoLists(ListNode l1, ListNode l2) {
@@ -171,8 +171,8 @@ public class MergeKSortedList {
     	
     	return pyseudoHead.next;
     }
-    
-    
+
+
     public static void main(String[] args) {
     	//ListNode l1 = Utils.array2LinkedList(new int[]{});
     	
