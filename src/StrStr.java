@@ -6,33 +6,35 @@ import java.util.Hashtable;
  * 
  * Implement strStr().
  * 
-   Returns the index of the first occurrence of needle in haystack, 
-    or -1 if needle is not part of haystack.
-
+ *  Returns the index of the first occurrence of needle in haystack, 
+ *  or -1 if needle is not part of haystack.
  * @author Lisong Guo <lisong.guo@me.com>
  * @date   Dec 28, 2014
  *
  */
 public class StrStr {
 
-	/**
+    /**
+     *  Native implementation
+
     public int strStr(String haystack, String needle) {
-    	int nl = needle.length();
-    	int hl = haystack.length();
-    	
-    	for(int i=0; i<=hl-nl; i++){
-    		
-    		if(haystack.substring(i, i+nl).equals(needle)){
-    			return i;
-    		}
-    	}
-    	
-    	return -1;
+        int nl = needle.length();
+        int hl = haystack.length();
+
+        for(int i=0; i<=hl-nl; i++){
+
+            if(haystack.substring(i, i+nl).equals(needle)){
+                return i;
+            }
+        }
+
+        return -1;
     }
     */
-    
+
+
     private Hashtable<Character, Integer> bcTable;
-   
+
     
     /**
      * Calculate the minimal distance of a character to the end of the string.
