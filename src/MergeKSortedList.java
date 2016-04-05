@@ -116,9 +116,15 @@ public class MergeKSortedList {
     }
     */
     
-	/**
-	 * Iterative merging, with the MergeTwoLists function. 
-	 */
+
+    /**
+     * Iterative merging, with the MergeTwoLists function.
+     * The order of the merging matters a lot!
+     * By pairing two equal-sized lists together, we minimize/optimize the
+     *   average complexity of merging in each iteration.
+     * While the number of the iteration remains the same, the overall
+     *   average complexity of the function is optimal.
+     */
     public ListNode mergeKLists(List<ListNode> lists) {
         if(lists == null || lists.size() == 0){
             return null;
@@ -137,58 +143,72 @@ public class MergeKSortedList {
         }
         return lists.get(0);
     }
-    
+
+
+    /**
+     *  Merge two ordered lists into a single ordered list.
+     *  Assume the two lists have the same length N.
+     *  The minimal complexity of the function is O(N) in the case
+     *    where the first element of a list is bigger than all elements in
+     *    another list, then we could just go through one list and concatenate
+     *    two lists together.
+     *  While the maximal complexity of the function is still O(2N) ~= O(N),
+     *    in the case where we have to go through both lists to combine them.
+     */
     public ListNode mergeTwoLists(ListNode l1, ListNode l2) {
     	
-    	if(l1 == null)
-    		return l2;
+        if(l1 == null)
+            return l2;
     	if(l2 == null)
-    		return l1;
+            return l1;
+
+        ListNode l1_iter = l1, l2_iter = l2;
+
+        ListNode pyseudoHead = new ListNode(0);
+        ListNode res_iter = pyseudoHead;
+
+        while(l1_iter != null && l2_iter != null) {
+
+            if(l1_iter.val < l2_iter.val){
+                res_iter.next = l1_iter;
+                res_iter = l1_iter;
+                l1_iter = l1_iter.next;
+            } else {
+                res_iter.next = l2_iter;
+                res_iter = l2_iter;
+                l2_iter = l2_iter.next;
+            }
+        }
     	
-    	ListNode l1_iter = l1, l2_iter = l2;
-    
-    	ListNode pyseudoHead = new ListNode(0);
-    	ListNode res_iter = pyseudoHead;
-    	
-    	while(l1_iter != null && l2_iter != null){
-    		
-    		if(l1_iter.val < l2_iter.val){
-    			res_iter.next = l1_iter;
-    			res_iter = l1_iter;
-    			l1_iter = l1_iter.next;
-    		}else{
-        		res_iter.next = l2_iter;
-        		res_iter = l2_iter;
-        		l2_iter = l2_iter.next;
-    		}
+        if(l1_iter == null){
+            res_iter.next = l2_iter;
+        }else{
+            res_iter.next = l1_iter;
     	}
-    	
-    	if(l1_iter == null){
-    		res_iter.next = l2_iter;
-    	}else{
-    		res_iter.next = l1_iter;
-    	}
-    	
-    	return pyseudoHead.next;
+
+        return pyseudoHead.next;
     }
 
 
     public static void main(String[] args) {
-    	//ListNode l1 = Utils.array2LinkedList(new int[]{});
-    	
-    	ListNode l1 = Utils.array2LinkedList(new int[]{1, 3, 4, 6});
-    	ListNode l2 = Utils.array2LinkedList(new int[]{2, 5, 7, 10});
-    	ListNode l3 = Utils.array2LinkedList(new int[]{9, 11});
-    	
-    	List<ListNode> lists = new ArrayList<ListNode>();
-    	lists.add(l1);
-    	lists.add(l2);
-    	lists.add(l3);
-    	
-    	MergeKSortedList solution = new MergeKSortedList();
-    	
-    	ListNode head = solution.mergeKLists(lists);
-    	Utils.printLinkedNodeList(head);
-	}
+        //ListNode l1 = Utils.array2LinkedList(new int[]{});
+
+        ListNode l1 = Utils.array2LinkedList(new int[]{1, 3, 4, 6});
+        ListNode l2 = Utils.array2LinkedList(new int[]{2, 5, 7, 10});
+        ListNode l3 = Utils.array2LinkedList(new int[]{9, 11});
+
+        List<ListNode> lists = new ArrayList<ListNode>();
+        lists.add(l1);
+        lists.add(l2);
+        lists.add(l3);
+
+        MergeKSortedList solution = new MergeKSortedList();
+
+        ListNode head = solution.mergeKLists(lists);
+        Utils.printLinkedNodeList(head);
+    }
 
 }
+
+
+
