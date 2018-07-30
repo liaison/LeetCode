@@ -18,6 +18,8 @@ class Solution:
         :rtype: int
 
           return the position to insert a new element into the sorted list.
+
+          Note: the solution can be implemented in a recursive way.
         """
         size = len(nums)
     
@@ -35,39 +37,40 @@ class Solution:
             return mid_index + 1 + self.searchInsert(nums[mid_index+1:], target)
 
 
+
+def verify(case_name, test_input, test_target):
+    solution = Solution()
+
+    print(case_name, test_input, ' target:', test_target)
+    assert(test_target == solution.searchInsert(*test_input))
+
+
+
 if __name__ == "__main__":
      
-    test_case_1_input = ([1,3,5,6], 5)
-    test_case_1_target = 2
 
     solution = Solution()
 
-    print("test case 1:", test_case_1_input)
-    assert(test_case_1_target == solution.searchInsert(*test_case_1_input))
-
+    test_case_1_input = ([1,3,5,6], 5)
+    test_case_1_target = 2
+    verify('test case 1:', test_case_1_input, test_case_1_target)
 
     test_case_2_input = ([], 1)
     test_case_2_target = 0
-    print("test case 2:", test_case_2_input, ' target:', test_case_2_target)
-    print(solution.searchInsert(*test_case_2_input))
-
+    verify('test case 2 (empty list):', test_case_2_input, test_case_2_target)
 
     test_case_3_input = ([1,3,5,6], 2)
     test_case_3_target = 1
-    print("test case 3:", test_case_3_input, ' target:', test_case_3_target)
-    assert(test_case_3_target == solution.searchInsert(*test_case_3_input))
-
+    verify("test case 3:", test_case_3_input, test_case_3_target)
 
     test_case_4_input = ([1,3,5,6], 7)
     test_case_4_target = 4
-    print("test case 4:", test_case_4_input, ' target:', test_case_4_target)
-    assert(test_case_4_target == solution.searchInsert(*test_case_4_input))
+    verify("test case 4:", test_case_4_input, test_case_4_target)
 
 
     test_case_5_input = ([1,3,5,6], 0)
     test_case_5_target = 0
-    print("test case 5:", test_case_5_input, ' target:', test_case_5_target)
-    assert(test_case_5_target == solution.searchInsert(*test_case_5_input))
+    verify("test case 5:", test_case_5_input, test_case_5_target)
 
 
 
