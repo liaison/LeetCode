@@ -1,6 +1,6 @@
 # README #
 
-This is an Eclipse Java project that I created to attempt some solutions for the questions in LeetCode site.
+This is a project that I created to attempt some solutions for the questions in LeetCode site. Most of the solutions are coded in Java, though some of them are implemented in Python.
 
 ### Organization ###
 
