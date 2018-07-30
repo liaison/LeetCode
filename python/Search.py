@@ -17,7 +17,7 @@ Your algorithm's runtime complexity must be in the order of O(log n).
 """
 
 class Solution:
-    def search(self, nums, target):
+    def _search(self, nums, target):
         """
         :type nums: List[int]
         :type target: int
@@ -45,6 +45,38 @@ class Solution:
                     return mid + 1 + right_ret
                 else:
                     return -1
+
+
+    def search(self, nums, target):
+        """
+            a revised binary search, at each step we are still able to narrow 
+              down to the right side.
+        """
+        start = 0
+        end = len(nums)
+        
+        import sys
+
+        while (start < end):
+            mid = int((start+end)/2)
+
+            if (target == nums[mid]):
+                return mid
+
+            same_side = ((target < nums[0]) == (nums[mid] < nums[0]))
+
+            if (not same_side):
+                comparator = -sys.maxsize-1 if (target < nums[0]) else sys.maxsize
+            else:
+                comparator = nums[mid]
+
+            if (target > comparator):
+                start = mid + 1
+            else:
+                end = mid
+
+
+        return -1
 
 
     def binary_search(self, sorted_nums, target):
@@ -88,6 +120,18 @@ if __name__ == "__main__":
     verify('test case 2:',
            test_case_2_input, test_case_2_target, solution.search)
     
+    test_case_4_input = ([4,5,6,7,0,1,2], 6)
+    test_case_4_target = 2
+    print(solution.search(*test_case_4_input))
+    verify('test case 4:',
+           test_case_4_input, test_case_4_target, solution.search)
+    
+    test_case_5_input = ([4,5,6,7,0,1,2], 0)
+    test_case_5_target = 4
+    print(solution.search(*test_case_5_input))
+    verify('test case 5:',
+           test_case_5_input, test_case_5_target, solution.search)
+
     sorted_list_1 = [x for x in range(5)]
     test_case_3_input = (sorted_list_1, 2)
     test_case_3_target = 2
