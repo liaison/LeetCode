@@ -9,7 +9,6 @@ You may assume no duplicates in the array.
 @date:   July 30, 2018
 
 """
-
 class Solution:
     def searchInsert(self, nums, target):
         """
@@ -18,17 +17,14 @@ class Solution:
         :rtype: int
 
           return the position to insert a new element into the sorted list.
-
           Note: the solution can be implemented in a recursive way.
         """
         size = len(nums)
-    
         if (size == 0):
             # empty input list, early exit
             return 0
 
         mid_index = int(size/2)
-
         if (nums[mid_index] == target):
             return mid_index 
         elif (nums[mid_index] > target):
@@ -37,17 +33,16 @@ class Solution:
             return mid_index + 1 + self.searchInsert(nums[mid_index+1:], target)
 
 
-
 def verify(case_name, test_input, test_target):
+    """
+       utility function for unit testing
+    """
     solution = Solution()
-
     print(case_name, test_input, ' target:', test_target)
     assert(test_target == solution.searchInsert(*test_input))
 
 
-
 if __name__ == "__main__":
-     
 
     solution = Solution()
 
@@ -66,7 +61,6 @@ if __name__ == "__main__":
     test_case_4_input = ([1,3,5,6], 7)
     test_case_4_target = 4
     verify("test case 4:", test_case_4_input, test_case_4_target)
-
 
     test_case_5_input = ([1,3,5,6], 0)
     test_case_5_target = 0
