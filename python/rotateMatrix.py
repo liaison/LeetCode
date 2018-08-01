@@ -1,5 +1,19 @@
 
 
+"""
+
+
+A more elegant solution would be to tranpose the matrix then reverse on each row.
+
+and for a NxN matrix, we have the transform :
+( i , j ) -> ( j , N - i -1 )
+Based on this, you can perform ( i , j ) -> ( j , i ) by transpose the matrix, 
+and reverse each row to perform ( j , i ) -> ( j , N - i - 1).
+
+
+
+"""
+
 class Solution:
     def rotate(self, matrix):
         """
