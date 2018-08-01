@@ -16,6 +16,21 @@ you may not use the same element twice.
 
 """
 class Solution:
+
+    def __twoSum(self, numbers, target):
+        """
+         The input list is NOT sorted.
+        """
+        dic = {}
+        for i, value in enumerate(numbers):
+            complement = target - value
+            if complement in dic:
+                return [dic[complement], i]
+            else:
+                # index the new value
+                dic[value] = i
+
+
     def _twoSum(self, numbers, target):
         """
         :type numbers: List[int]
