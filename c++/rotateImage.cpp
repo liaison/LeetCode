@@ -39,6 +39,13 @@ void print_matrix(vector<vector<int> >& m){
     }
 }
 
+void print_vector(vector<int>& v){
+    for(auto e: v){
+        cout << e;
+    }
+    cout << endl;
+}
+
 
 int main(){
     Solution solution;
