@@ -103,3 +103,7 @@ if __name__ == "__main__":
     verify('test case 2:',
            test_case_2_input, test_case_2_target, solution.minPathSum)
 
+    test_case_3_input = ([[1]], )
+    test_case_3_target = 1
+    verify('test case 3:',
+           test_case_3_input, test_case_3_target, solution.minPathSum)
