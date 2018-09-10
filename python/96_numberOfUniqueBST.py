@@ -36,6 +36,19 @@ class Solution:
         return G[n]
 
 
+    def catalanNumber(self, n):
+        """
+            The above number is actually known as Catalan number.
+        :type n: int
+        :rtype: int
+        """
+        C = 1
+        for i in range(0, n):
+            C = 2 * (2*i+1)/(i+2) * C
+
+        return int(C)
+
+
 def verify(case_name, test_input, test_target, test_func):
     """
        utility function for unit testing
@@ -56,7 +69,10 @@ if __name__ == "__main__":
            test_case_1_input, test_case_1_target, solution.numTrees)
 
 
-
+    test_case_2_input = (3, )
+    test_case_2_target = 5
+    verify('test case 2:',
+           test_case_2_input, test_case_2_target, solution.catalanNumber)
 
 
 
