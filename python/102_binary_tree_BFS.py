@@ -43,7 +43,7 @@ class Solution:
 
         return ret
 
-    def levelOrder_deque(self, root):
+    def levelOrder_list(self, root):
         ret = []
         level_list = []
         if root is None:
@@ -53,6 +53,33 @@ class Solution:
 
         while len(node_queue) > 0:
             curr_node = node_queue.pop(0)
+            if curr_node:
+                level_list.append(curr_node.val)
+            
+                if curr_node.left:
+                    node_queue.append(curr_node.left)
+                if curr_node.right:
+                    node_queue.append(curr_node.right)
+            else:
+                # level sentinel
+                ret.append(level_list)
+                level_list = []
+                if len(node_queue) > 0:
+                    node_queue.append(None)
+
+        return ret
+    
+    def levelOrder_deque(self, root):
+        ret = []
+        level_list = []
+        if root is None:
+            return []
+
+        from collections import deque
+        node_queue = deque([root, None])
+
+        while len(node_queue) > 0:
+            curr_node = node_queue.popleft()
             if curr_node:
                 level_list.append(curr_node.val)
             
