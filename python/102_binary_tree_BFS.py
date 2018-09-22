@@ -43,6 +43,32 @@ class Solution:
 
         return ret
 
+    def levelOrder_deque(self, root):
+        ret = []
+        level_list = []
+        if root is None:
+            return []
+
+        node_queue = [root, None]
+
+        while len(node_queue) > 0:
+            curr_node = node_queue.pop(0)
+            if curr_node:
+                level_list.append(curr_node.val)
+            
+                if curr_node.left:
+                    node_queue.append(curr_node.left)
+                if curr_node.right:
+                    node_queue.append(curr_node.right)
+            else:
+                # level sentinel
+                ret.append(level_list)
+                level_list = []
+                if len(node_queue) > 0:
+                    node_queue.append(None)
+
+        return ret
+
 
     def levelOrder_DFS(self, root):
         def levelOrder_DFS_rec(level, root):
@@ -84,7 +110,7 @@ if __name__ == "__main__":
     test_case_1_input = (t1, )
     test_case_1_target = [[1], [2,3]]
     verify('test case 1:',
-           test_case_1_input, test_case_1_target, solution.levelOrder_DFS)
+           test_case_1_input, test_case_1_target, solution.levelOrder_deque)
 
     p1 = TreeNode(1)
     p2 = TreeNode(2)
@@ -95,7 +121,7 @@ if __name__ == "__main__":
     test_case_2_input = (p1, )
     test_case_2_target = [[1], [2], [3]]
     verify('test case 2:',
-           test_case_2_input, test_case_2_target, solution.levelOrder)
+           test_case_2_input, test_case_2_target, solution.levelOrder_deque)
 
 
     test_case_3_input = (None, )
