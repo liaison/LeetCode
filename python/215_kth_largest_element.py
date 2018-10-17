@@ -26,6 +26,7 @@ class Solution:
             return nums[0]
         
         def swap(a, b):
+            print('swap({} {})'.format(a,b))
             temp = nums[a]
             nums[a] = nums[b]
             nums[b] = temp
@@ -37,25 +38,33 @@ class Solution:
         while low < high:
             # sort of bubble sort
             pivot = nums[k]
-            i = low
-            j = high
+            left = low
+            right = high
 
-            while True:
-                while nums[i] > pivot: i += 1
-                while nums[j] < pivot: j -= 1
-                
-                if i <= j:
-                    swap(i, j)
-                    i += 1
-                    j -= 1
-
-                if i > j: break
-
-            print('k:{} pivot:{} low:{}, high:{}, nums:{}'.format(
+            print('@@@ k:{} pivot:{} low:{}, high:{}, nums:{}'.format(
                     k, pivot, low, high, nums))
             
-            if j < k: low = i
-            if i > k: high = j
+            # quick selection
+            # left handside numbers  > nums[k]
+            # right handside numbers < nums[k]
+            while True:
+                while nums[left] > pivot: left += 1
+                while nums[right] < pivot: right -= 1
+                
+                if left <= right:
+                    swap(left, right)
+                    left += 1
+                    right -= 1
+
+                if left > right: break
+
+            print('### k:{} pivot:{} low:{}, high:{}, nums:{}'.format(
+                    k, pivot, low, high, nums))
+            
+            # narrow down the sorting zone
+            if left > k: high = right
+            if right < k: low = left
+
 
         return nums[k]
 
