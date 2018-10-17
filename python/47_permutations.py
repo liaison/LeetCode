@@ -19,10 +19,8 @@ class Solution:
             nums[j] = temp
 
         def isduplicate(start, end):
-            for i in range(start, end):
-                if nums[i] == nums[end]:
-                    return True
-            return False
+            # check if nums[end] in the list of nums[start:end]
+            return nums[end] in nums[start:end]
 
         def permute_rec(start):
             if start == len(nums)-1:
