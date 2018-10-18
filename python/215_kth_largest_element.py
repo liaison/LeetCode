@@ -16,8 +16,52 @@ class Solution:
         nums.sort(reverse=True)
         return nums[k-1]
 
+    def findKthLargest_quickselect(self, nums, k):
+        """
+        https://en.wikipedia.org/wiki/Quickselect
+        Similar to the quick sorting algorithm
+        """
+        import random
 
-    def findKthLargest_linear(self, nums, k):
+        def swap(a, b):
+            temp = nums[a]
+            nums[a] = nums[b]
+            nums[b] = temp
+
+        def partition(nums, left, right, pivot_index):
+            pivot = nums[pivot_index]
+            # move the pivot to the end, so that we could do the partition with a single loop
+            swap(pivot_index, right)
+            new_pivot_index = left
+            for i in range(left, right):
+                if nums[i] > pivot:
+                    swap(i, new_pivot_index)
+                    new_pivot_index += 1
+            swap(right, new_pivot_index)
+            return new_pivot_index
+
+        def quick_select(nums, left, right, k):
+            if left == right:  # a single element
+                return nums[left]
+
+            # randomly pick up an element as the pivot
+            pivot_index = random.randint(left, right)
+
+            # partition the list and return the new pivot index
+            pivot_index = partition(nums, left, right, pivot_index)
+
+            if k == pivot_index:  # find the element
+                return nums[k]
+            elif k < pivot_index:
+                return quick_select(nums, left, pivot_index-1, k)
+            else:
+                return quick_select(nums, pivot_index+1, right, k)
+
+        # the Kth largest number would be indexed as nums[k-1]
+        return quick_select(nums, 0, len(nums)-1, k-1)
+
+
+    def findKthLargest_linear_temp(self, nums, k):
         """ """
         low = 0
         high = len(nums) - 1
@@ -96,11 +140,8 @@ if __name__ == "__main__":
     k2 = 4
     test_case_2_input = (t2, k2)
     test_case_2_target = 4
-    #verify('test case 2:',
-    #       test_case_2_input, test_case_2_target, solution.findKthLargest)
     verify('test case 2:',
            test_case_2_input, test_case_2_target, solution.findKthLargest_linear)
-
     
     t3 = [1]
     k3 = 1
