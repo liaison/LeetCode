@@ -52,17 +52,19 @@ class Solution:
         dtable = defaultdict()
 
         def backtrace(word1, word2):
-            if len(word1) == 0:
-                return len(word2)
-            if len(word2) == 0:
-                return len(word1)
-        
             key = (word1, word2)
+
+            if len(word1) == 0:
+                dtable[key] = len(word2)
+            if len(word2) == 0:
+                dtable[key] = len(word1)
+
             if key in dtable:
                 return dtable[key]
 
             if word1[0] == word2[0]:
-                return backtrace(word1[1:], word2[1:])
+                dtable[key] = backtrace(word1[1:], word2[1:])
+                return dtable[key]
             else:
                 delete_1 = backtrace(word1[1:], word2)
                 delete_2 = backtrace(word1, word2[1:])
