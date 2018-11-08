@@ -41,6 +41,36 @@ class Solution:
         
         return dp[rows-1][cols-1]
 
+    
+    def minDistance_hashtable(self, word1, word2):
+        """
+        :type word1: str
+        :type word2: str
+        :rtype: int
+        """
+        from collections import defaultdict
+        dtable = defaultdict()
+
+        def backtrace(word1, word2):
+            if len(word1) == 0:
+                return len(word2)
+            if len(word2) == 0:
+                return len(word1)
+        
+            key = (word1, word2)
+            if key in dtable:
+                return dtable[key]
+
+            if word1[0] == word2[0]:
+                return backtrace(word1[1:], word2[1:])
+            else:
+                delete_1 = backtrace(word1[1:], word2)
+                delete_2 = backtrace(word1, word2[1:])
+                dtable[key] = min(delete_1, delete_2) + 1 
+                return dtable[key]
+
+        return backtrace(word1, word2)
+
 
 def verify(case_name, test_input, test_target, test_func):
     """
@@ -61,7 +91,7 @@ if __name__ == "__main__":
     test_case_1_input = (word1, word2)
     test_case_1_target = 2  # sea -> ea    eat -> ea
     verify('test case 1:',
-           test_case_1_input, test_case_1_target, solution.minDistance)
+           test_case_1_input, test_case_1_target, solution.minDistance_hashtable)
 
 
 
