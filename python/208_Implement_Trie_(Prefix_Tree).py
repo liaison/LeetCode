@@ -15,8 +15,7 @@ trie.search("app");     // returns true
 """
 
 class TrieNode:
-    def __init__(self, key: str) -> None:
-        self.key = key
+    def __init__(self) -> None:
         self.children = {}
         # we don't need to store the actual value, 
         #   since the prefix would do the comparison of values along the path.
@@ -29,7 +28,7 @@ class Trie:
         """
         Initialize your data structure here.
         """
-        self.root = TrieNode("")
+        self.root = TrieNode()
 
 
     def insert(self, word: str) -> None:
@@ -43,7 +42,7 @@ class Trie:
                 curr = curr.children[key]
             else:
                 # create the new node
-                newNode = TrieNode(key)
+                newNode = TrieNode()
                 curr.children[key] = newNode
                 curr = newNode
 
