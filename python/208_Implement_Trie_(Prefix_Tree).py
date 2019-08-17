@@ -34,7 +34,8 @@ class Trie:
 
     def insert(self, word: str) -> None:
         """
-        Inserts a word into the trie.
+          Inserts a word into the trie, 
+          create nodes along the way.
         """
         curr = self.root
         for key in word:
@@ -45,7 +46,7 @@ class Trie:
                 newNode = TrieNode(key)
                 curr.children[key] = newNode
                 curr = newNode
-        
+
         # reach the desired node
         curr.hasValue = True
 
