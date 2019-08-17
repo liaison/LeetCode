@@ -1,7 +1,10 @@
 """
-Given the root of a binary tree, find the maximum value V for which there exists different nodes A and B where V = |A.val - B.val| and A is an ancestor of B.
+Given the root of a binary tree, find the maximum value V for which 
+there exists different nodes A and B 
+where V = |A.val - B.val| and A is an ancestor of B.
 
-(A node A is an ancestor of B if either: any child of A is equal to B, or any child of A is an ancestor of B.)
+(A node A is an ancestor of B if either: 
+any child of A is equal to B, or any child of A is an ancestor of B.)
 
 """
 class Solution1:
@@ -63,7 +66,9 @@ class SolutionOptimal:
                 find the min/max values along the path
             """
             if not node:
+                # the extreme difference can only be between the extreme values !
                 return (high-low)
+            
             low = min(node.val, low)
             high = max(node.val, high)
             return max(minMaxDfs(node.left, low, high),
