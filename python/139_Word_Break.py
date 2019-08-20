@@ -20,6 +20,39 @@ Explanation: Return true because "applepenapple" can be segmented as "apple pen 
              Note that you are allowed to reuse a dictionary word.
 """
 
+
+# ====================================================================
+
+class SolutionDP(object):
+    def wordBreak(self, s, wordDict):
+        """
+        :type s: str
+        :type wordDict: List[str]
+        :rtype: bool
+        """
+        dp = [False for i in range(len(s)+1)]
+        
+        # start of the dynamic programming solution.
+        dp[0] = True
+        
+        # dp[endIndex]: indicates the viability of substring s[0:endIndex] 
+        
+        # endIndex marks the end of the substring to check
+        for endIndex in range(1, len(s)+1):
+            # Check the viability of substring, using the previous intermediate results.
+            #for beginIndex in range(0, i):
+            # We could have some speedup if we check the word from the end of the string,
+            #   since the new word might appear when the string grows.
+            for beginIndex in reversed(range(0, i)):
+            
+                if dp[beginIndex] and s[beginIndex:endIndex] in wordDict:
+                    dp[endIndex] = True
+                    break
+        
+        return dp[len(s)]
+
+# ====================================================================
+
 class TrieNode:
     def __init__(self):
         self.children = {}
