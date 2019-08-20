@@ -45,16 +45,15 @@ class Trie:
 
         curr.isWord = True 
 
-
     def containsKey(self, key):
+        """ Check if the Trie contains the letter/key """
         return key in self.keySet
-
 
     def getRoot(self):
         return self.root
 
-
     def match(self, word):
+        """ Not necessary in this problem """
         curr = self.root
         for key in word:
             if key in curr.children:
@@ -81,9 +80,14 @@ class Solution:
             if not wordTrie.containsKey(s[i]):
                 return False
         
+        # memoization 
         memo = {} # len(s): dfs result
         
         def dfs(trieNode, s):
+            """
+                DFS recursion with memoization.
+                Note: we should store all the intermediates results in all exits/returns.
+            """
             nonlocal rootTrieNode
             nonlocal memo
             
@@ -96,6 +100,7 @@ class Solution:
             currTrieNode = trieNode
             for index, c in enumerate(s):
                 if c not in currTrieNode.children:
+                    # Important to store all the intermediate results.
                     memo[len(s)] = False
                     return False
                 else:
