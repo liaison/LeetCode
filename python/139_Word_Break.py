@@ -43,7 +43,7 @@ class SolutionDP(object):
             #for beginIndex in range(0, i):
             # We could have some speedup if we check the word from the end of the string,
             #   since the new word might appear when the string grows.
-            for beginIndex in reversed(range(0, i)):
+            for beginIndex in reversed(range(0, endIndex)):
             
                 if dp[beginIndex] and s[beginIndex:endIndex] in wordDict:
                     dp[endIndex] = True
