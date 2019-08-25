@@ -17,6 +17,9 @@ class Solution:
     def lastStoneWeight(self, stones: List[int]) -> int:
         import heapq
         
+        # Since in Python, the heap is implemented as minimum heap,
+        # in order to have the maximum heap, we applied a trick here,
+        # i.e. we applied the negation on the original values.
         neg_stones = [-stone for stone in stones]
         heapq.heapify(neg_stones)
         
