@@ -60,6 +60,9 @@ class Solution(object):
             # Tried all directions, and did not find any match
             return False
         
+        # the drawback of this approach is that we end up tempering the original board
+        #  at the end of the function. But we avoid the use of visited map and gain some time.
+        
         # Start from each of the positions in the board,
         #   to kick off the backtracking.
         for pos in boardDict:
