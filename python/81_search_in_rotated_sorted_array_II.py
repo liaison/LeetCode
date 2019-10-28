@@ -32,3 +32,36 @@ class Solution:
             high -= 1
 
         return binary_search(0, high, nums, target)
+
+    
+class SolutionIteration:
+
+    def search(self, nums: List[int], target: int) -> bool:
+
+        low = 0
+        # avoid the case when the head and the tail are duplicates
+        high = len(nums)-1
+        while high > 0:
+            if nums[high] != nums[0]:
+                break
+            high -= 1
+
+        while low <= high:
+            pivot = int((low+high)/2)
+            if nums[pivot] == target:
+                return True
+
+            is_same_side = (nums[pivot] < nums[0]) == (target < nums[0])
+
+            if is_same_side:
+                comparator = nums[pivot]
+            else:
+                # using the nums[0] as the reversed comparator
+                comparator = float('-inf') if target < nums[0] else float('inf')
+
+            if target < comparator:
+                high = pivot - 1
+            else:
+                low = pivot + 1
+
+        return False
