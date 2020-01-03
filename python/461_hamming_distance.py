@@ -19,6 +19,16 @@ Explanation:
 The above arrows point to positions where the corresponding bits are different.
 
 """
+class BrianKernighanSolution:
+    def hammingDistance(self, x: int, y: int) -> int:
+        diff = x ^ y
+        count = 0
+        while diff:
+            count += 1
+            # turn off rightmost 1-bit
+            diff = diff & (diff - 1)
+        return count
+
 class Solution(object):
     def hammingDistance(self, x, y):
         """
