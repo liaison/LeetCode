@@ -43,3 +43,39 @@ class Solution(object):
         nextNum.append('E')
         
         return self.nextNumber(n-1, nextNum)
+
+
+class SolutionRec(object):
+    def countAndSay(self, n):
+        """
+        :type n: int
+        :rtype: str
+        """
+        prevNum = ['1', 'E']
+        return ''.join(self.nextNumber(n, prevNum))
+
+
+    def count(self, prevDigit, count, num, result):
+        if len(num) == 0:
+            return result
+    
+        if prevDigit == num[0]:
+            return self.count(prevDigit, count+1, num[1:], result)
+        else:
+            result.extend([str(count), prevDigit])
+            return self.count(num[0], 1, num[1:], result)
+
+
+    def nextNumber(self, n, prevNum):
+        if n == 1:
+            return prevNum[:-1]
+        
+        result = []
+        nextNum = self.count(prevNum[0], 1, prevNum[1:], result)
+        
+        nextNum.append('E')
+        
+        return self.nextNumber(n-1, nextNum)
+
+        
+        
