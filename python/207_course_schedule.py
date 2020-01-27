@@ -46,3 +46,52 @@ class Solution(object):
             visited.remove(child)
     
         return False
+
+
+class SolutionBacktracking(object):
+    """
+      a more proper backtracking solution
+    """
+
+    def canFinish(self, numCourses, prerequisites):
+        """
+        :type numCourses: int
+        :type prerequisites: List[List[int]]
+        :rtype: bool
+        """
+        courseDict = {}
+    
+        for relation in prerequisites:
+            nextCourse, prevCourse = relation[0], relation[1]
+            if prevCourse in courseDict:
+                courseDict[prevCourse].add(nextCourse)
+            else:
+                courseDict[prevCourse] = set([nextCourse])
+
+        visited = [False] * numCourses    
+        for courseNum in range(numCourses):
+            if self.isCyclic(courseNum, courseDict, visited):
+                return False
+        
+        return True
+
+
+    def isCyclic(self, courseNum, courseDict, visited):
+    
+        if courseNum not in courseDict:
+            # this is the last course to take
+            return False
+    
+        visited[courseNum] = True
+        
+        # backtracking
+        ret = False
+        for child in courseDict[courseNum]:
+            if visited[child]:
+                ret = True
+                break
+            ret = self.isCyclic(child, courseDict, visited)
+            if ret: break
+    
+        visited[courseNum] = False
+        return ret
