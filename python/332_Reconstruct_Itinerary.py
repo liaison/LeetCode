@@ -108,5 +108,38 @@ class Solution_Faster(object):
             
         return False
         
+
+class SolutionFastest(object):
+    def findItinerary(self, tickets):
+        """
+            faster than 96% of submissions
         
+        :type tickets: List[List[str]]
+        :rtype: List[str]
+        """
+        from collections import defaultdict
+        self.originMap = defaultdict(list)
+        
+        for ticket in tickets:
+            origin, dest = ticket[0], ticket[1]
+            self.originMap[origin].append(dest)
+        
+        # sort the itinerary based on the lexical order
+        for origin, itinerary in self.originMap.items():
+        # Note that we could have multiple identical flights, i.e. same origin and destination.
+            itinerary.sort(reverse=True)
+        
+        self.flights = len(tickets)
+        self.result = []
+        self.DFS('JFK')
+    
+        return self.result[::-1]
+
+    def DFS(self, origin):
+        destList = self.originMap[origin]
+        while destList:
+            nextDest = destList.pop()
+            self.DFS(nextDest)
+        self.result.append(origin)
+    
  
