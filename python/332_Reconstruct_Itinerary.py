@@ -98,14 +98,14 @@ class Solution_Faster(object):
             return True
         
         for i, nextDest in enumerate(self.originMap[origin]):
-            # unique label to identify an itinerary
             if not self.visitBitmap[origin][i]:
+                # mark the visit before the next recursion
                 self.visitBitmap[origin][i] = True
                 ret = self.backtracking(nextDest, route + [nextDest])
                 self.visitBitmap[origin][i] = False
                 if ret:
                     return True
-            
+
         return False
         
 
