@@ -95,3 +95,52 @@ class SolutionBacktracking(object):
     
         visited[courseNum] = False
         return ret
+    
+    
+    
+
+class GNode(object):    
+    def __init__(self, label):
+        self.label = label
+        self.inNodes = set()
+        self.outNodes = set()
+
+
+class SolutionTopologicalSorting(object):
+    def canFinish(self, numCourses, prerequisites):
+        """
+        :type numCourses: int
+        :type prerequisites: List[List[int]]
+        :rtype: bool
+        """
+        graph = [GNode(i) for i in range(numCourses)]
+        
+        totalDeps = 0
+        for relation in prerequisites:
+            nextCourse, prevCourse = relation[0], relation[1]
+            graph[prevCourse].outNodes.add(nextCourse)
+            graph[nextCourse].inNodes.add(prevCourse)
+            totalDeps += 1
+
+        nodepCourses = set()
+        for i in range(numCourses):
+            if len(graph[i].inNodes) == 0:
+                nodepCourses.add(i)
+    
+        removedEdges = 0
+        while nodepCourses:
+            # pop out a random element
+            course = nodepCourses.pop()
+            
+            for nextCourse in graph[course].outNodes:     
+                graph[nextCourse].inNodes.remove(course)
+                removedEdges += 1
+                if len(graph[nextCourse].inNodes) == 0:
+                    nodepCourses.add(nextCourse)
+        
+        # if there are still some edges left, then there exist some cycles
+        # Due to the dead-lock (dependencies), we cannot remove the cyclic edges
+        if removedEdges == totalDeps:
+            return True
+        else:
+            return False
