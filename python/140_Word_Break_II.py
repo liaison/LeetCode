@@ -52,3 +52,35 @@ class Solution:
         
         DFS(s)
         return memo[s]
+
+
+
+class Solution_TLE:
+    """
+        solution that exceeds the time limit with the following test case:
+                "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaabaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+["a","aa","aaa","aaaa","aaaaa","aaaaaa","aaaaaaa","aaaaaaaa","aaaaaaaaa","aaaaaaaaaa"]
+
+    """
+    def wordBreak(self, s: str, wordDict: List[str]) -> List[str]:
+        """
+        :type s: str
+        :type wordDict: List[str]
+        :rtype: bool
+        """
+        wordSet = set(wordDict)
+
+        dp = [[]] * (len(s)+1)
+        dp[0] = [""]
+
+        for endIndex in range(1, len(s)+1):
+            sublist = []
+            for startIndex in range(0, endIndex):
+                word = s[startIndex:endIndex]
+                if word in wordSet:
+                    for subsentence in dp[startIndex]:
+                        sublist.append((subsentence + ' ' + word).strip())
+
+            dp[endIndex] = sublist
+
+        return dp[len(s)]
