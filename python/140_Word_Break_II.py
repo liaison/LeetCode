@@ -84,3 +84,86 @@ class Solution_TLE:
             dp[endIndex] = sublist
 
         return dp[len(s)]
+
+    
+class Solution_Stops:
+    def wordBreak(self, s: str, wordDict: List[str]) -> List[str]:
+        """
+        :type s: str
+        :type wordDict: List[str]
+        :rtype: bool
+        """
+        
+        if set(Counter(s).keys()) > set(Counter("".join(wordDict)).keys()):
+            return []
+        
+        wordSet = set(wordDict)
+        
+        dp = [[]] * (len(s)+1)
+        dp[0] = [[0]]
+        
+        for endIndex in range(1, len(s)+1):
+            stops = []
+            for startIndex in range(0, endIndex):
+                word = s[startIndex:endIndex]
+                if word in wordSet:
+                    for subsentence in dp[startIndex]:
+                        copy = subsentence.copy()
+                        copy.append(endIndex)
+                        stops.append(copy)
+            
+            print(endIndex, stops)
+            
+            dp[endIndex] = stops
+        
+        ret = []
+        for stops in dp[len(s)]:
+            words = []
+            for i in range(len(stops)-1):
+                words.append(s[stops[i]:stops[i+1]])
+            ret.append(" ".join(words))
+        
+        return ret
+
+
+class Solution_RecursiveEncoding:
+    def wordBreak(self, s: str, wordDict: List[str]) -> List[str]:
+        """
+        :type s: str
+        :type wordDict: List[str]
+        :rtype: bool
+        """
+        # quick check 
+        if set(Counter(s).keys()) > set(Counter("".join(wordDict)).keys()):
+            return []
+        
+        wordSet = set(wordDict)
+        
+        dp = [[]] * (len(s)+1)
+        dp[0] = [[0]]
+        
+        for endIndex in range(1, len(s)+1):
+            stops = []
+            for startIndex in range(0, endIndex):
+                word = s[startIndex:endIndex]
+                if word in wordSet:
+                    stops.append([startIndex, endIndex])
+            dp[endIndex] = stops
+        
+        ret = []
+        def wordDFS(sentence, dp_index):
+            if dp_index == 0:
+                ret.append(" ".join(sentence))
+                return
+        
+            for start, end in dp[dp_index]:
+                word = s[start:end]
+                wordDFS([word] + sentence, start)
+        
+        wordDFS([], len(s))
+        
+        return ret
+
+    
+    
+    
