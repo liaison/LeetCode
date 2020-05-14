@@ -34,7 +34,7 @@ class Solution:
         memo = defaultdict(list)
         
         def DFS(s):
-            """ top-down DFS with memoization """"
+            """ top-down DFS with memoization """
             #nonlocal memo
             if not s:
                 return [None]
