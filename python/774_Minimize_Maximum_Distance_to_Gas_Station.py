@@ -19,3 +19,28 @@ class Solution:
             heapq.heappush(interval_queue, (weight, interval, num_gas))
         
         return -interval_queue[0][0]
+    
+
+class SolutionBinarySearch:
+    def minmaxGasDist(self, stations: List[int], K: int) -> float:
+        
+        intervals = []
+        for i in range(len(stations)-1):
+            intervals.append(stations[i+1] - stations[i])
+            
+        def isvalid_minimal_distance(D):
+            num_gas_stations = sum([int(interval / D) for interval in intervals])
+            return num_gas_stations <= K
+        
+        
+        low, high = 0, 10**8
+        while high - low > 1e-6:
+            mid = (high + low) / 2
+            if isvalid_minimal_distance(mid):
+                high = mid
+            else:
+                low = mid
+        
+        return low
+        
+            
