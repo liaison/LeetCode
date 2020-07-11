@@ -33,8 +33,32 @@ class SolutionTLE:
         #print(group_count)
         
         return max_size
-                
-                
+
+
+class Solution:
+    def largestComponentSize(self, A: List[int]) -> int:
+
+        dsu = DisjointSetUnion(max(A))
+
+        # attribute each element in A
+        #   to all the groups that lead by its factors.
+        for a in A:
+            for factor in range(2, int(sqrt(a))+1):
+                if a % factor == 0:
+                    dsu.union(a, factor)
+                    dsu.union(a, a // factor)
+
+        # count the size of group one by one
+        max_size = 0
+        group_count = defaultdict(int)
+        for a in A:
+            group_id = dsu.find(a)
+            group_count[group_id] += 1
+            max_size = max(max_size, group_count[group_id])
+
+        return max_size
+
+
 class DisjointSetUnion(object):
 
     def __init__(self, size):
@@ -69,10 +93,6 @@ class DisjointSetUnion(object):
         self.rank[py] += self.rank[px]
         # return the final (merged) group
         return py
-
-    def rank(self, x):
-        """ return the size of the component that x belongs to"""
-        return self.rank[self.find(x)]
 
                 
                 
