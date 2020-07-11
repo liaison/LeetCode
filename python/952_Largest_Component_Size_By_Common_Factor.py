@@ -59,6 +59,45 @@ class Solution:
         return max_size
 
 
+class SolutionPrimeDecomposition:
+    """ slower than the enumeration of all factors ?! 
+    """
+    def largestComponentSize(self, A: List[int]) -> int:
+        
+        dsu = DisjointSetUnion(max(A))
+        
+        for a in A:
+            for factor in range(2, int(sqrt(a))+1):    
+                for prime_factor in set(self.primeDecompose(a)):
+                    dsu.union(a, prime_factor)
+        
+        max_size = 0
+        group_count = defaultdict(int)
+        for a in A:
+            group_id = dsu.find(a)
+            group_count[group_id] += 1
+            max_size = max(max_size, group_count[group_id]) 
+        
+        return max_size
+
+
+    def primeDecompose(self, num):
+        """ decompose any positive number into 
+                a series of prime factors.
+            e.g. 12 = 2 * 2 * 3
+        """
+        factor = 2
+        prime_factors = []
+        while num >= factor * factor:
+            if num % factor == 0:
+                prime_factors.append(factor)
+                num = num // factor
+            else:
+                factor += 1
+        prime_factors.append(num)
+        return prime_factors
+
+
 class DisjointSetUnion(object):
 
     def __init__(self, size):
