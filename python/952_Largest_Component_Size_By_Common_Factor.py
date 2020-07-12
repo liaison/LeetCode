@@ -67,9 +67,8 @@ class SolutionPrimeDecomposition:
         dsu = DisjointSetUnion(max(A))
         
         for a in A:
-            for factor in range(2, int(sqrt(a))+1):    
-                for prime_factor in set(self.primeDecompose(a)):
-                    dsu.union(a, prime_factor)
+            for prime_factor in set(self.primeDecompose(a)):
+                dsu.union(a, prime_factor)
         
         max_size = 0
         group_count = defaultdict(int)
