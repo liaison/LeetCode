@@ -26,3 +26,24 @@ class Solution:
                     max_len = max(max_len, dfs(row, col, direction))
         
         return max_len
+
+
+class SolutionManualMemoization:
+    def longestLine(self, M: List[List[int]]) -> int:
+        
+        if len(M) == 0:
+            return 0
+        
+        rows, cols = len(M), len(M[0])
+        max_len = 0
+        
+        path_counter = defaultdict(int)
+        
+        for row in range(rows):
+            for col in range(cols):
+                for direction in [row, col+.1, row-col+.2, row+col+.3]:
+                    new_count = (path_counter[direction] + 1) * M[row][col]
+                    path_counter[direction] = new_count
+                    max_len = max(max_len, new_count)
+        
+        return max_len
