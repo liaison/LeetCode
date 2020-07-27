@@ -21,6 +21,25 @@ class Solution:
         return False
 
 
+class SolutionDP:
+    def canReach(self, arr: List[int], start: int) -> bool:
+        
+        @lru_cache(maxsize=None)
+        def dp(curr):
+            
+            if 0 > curr or curr >= len(arr):
+                return False
+            elif arr[curr] == 0:
+                return True
+            elif arr[curr] < 0:
+                return False
+            
+            arr[curr] = -arr[curr]
+            return dp(curr + arr[curr]) or dp(curr - arr[curr])
+        
+        return dp(start)
+    
+
 class SolutionBacktrack:
     def canReach(self, arr: List[int], start: int) -> bool:
         
