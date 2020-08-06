@@ -30,4 +30,21 @@ class Solution:
         segment_lengths.append(segment[1] - segment[0] + 1)
         
         return segment_lengths[1:]
+
+    
+class SolutionTwoPass:
+    def partitionLabels(self, S: str) -> List[int]:
+        
+        last_index_dict = {}
+        for index, letter in enumerate(S):
+            last_index_dict[letter] = index
+        
+        segs = []
+        seg_start, seg_end = 0, 0
+        for index, letter in enumerate(S):
+            seg_end = max(seg_end, last_index_dict[letter])
+            if seg_end == index:
+                segs.append(seg_end - seg_start + 1)
+                seg_start = index + 1
             
+        return segs
