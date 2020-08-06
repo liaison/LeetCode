@@ -4,7 +4,6 @@ class Solution:
         # construct the intervals (range) for each letter
         letter_range = {}
         for index, letter in enumerate(S):
-            
             if letter in letter_range:
                 first_index, last_index = letter_range[letter]
                 letter_range[letter] = (first_index, index)
@@ -13,7 +12,9 @@ class Solution:
         
         # sort the interval based on the starting index
         intervals = list(letter_range.values())
-        intervals.sort(key=lambda r:r[0])
+        # since the dictionary in python is ordered by insertion sequence
+        # no need to sort the intervals.
+        #intervals.sort(key=lambda r:r[0])
         
         # merge intervals greedily
         segment = [-1, -1]
@@ -29,3 +30,4 @@ class Solution:
         segment_lengths.append(segment[1] - segment[0] + 1)
         
         return segment_lengths[1:]
+            
