@@ -1,4 +1,25 @@
 
+class Solution:
+    def maxProduct(self, nums: List[int]) -> int:
+        """
+            Keep the intermediate results of the previous num
+        """
+        curr_products = []
+        max_product = float('-inf')
+        
+        for num in nums:
+            curr_products.append(1)
+            next_products = []
+            for product in curr_products:
+                new_product = num * product
+                max_product = max(max_product, new_product)
+                next_products.append(new_product)
+            
+            curr_products = next_products
+            
+        return max_product
+
+
 class SolutionDP:
     """
         Rather than keeping all the intermediate products, 
