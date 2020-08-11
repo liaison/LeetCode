@@ -21,3 +21,31 @@ class SolutionTLE:
                     return True
         
         return False
+
+    
+class Solution(object):
+    def find132pattern(self, nums):
+        """
+        :type nums: List[int]
+        :rtype: bool
+        """
+        
+        small_index = 0
+        # build the rising slopes on-the-go
+        #   and check if the number falls into any of the rising slopes.
+        rising_slopes = []
+        
+        for i in range(1, len(nums)):
+            
+            if nums[i] < nums[i-1]:
+                if small_index < i - 1:
+                    rising_slopes.append((small_index, i-1))
+                
+                small_index = i
+            
+            for (li, hi) in rising_slopes:
+                if nums[li] < nums[i] < nums[hi]:
+                    return True
+        
+        return False
+        
