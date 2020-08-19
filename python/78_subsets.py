@@ -17,6 +17,20 @@ class Solution:
         return results
 
 
+class SolutionCascading:
+    def subsets(self, nums: List[int]) -> List[List[int]]:
+
+        results = [[]]
+        
+        # add a new number to the candidates
+        # append this new number to each of the existing combination
+        for num in nums:
+            new_combs = [comb + [num] for comb in results]
+            results += new_combs
+        
+        return results
+
+    
 class SolutionBacktrack:
     def subsets(self, nums: List[int]) -> List[List[int]]:
         
