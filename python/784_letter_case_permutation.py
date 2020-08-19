@@ -29,3 +29,37 @@ class Solution:
         backtrack(0, [])
 
         return results
+
+
+class SolutionNoPop:
+    def letterCasePermutation(self, S: str) -> List[str]:
+        
+        results = []
+        
+        def backtrack(curr, comb):
+            
+            if curr == len(S):
+                results.append("".join(comb))
+                return
+            
+            # branch 1). make the change
+            letter = S[curr]
+            if letter.isalpha():
+                if letter.isupper():
+                    comb[curr] = letter.lower()
+                else:
+                    comb[curr] = letter.upper()
+
+                backtrack(curr+1, comb)
+                
+            # branch 2). do not make the change to the ltter
+            # either a number or alphabet
+            comb[curr] = letter
+            backtrack(curr+1, comb)
+
+
+        comb = [""] * len(S)
+        backtrack(0, comb)
+        
+        return results
+                
