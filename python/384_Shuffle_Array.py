@@ -20,7 +20,8 @@ class Solution:
         """
         # apparently this is so-call Fisher-Yates algorithm.
         for i in range(len(self.perm)):
-            randi = random.randrange(i, len(self.perm))
+            #randi = random.randrange(i, len(self.perm))
+            randi = i + random.randint(0, len(self.perm)-i-1)
             self.perm[i], self.perm[randi] = self.perm[randi], self.perm[i]
             
         return self.perm
