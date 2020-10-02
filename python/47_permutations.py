@@ -37,6 +37,33 @@ class Solution:
         
         return ret
 
+
+    def permuteUnique_vt(self, nums):
+        """ solution with visit_table
+        """
+        ret = []
+        visited = [0] * len(nums)
+        nums.sort()
+
+        def permute_dfs(path):
+            print('visit:{} path:{}'.format(visited, path))
+            if len(path) == len(nums):
+                ret.append(path)
+                return
+            
+            for i in range(0, len(nums)):
+                print(visited)
+
+                if visited[i] == 1: continue
+                if i > 0 and visited[i-1] == 0 and nums[i] == nums[i-1]: continue
+                visited[i] = 1
+                permute_dfs(path + [nums[i]])
+                visited[i] = 0
+
+        permute_dfs([])
+        return ret
+
+
 def verify(case_name, test_input, test_target, test_func):
     """
        utility function for unit testing
@@ -59,9 +86,11 @@ if __name__ == "__main__":
         [2,1,1]
     ]
 
-    verify('test case 1:',
-           test_case_1_input, test_case_1_target, solution.permuteUnique)
+    #verify('test case 1:',
+    #       test_case_1_input, test_case_1_target, solution.permuteUnique)
 
+    verify('test case 1:',
+           test_case_1_input, test_case_1_target, solution.permuteUnique_vt)
     
     t2 = [2, 2, 1, 1]
     test_case_2_input = (t2, )
