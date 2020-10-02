@@ -105,5 +105,38 @@ class SolutionPseudoTail:
         return operand_stack[-1]
 
 
+class SolutionOperandStack:
+    def calculate(self, s: str) -> int:
+        
+        component_stack = []
+        operand = 0
+        # a pseudo head to add the first operand
+        pre_operator = "+"
+        
+        # add a pseudo tail to evaluate all expressions at the end.
+        for letter in s + "+":
+            if letter == " ":
+                pass
+            elif not letter.isnumeric():
+                # encounter a new operator
+                
+                if pre_operator == "+":
+                    component_stack.append(operand)
+                elif pre_operator == "-":
+                    component_stack.append(-operand)
+                elif pre_operator == "*":
+                    pre_operand = component_stack.pop()
+                    component_stack.append(pre_operand * operand)
+                elif pre_operator == "/":
+                    pre_operand = component_stack.pop()
+                    component_stack.append(int(pre_operand / operand))
+                
+                # prepare for the next expression
+                operand = 0
+                pre_operator = letter
+            else:
+                operand = operand * 10 + int(letter)
+
+        return sum(component_stack)
 
 
