@@ -5,6 +5,25 @@
 #         self.left = None
 #         self.right = None
 
+
+class SolutionBinarySearch:
+    def inorderSuccessor(self, root: 'TreeNode', p: 'TreeNode') -> 'TreeNode':
+        
+        curr = root
+        candidate = None
+        
+        # Binary Search traversal
+        while curr:
+            if curr.val > p.val:
+                # update candidate with the latest value that is greater than P
+                candidate = curr
+                curr = curr.left
+            else: # curr.val <= p.val
+                curr = curr.right
+        
+        return candidate
+
+
 class Solution:
     def inorderSuccessor(self, root: 'TreeNode', p: 'TreeNode') -> 'TreeNode':
         
