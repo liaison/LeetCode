@@ -20,3 +20,21 @@ class Solution:
         for node, indegree in node_indegree.items():
             if indegree == 0:
                 return node
+
+
+class SolutionSet:
+    def findRoot(self, tree: List['Node']) -> 'Node':
+
+        seen = set()
+        
+        for node in tree:
+            for child in node.children:
+                seen.add(child.val)
+        
+        for node in tree:
+            if node.val not in seen:
+                return node
+
+            
+
+        
