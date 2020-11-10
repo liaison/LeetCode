@@ -35,7 +35,7 @@ class Solution:
 #     def __init__(self, val=0, next=None):
 #         self.val = val
 #         self.next = next
-class SolutionBufferedReservoir:
+class SolutionSlidingWindow:
 
     def __init__(self, head: ListNode):
         """
@@ -52,21 +52,21 @@ class SolutionBufferedReservoir:
         chosen_value = 0
         curr = self.head
         
-        buffer_size = 1000
-        reservoir = [0] * buffer_size
+        window_size = 100
+        window = [0] * window_size
         total_index = 0
         
         while curr:
-            r_index = 0
-            while curr and r_index < buffer_size:
-                reservoir[r_index] = curr.val
+            w_index = 0
+            while curr and w_index < window_size:
+                window[w_index] = curr.val
                 curr = curr.next
-                r_index += 1
+                w_index += 1
             
-            total_index += r_index
+            total_index += w_index
             pick = random.randrange(0, total_index)
-            if pick < r_index:
-                chosen_value = reservoir[pick]
+            if pick < w_index:
+                chosen_value = window[pick]
             
             # move on to the round
             if curr:
@@ -75,9 +75,6 @@ class SolutionBufferedReservoir:
         return chosen_value
 
 
-# Your Solution object will be instantiated and called as such:
-# obj = Solution(head)
-# param_1 = obj.getRandom()
 # Your Solution object will be instantiated and called as such:
 # obj = Solution(head)
 # param_1 = obj.getRandom()
