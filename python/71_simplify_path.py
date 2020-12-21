@@ -1,8 +1,29 @@
+class SolutionRefined:
+    def simplifyPath(self, path: str) -> str:
+
+        folders = path.split('/')
+
+        canonical = deque([])
+        for i, folder in enumerate(folders):
+            if folder == "" or folder == ".":
+                # skip
+                continue
+            elif folder == "..":
+                # we might go beyond the root folder
+                if canonical:
+                    canonical.pop()
+            else:
+                canonical.append(folder)
+
+        return "/" + "/".join(canonical)
+
+
+
 class Solution:
     def simplifyPath(self, path: str) -> str:
-        
+
         folders = path.split('/')
-        
+
         canonical = deque([])
         for i, folder in enumerate(folders):
             if folder == "" and i > 0:
@@ -15,13 +36,15 @@ class Solution:
             elif folder == ".":
                 continue
             else:
-                canonical.append(folder)       
-        
+                canonical.append(folder)
+
         if len(canonical) == 0 or canonical[0] != "":
             canonical.appendleft("")
-        
+
         if len(canonical) == 1:
             return "/"
         else:
             return "/".join(canonical)
+
+
 
