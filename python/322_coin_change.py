@@ -60,12 +60,12 @@ class SolutionRefinedDP:
         dp = [float('inf') for i in range(amount+1)]
         dp[0] = 0
 
+        # one could swap the order of the loops
+        #   though this order can deal with more scenarios.
         for coin in coins:
             for sub_amount in range(coin, amount+1):
                 dp[sub_amount] = min(dp[sub_amount], dp[sub_amount-coin]+1)
 
         return -1 if dp[amount] == float('inf') else dp[amount]
-
-
 
 
