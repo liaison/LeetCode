@@ -18,13 +18,13 @@ class Solution:
 
         for first_sep in range(1, len(num)-1):
             first_num = int(num[0:first_sep])
-
+            # skip the numbers with leading zero, e.g. "02"
             if first_sep > 1 and first_num < 10:
                 break
 
             for second_sep in range(first_sep+1, len(num)):
-
                 prev_num = int(num[first_sep:second_sep])
+                # skip the numbers with leading zero, e.g. "02"
                 if second_sep - first_sep > 1 and prev_num < 10:
                     break
 
