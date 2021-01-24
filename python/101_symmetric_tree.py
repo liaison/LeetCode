@@ -22,3 +22,28 @@ class Solution:
                 return False
 
         return symmetric(root.left, root.right)
+
+
+
+class SolutionBFS:
+    def isSymmetric(self, root: TreeNode) -> bool:
+
+        if root is None:
+            return True
+
+        # BFS traversal
+        queue = deque([(root.left, root.right)])
+        while queue:
+            left, right = queue.popleft()
+            if left and right:
+                if left.val != right.val:
+                    return False
+                queue.append((left.left, right.right))
+                queue.append((left.right, right.left))
+            elif left is None and right is None:
+                continue
+            else:
+                return False
+
+        return True
+
