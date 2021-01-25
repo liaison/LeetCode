@@ -7,11 +7,10 @@
 class Solution:
     def findDuplicateSubtrees(self, root: TreeNode) -> List[TreeNode]:
 
-        # node_str -> node
+        # set of all node strings
         node_str_set = set()
         duplicated_strs = set()
         duplicated_nodes = list()
-
 
         def node2str(node):
             """
