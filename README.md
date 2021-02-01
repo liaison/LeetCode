@@ -1,7 +1,8 @@
-# README #
+# LeetCode Solutions #
 
-This is a project that I created to attempt some solutions for the questions in LeetCode site.
+This is a project that I created to attempt some solutions for the questions on the LeetCode site.
 At the beginning, most of my solutions are coded in Java, though nowadays more and more are implemented in Python.
+
 
 ### Organization ###
 
