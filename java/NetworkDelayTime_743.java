@@ -61,9 +61,8 @@ class NetworkDelayTime_743 {
 }
 
 
-
-
 class SolutionDijkstra {
+
     public int networkDelayTime(int[][] times, int n, int k) {
 
         HashMap<Integer, List<Pair<Integer, Integer>>> graph = new HashMap<>();
@@ -76,19 +75,17 @@ class SolutionDijkstra {
             graph.get(source).add(newEdge);
         }
 
+        // <timestamp, target>
         PriorityQueue<Integer[]> queue = new PriorityQueue<>(
             n, Comparator.comparing(p -> p[0]));
 
         List<Pair<Integer, Integer>> emptyEdgeList = new ArrayList<>();
 
-        // init the PriorityQueue with the neighbors of the starting point
-        for (Pair<Integer, Integer> entry : graph.getOrDefault(k, emptyEdgeList)) {
-            queue.add(new Integer[]{entry.getKey(), entry.getValue()});
-        }
+        // init the PriorityQueue with the starting point
+        queue.add(new Integer[]{0, k});
 
         // target: distance_to_target
         HashMap<Integer, Integer> dist = new HashMap<>();
-        dist.put(k, 0);
 
         while (queue.size() > 0) {
             Integer[] entry = queue.poll();
@@ -110,15 +107,6 @@ class SolutionDijkstra {
         return dist.size() == n ? Collections.max(dist.values()) : -1;
     }
 }
-
-
-
-
-
-
-
-
-
 
 
 
