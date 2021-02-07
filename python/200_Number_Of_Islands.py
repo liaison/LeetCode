@@ -37,23 +37,16 @@ class UnionFind:
         self.COLS = len(grid[0])
         self.group_count = 0
         self.parent = [0] * (self.ROWS * self.COLS + 1)
-        self.grid = grid
 
         for row, row_values in enumerate(grid):
             for col, value in enumerate(row_values):
                 if value == "1":
-                    index = self.encode((row, col))
+                    index = self.encode(row, col)
                     self.parent[index] = index
                     self.group_count += 1
 
-    def encode(self, a):
-        row, col = a
+    def encode(self, row, col):
         return self.COLS * row + col + 1
-
-    def decode(self, index):
-        row = (index - 1) // self.COLS
-        col = (index - 1) % self.COLS
-        return (row, col)
 
     def union(self, a, b):
         a_group = self.find(a)
@@ -63,23 +56,16 @@ class UnionFind:
             self.group_count -= 1
 
     def find(self, a):
-        index = self.encode(a)
-        if self.parent[index] != index:
-            self.parent[index] = self.find(self.decode(self.parent[index]))
-        return self.parent[index]
+        if self.parent[a] != a:
+            self.parent[a] = self.find(self.parent[a])
+        return self.parent[a]
 
     def get_count(self):
         return self.group_count
-#         group_ids = set()
-#         for row in range(self.ROWS):
-#             for col in range(self.COLS):
-#                 if self.grid[row][col] == "1":
-#                     group_id = self.find((row, col))
-#                     group_ids.add(group_id)
-#         return len(group_ids)
 
 
 class SolutionUnionFind:
+
     def numIslands(self, grid: List[List[str]]) -> int:
 
         ROWS = len(grid)
@@ -96,7 +82,9 @@ class SolutionUnionFind:
                         next_row, next_col = row + ro, col + co
                         if 0 <= next_row < ROWS and 0 <= next_col < COLS \
                             and grid[next_row][next_col] == "1":
-                            groups.union((next_row, next_col), (row, col))
+
+                            groups.union(groups.encode(next_row, next_col),
+                                         groups.encode(row, col))
 
 
         return groups.get_count()
