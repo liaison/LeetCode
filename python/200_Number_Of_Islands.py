@@ -28,3 +28,79 @@ class Solution:
                     island_count += 1
 
         return island_count
+
+
+class UnionFind:
+
+    def __init__(self, grid):
+        self.ROWS = len(grid)
+        self.COLS = len(grid[0])
+        self.group_count = 0
+        self.parent = [0] * (self.ROWS * self.COLS + 1)
+        self.grid = grid
+
+        for row, row_values in enumerate(grid):
+            for col, value in enumerate(row_values):
+                if value == "1":
+                    index = self.encode((row, col))
+                    self.parent[index] = index
+                    self.group_count += 1
+
+    def encode(self, a):
+        row, col = a
+        return self.COLS * row + col + 1
+
+    def decode(self, index):
+        row = (index - 1) // self.COLS
+        col = (index - 1) % self.COLS
+        return (row, col)
+
+    def union(self, a, b):
+        a_group = self.find(a)
+        b_group = self.find(b)
+        if a_group != b_group:
+            self.parent[a_group] = b_group
+            self.group_count -= 1
+
+    def find(self, a):
+        index = self.encode(a)
+        if self.parent[index] != index:
+            self.parent[index] = self.find(self.decode(self.parent[index]))
+        return self.parent[index]
+
+    def get_count(self):
+        return self.group_count
+#         group_ids = set()
+#         for row in range(self.ROWS):
+#             for col in range(self.COLS):
+#                 if self.grid[row][col] == "1":
+#                     group_id = self.find((row, col))
+#                     group_ids.add(group_id)
+#         return len(group_ids)
+
+
+class SolutionUnionFind:
+    def numIslands(self, grid: List[List[str]]) -> int:
+
+        ROWS = len(grid)
+        COLS = len(grid[0])
+
+        groups = UnionFind(grid)
+
+        for row, row_values in enumerate(grid):
+            for col, value in enumerate(row_values):
+                if value == "1":
+                    # only need to check the right and down directions
+                    dirs = [(0, 1), (1, 0)]
+                    for ro, co in dirs:
+                        next_row, next_col = row + ro, col + co
+                        if 0 <= next_row < ROWS and 0 <= next_col < COLS \
+                            and grid[next_row][next_col] == "1":
+                            groups.union((next_row, next_col), (row, col))
+
+
+        return groups.get_count()
+
+
+
+
