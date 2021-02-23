@@ -26,3 +26,29 @@ class Solution:
         max_zigzag = max(max_zigzag, left, right)
 
         return max_zigzag
+
+
+
+class SolutionPseudoHead:
+    def longestZigZag(self, root: TreeNode) -> int:
+
+        max_zigzag = -1
+
+        def dfs(node):
+            nonlocal max_zigzag
+
+            if node is None:
+                return (-1, -1)
+
+            left_left, left_right = dfs(node.left)
+            right_left, right_right = dfs(node.right)
+
+            max_zigzag = max(max_zigzag, left_left, left_right, right_left, right_right)
+
+            return (left_right + 1, right_left + 1)
+
+        pseudo_root = TreeNode()
+        pseudo_root.left = root
+        dfs(pseudo_root)
+
+        return max_zigzag
