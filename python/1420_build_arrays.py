@@ -29,3 +29,26 @@ class Solution:
 
         return ans
 
+
+class SolutionRefined:
+    def numOfArrays(self, n: int, m: int, k: int) -> int:
+        modulo = 10**9 + 7
+
+        @functools.lru_cache(maxsize=None)
+        def count_ways(array_length, max_num, remain_cost):
+
+            if array_length == 0:
+                return (remain_cost == 0)
+
+            count = 0
+            for num in range(1, m+1):
+                if num > max_num:
+                    count += count_ways(array_length-1, num, remain_cost - 1)
+                else:
+                    count += count_ways(array_length-1, max_num, remain_cost)
+                count = count % modulo
+
+            return count
+
+
+        return count_ways(n, -1, k)
