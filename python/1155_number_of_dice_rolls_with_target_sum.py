@@ -20,3 +20,20 @@ class Solution:
 
         return dp(0, target)
 
+
+class SolutionListComprehension:
+    def numRollsToTarget(self, d: int, f: int, target: int) -> int:
+
+        modulo = 10 ** 9 + 7
+
+        @functools.lru_cache(maxsize=None)
+        def dp(dice_index, remain):
+
+            if dice_index == d:
+                return (remain == 0)
+            elif remain < 0:
+                return 0
+
+            return sum([dp(dice_index+1, remain - num) for num in range(1, f+1)]) % modulo
+
+        return dp(0, target)
