@@ -12,6 +12,7 @@ class Solution:
         shift = 1
         while shift < n:
 
+            # obtain the symmetric samples of the current results
             size = len(res)
             for i in range(size-1, -1, -1):
                 new_value = res[i] | (1 << shift)
