@@ -48,6 +48,31 @@ class Solution:
         return total_cost
 
 
+    def minCostToSupplyWater_Sort(self, n: int, wells: List[int], pipes: List[List[int]]) -> int:
+        """
+            The sorting solution is two times faster than the heap solution.
+        """
+        ordered_edges = []
+
+        for index, weight in enumerate(wells):
+            ordered_edges.append((weight, n+1, index+1))
+
+        for house_1, house_2, weight in pipes:
+            ordered_edges.append((weight, house_1, house_2))
+
+        # sort the edges by its weight
+        ordered_edges.sort(key=lambda x: x[0])
+
+        uf = UnionFind(n+1)
+        total_cost = 0
+        for weight, house_1, house_2 in ordered_edges:
+
+            if uf.union(house_1, house_2):
+                total_cost += weight
+
+
+        return total_cost
+
 
 
 
