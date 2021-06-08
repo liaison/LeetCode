@@ -70,8 +70,57 @@ class Solution:
             if uf.union(house_1, house_2):
                 total_cost += weight
 
+        return total_cost
+
+
+    def minCostToSupplyWater_Prim(self, n: int, wells: List[int], pipes: List[List[int]]) -> int:
+
+        # bidirectional graph represented in adjacency list
+        graph = defaultdict(list)
+
+        # add a virtual vectex indexed with 0.
+        #   then add an edge to each of the house weighted by the cost
+        for index, weight in enumerate(wells):
+            graph[0].append((weight, index+1))
+
+        # add the bidirectional edges to the graph
+        for house_1, house_2, weight in pipes:
+            graph[house_1].append((weight, house_2))
+            graph[house_2].append((weight, house_1))
+
+        # A set to maintain all the vertex that has been added to
+        #   the final MST (Minimal Spanning Tree),
+        #   starting from the vertex 0.
+        mst_set = set([0])
+
+        # heap to maitain the order of edges to be visited,
+        #   starting from the edges originated from the vertex 0.
+        heapq.heapify(graph[0])
+        edges_heap = graph[0]
+
+        total_cost = 0
+        while len(mst_set) < n+1:
+            weight, next_house = heapq.heappop(edges_heap)
+            if next_house not in mst_set:
+                # adding the new vertex into the set
+                mst_set.add(next_house)
+                total_cost += weight
+                # expanding the candidates of edge to choose from
+                #   in the next round
+                for edge in graph[next_house]:
+                    heapq.heappush(edges_heap, edge)
 
         return total_cost
+
+
+
+
+
+
+
+
+
+
 
 
 
