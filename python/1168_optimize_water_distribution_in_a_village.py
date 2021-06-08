@@ -107,8 +107,9 @@ class Solution:
                 total_cost += weight
                 # expanding the candidates of edge to choose from
                 #   in the next round
-                for edge in graph[next_house]:
-                    heapq.heappush(edges_heap, edge)
+                for weight, house in graph[next_house]:
+                    if house not in mst_set:
+                        heapq.heappush(edges_heap, (weight, house))
 
         return total_cost
 
