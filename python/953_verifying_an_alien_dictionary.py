@@ -1,6 +1,10 @@
 class Solution:
     def isAlienSorted(self, words: List[str], order: str) -> bool:
 
+        # handle the edge case, as well as a cheap optimization
+        if len(words) <= 1:
+            return True
+
         letter_order = {}
         for rank, letter in enumerate(order):
             letter_order[letter] = rank
@@ -26,4 +30,5 @@ class Solution:
 
 
         return True
+
 
