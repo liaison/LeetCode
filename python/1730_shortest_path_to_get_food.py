@@ -4,6 +4,7 @@ class Solution:
 
         start = None
 
+        # 1). Locate the starting point first
         ROWS = len(grid)
         COLS = len(grid[0])
         for row in range(ROWS):
@@ -15,6 +16,7 @@ class Solution:
         grid[start[0]][start[1]] = "X"
         queue = deque([(start, 0)])
 
+        # Run a BFS search to find the "nearest" target/food.
         while queue:
             (row, col), distance = queue.popleft()
 
@@ -22,7 +24,6 @@ class Solution:
                 next_row, next_col = row + r_offset, col + c_offset
                 if 0 > next_row or next_row == ROWS or 0 > next_col or next_col == COLS:
                     continue
-
                 if grid[next_row][next_col] == "X":
                     continue
                 elif grid[next_row][next_col] == "#": # find the food
