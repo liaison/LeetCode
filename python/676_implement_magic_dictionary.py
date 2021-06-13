@@ -33,8 +33,9 @@ class MagicDictionary:
                 return unmatched_once
 
             letter = searchWord[index]
+            # Backtracking on the match of letter
+            #    try both matched and unmatched cases
             for next_letter in node.keys():
-
                 if letter != next_letter:
                     if unmatched_once:
                         continue
