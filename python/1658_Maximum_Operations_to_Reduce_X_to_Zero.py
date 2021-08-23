@@ -45,6 +45,9 @@ class Solution:
         max_subarray_size = float('-inf')
         left = 0
         window_sum = 0
+
+        # right pointer fixed for each iteration
+        # both left and right pointers move in the same direction
         for right in range(0, len(nums)):
             window_sum += nums[right]
 
