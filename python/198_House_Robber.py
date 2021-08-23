@@ -13,7 +13,7 @@ class Solution:
         return max(to_rob, not_to_rob)
 
 
-class Solution:
+class SolutionRecursionMemoization:
     def rob(self, nums: List[int]) -> int:
 
         @functools.lru_cache(maxsize=None)
@@ -25,3 +25,17 @@ class Solution:
             return max(dfs(start+1, accu), dfs(start+2, accu + nums[start]))
 
         return dfs(0, 0)
+
+
+class SolutionDP:
+    def rob(self, nums: List[int]) -> int:
+
+        N = len(nums)
+        dp = [0] * (len(nums) + 1)
+
+        dp[N-1] = nums[N-1]
+
+        for i in range(N-2, -1, -1):
+            dp[i] = max(dp[i+1], dp[i+2] + nums[i])
+
+        return dp[0]
