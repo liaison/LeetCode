@@ -24,3 +24,26 @@ class SolutionHashTableNaive:
                 break
 
         return max_len
+
+
+class Solution:
+    def findLength(self, nums1: List[int], nums2: List[int]) -> int:
+
+        """"
+            DP to find the maximum length of common prefixes
+        """
+        num1_len, num2_len = len(nums1), len(nums2)
+
+        # max length of common prefixes
+        # e.g.  dp[i][j] = max length of prefixes between num1[i:] and nums2[j:]
+        dp = [[0] * (num2_len + 1) for _ in range(num1_len+1)]
+
+        # iterate through the strings in reversed order
+        for index1 in range(num1_len - 1, -1, -1):
+            for index2 in range(num2_len - 1, -1, -1):
+
+                if nums1[index1] == nums2[index2]:
+                    dp[index1][index2] = dp[index1+1][index2+1] + 1
+
+        # the maximum of all common prefixes
+        return max([max(row) for row in dp])
