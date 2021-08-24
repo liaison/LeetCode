@@ -19,6 +19,7 @@ class Solution:
         queue = [(0, 0)]
         heapq.heapify(queue)
 
+        # Greedy BFS, IS NOT CORRECT, which cannot guarantee the optimal value
         # Greedy BFS, similar to find the shortest distance between two nodes in graph
         while queue:
             sub_amount, coin_count = heapq.heappop(queue)
@@ -80,6 +81,26 @@ class SolutionDP:
         return dp[amount]
 
 
+class SolutionDPTable:
+    def coinChange(self, coins: List[int], amount: int) -> int:
+
+        min_coins = dict()
+        min_coins[0] = 0
+
+        for subamount in range(amount+1):
+
+            min_changes = float('inf')
+            for coin in coins:
+                remain = subamount - coin
+                if remain >= 0 and remain in min_coins:
+                    min_changes = min(min_changes, min_coins[remain] + 1)
+
+            if min_changes != float('inf'):
+                min_coins[subamount] = min_changes
+
+        return min_coins[amount] if amount in min_coins else -1
+
+
 class SolutionRefinedDP:
     def coinChange(self, coins: List[int], amount: int) -> int:
 
@@ -96,3 +117,23 @@ class SolutionRefinedDP:
         return -1 if dp[amount] == float('inf') else dp[amount]
 
 
+class SolutionBFS:
+    def coinChange(self, coins: List[int], amount: int) -> int:
+
+        queue = deque([(0, 0)])
+
+        coins.sort(reverse=True)
+
+        # TLE
+        while queue:
+            sub_amount, coin_count = queue.popleft()
+
+            if sub_amount == amount:
+                return coin_count
+
+            for coin in coins:
+                new_amount = sub_amount + coin
+                if new_amount <= amount:
+                    queue.append((new_amount, coin_count + 1))
+
+        return -1
