@@ -17,7 +17,6 @@ class Solution:
 
         for index in range(N-2, -1, -1):
             curr_day = days[index]
-
             min_cost = float('inf')
 
             # Try different plans from the current day till the end
@@ -26,11 +25,8 @@ class Solution:
                 while next_day_index < N and days[next_day_index] < curr_day + duration :
                     next_day_index += 1
 
-                if next_day_index != N:
-                    min_cost = min(min_cost, costs[ci] + dp[next_day_index])
-                else:
-                    min_cost = min(min_cost, costs[ci])
-
+                min_cost = min(min_cost, costs[ci] + dp[next_day_index])
+            # fill the best plan for the postfix plan, days[index:]
             dp[index] = min_cost
 
         return dp[0]
