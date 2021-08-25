@@ -9,6 +9,12 @@ class Solution:
             for subregion in region[1:]:
                 parents[subregion] = parent_region
 
+        """
+            1 ------o---|    1 + 2:  ------o---|--o---
+            2     --o---|    2 + 1:  --o---|------o---
+
+            lengths after o (o---) are always same, so 2 pointers finally meet at the same node
+        """
         p1 = region1
         p2 = region2
         while p1 != p2:
