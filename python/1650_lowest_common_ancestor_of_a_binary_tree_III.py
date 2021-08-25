@@ -61,3 +61,21 @@ class Solution:
             other = p if other is None else other.parent
 
         return one
+
+
+
+class Solution:
+    def lowestCommonAncestor(self, p: 'Node', q: 'Node') -> 'Node':
+
+        def dfs(node, ancestor_set):
+            if node:
+                ancestor_set.add(node.val)
+                dfs(node.parent, ancestor_set)
+
+        p_ancestors = set()
+        dfs(p, p_ancestors)
+
+        while q:
+            if q.val in p_ancestors:
+                return q
+            q = q.parent
