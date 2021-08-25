@@ -47,3 +47,44 @@ class Solution:
 
         return path_to_p[index-1]
 
+
+
+# Definition for a binary tree node.
+# class TreeNode:
+#     def __init__(self, x):
+#         self.val = x
+#         self.left = None
+#         self.right = None
+
+class Solution:
+    def lowestCommonAncestor(self, root: 'TreeNode', p: 'TreeNode', q: 'TreeNode') -> 'TreeNode':
+
+        result = None
+        def get_descendants(node):
+            """
+                Retrieve all the descendant nodes starting from the input node.
+                while traversing the nodes, find the first subtree that contains the two input nodes
+            """
+            nonlocal result
+
+            if not node:
+                return set()
+
+            left_nodes = get_descendants(node.left)
+
+            # we find the result in the left tree, early exit!
+            if result:
+                return set()
+
+            right_nodes = get_descendants(node.right)
+
+            all_nodes = left_nodes | right_nodes | {node.val}
+
+            # the first subtree that contains both the target nodes
+            if p.val in all_nodes and q.val in all_nodes and not result:
+                result = node
+
+            return all_nodes
+
+        get_descendants(root)
+        return result
