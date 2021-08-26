@@ -22,5 +22,29 @@ class SolutionDP:
                     return s[start:(end+1)]
 
 
+class Solution:
+    def longestPalindrome(self, s: str) -> str:
+
+        def extend_around_center(left, right):
+            while left >= 0 and right < len(s):
+                if s[left] != s[right]:
+                    break
+                left -= 1
+                right += 1
+            # return the length of palindrome string
+            return (right - left - 1)
+
+        max_start, max_end = 0, 0
+
+        for index in range(len(s)):
+            len1 = extend_around_center(index, index)
+            len2 = extend_around_center(index, index+1)
+
+            max_len = max(len1, len2)
+            if max_len > (max_end - max_start):
+                max_start = index - (max_len-1) // 2
+                max_end = index + max_len // 2
+
+        return s[max_start:(max_end+1)]
 
 
