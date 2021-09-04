@@ -28,3 +28,47 @@ class Solution:
                 break
 
         return worker_bike_match
+
+
+
+class Solution:
+    def assignBikes(self, workers: List[List[int]], bikes: List[List[int]]) -> List[int]:
+
+        worker_bike_match = [-1] * len(workers)
+        bike_occupied = [False] * len(bikes)
+
+        distance_per_worker = []
+        for worker_index, worker in enumerate(workers):
+            distance_list = []
+            for bike_index, bike in enumerate(bikes):
+                distance = abs(worker[0] - bike[0]) + abs(worker[1] - bike[1])
+                distance_list.append((distance, worker_index, bike_index))
+            # sort the distances for each worker
+            distance_list.sort(reverse=True)
+            distance_per_worker.append(distance_list)
+
+        match_count = 0
+
+        # init all the shortest distances per worker
+        queue = [worker_distance.pop() for worker_distance in distance_per_worker]
+        heapq.heapify(queue)
+
+        # multi-headed merge sort
+        # (distance, worker_index, bike_index)
+        # Keep the worker_index as the pointer to the distance matrix, to pick up the next element if necessary
+        while match_count < len(workers):
+            # At any moment, the heap contains only the workers that have not yet been assigned a bike
+            distance, worker_index, bike_index = heapq.heappop(queue)
+
+            if not bike_occupied[bike_index]:
+                match_count += 1
+                worker_bike_match[worker_index] = bike_index
+                bike_occupied[bike_index] = True
+            else:
+                # propose another bike to the worker
+                heapq.heappush(queue, distance_per_worker[worker_index].pop())
+
+        return worker_bike_match
+
+
+
