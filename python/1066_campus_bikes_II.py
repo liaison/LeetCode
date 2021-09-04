@@ -75,3 +75,33 @@ class Solution:
 
         bike_mask = ["0" for i in range(len(bikes))]
         return min_distance_sum(0, "".join(bike_mask))
+
+
+
+class SolutionBitMask:
+    def assignBikes(self, workers: List[List[int]], bikes: List[List[int]]) -> int:
+
+        def manhattan_distance(worker, bike):
+            return abs(worker[0] - bike[0]) + abs(worker[1] - bike[1])
+
+        @functools.lru_cache(maxsize=None)
+        def min_distance_sum(worker_index, bike_mask):
+
+            if worker_index == len(workers):
+                return 0
+
+            ret = float("inf")
+            for bike_index in range(len(bikes)):
+                if (bike_mask & (1 << bike_index) == 0):
+                    new_match = manhattan_distance(workers[worker_index], bikes[bike_index])
+                    # mark the bike as occupied
+                    bike_mask = (bike_mask | (1 << bike_index))
+                    ret = min(ret, new_match + min_distance_sum(worker_index+1, bike_mask))
+                    # backtracking, i.e. unmark the bike
+                    bike_mask = (bike_mask ^ (1 << bike_index))
+
+            return ret
+
+        bike_mask = 0
+
+        return min_distance_sum(0, 0)
