@@ -105,3 +105,37 @@ class SolutionBitMask:
         bike_mask = 0
 
         return min_distance_sum(0, 0)
+
+
+
+class SolutionBFS:
+    def assignBikes(self, workers: List[List[int]], bikes: List[List[int]]) -> int:
+
+        def manhattan_distance(worker, bike):
+            return abs(worker[0] - bike[0]) + abs(worker[1] - bike[1])
+
+        queue = [(0, 0, 0)]
+        visited = set()
+
+        # a bit like Dijkstra's algorithm
+        while queue:
+            cost_so_far, worker_index, bike_mask = heapq.heappop(queue)
+
+            if worker_index == len(workers):
+                return cost_so_far
+
+            # skip the combinations that are inferieur,
+            #   the ones that are visited earlier are superious, i.e. shorter distance
+            if bike_mask in visited:
+                continue
+
+            for bike_index in range(len(bikes)):
+                if bike_mask & (1 << bike_index) == 0:
+                    new_mask = bike_mask | (1 << bike_index)
+                    new_cost = cost_so_far + manhattan_distance(
+                        workers[worker_index], bikes[bike_index])
+                    heapq.heappush(queue, (new_cost, worker_index+1, new_mask))
+
+            visited.add(bike_mask)
+
+        return None
