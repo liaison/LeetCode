@@ -52,3 +52,18 @@ class Solution:
                 high = mid
 
         return k - missing_so_far(low-1) + nums[low-1]
+
+
+class Solution:
+    def missingElement(self, nums: List[int], k: int) -> int:
+
+        def missing_so_far(index):
+            return nums[index] - nums[0] - index
+
+        # equivalent to the previous implementation
+        # in order to apply bisect, we have to instantialize each index, therefore O(N)
+        gap_index = [missing_so_far(index) for index in range(len(nums))]
+
+        low = bisect.bisect_left(gap_index, k)
+
+        return k - missing_so_far(low-1) + nums[low-1]
