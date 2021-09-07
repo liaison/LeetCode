@@ -15,3 +15,21 @@ class Solution:
             missing_count -= 1
 
         return iterate_num + (k - missing_count)
+
+
+class Solution:
+    def missingElement(self, nums: List[int], k: int) -> int:
+
+        for i in range(1, len(nums)):
+            # calculate the gaps between two adjacent numbers
+            gaps = nums[i] - nums[i-1] - 1
+
+            # find the gap
+            if gaps >= k:
+                return nums[i-1] + k
+
+            # reduce the expected target
+            k -= gaps
+
+        # the target beyond the array
+        return nums[-1] + k
