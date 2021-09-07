@@ -25,3 +25,26 @@ class Solution:
 
         return result
 
+
+class SolutionTwoPass:
+    def shortestToChar(self, s: str, c: str) -> List[int]:
+
+        prev_target = float('-inf')
+        res = []
+
+        # Find solution on the left hand side
+        for index, letter in enumerate(s):
+            if letter == c:
+                prev_target = index
+            res.append(index - prev_target)
+
+        # Find the solution on the right hand side
+        #  and combine the two results together
+        prev_target = float("inf")
+        for index in range(len(s)-1, -1, -1):
+            if s[index] == c:
+                prev_target = index
+
+            res[index] = min(res[index], prev_target - index)
+
+        return res
