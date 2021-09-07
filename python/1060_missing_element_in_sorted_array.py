@@ -33,3 +33,22 @@ class Solution:
 
         # the target beyond the array
         return nums[-1] + k
+
+
+class Solution:
+    def missingElement(self, nums: List[int], k: int) -> int:
+
+        # the global index of missing numbers, for each position
+        def missing_so_far(index):
+            return nums[index] - nums[0] - index
+
+        low, high = 0, len(nums)
+        while low < high:
+            mid = (low + high) // 2
+
+            if missing_so_far(mid) < k:
+                low = mid + 1
+            else:
+                high = mid
+
+        return k - missing_so_far(low-1) + nums[low-1]
