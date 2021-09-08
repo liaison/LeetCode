@@ -25,8 +25,6 @@ class Solution:
                     # no match
                     return False
                 else:
-                    cursor = indices[first_match]
-
             return True
 
         count = 0
