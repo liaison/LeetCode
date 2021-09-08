@@ -1,3 +1,19 @@
+class Solution:
+    def maxLength(self, arr: List[str]) -> int:
+        results = [""]
+        max_len = 0
+
+        for word in arr:
+            for concat_str in results:
+                new_str = concat_str + word
+
+                if len(new_str) == len(set(new_str)):
+                    results.append(new_str)
+                    max_len = max(max_len, len(new_str))
+
+        return max_len
+
+
 
 class Solution:
     def maxLength(self, arr: List[str]) -> int:
