@@ -37,3 +37,45 @@ class Solution:
 
         return head if left != 0 else linked_list[right]
 
+
+
+# Definition for singly-linked list.
+# class ListNode:
+#     def __init__(self, val=0, next=None):
+#         self.val = val
+#         self.next = next
+class Solution:
+    def reverseBetween(self, head: Optional[ListNode], left: int, right: int) -> Optional[ListNode]:
+
+        if left == right:
+            return head
+
+        prev, curr = None, head
+        while left > 1:
+            prev = curr
+            curr = curr.next
+            left -= 1
+            right -= 1
+
+        temp_prev, temp_curr = prev, curr
+
+        while right:
+            next_curr = curr.next
+            curr.next = prev
+
+            prev = curr
+            curr = next_curr
+            right -= 1
+
+
+        if temp_prev:
+            temp_prev.next = prev
+        else:
+            head = prev
+
+        temp_curr.next = curr
+        return head
+
+
+
+
