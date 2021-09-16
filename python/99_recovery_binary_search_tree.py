@@ -39,3 +39,41 @@ class Solution:
 
 
 
+# Definition for a binary tree node.
+# class TreeNode:
+#     def __init__(self, val=0, left=None, right=None):
+#         self.val = val
+#         self.left = left
+#         self.right = right
+class SolutionIteration:
+    def recoverTree(self, root: Optional[TreeNode]) -> None:
+        """
+        Do not return anything, modify root in-place instead.
+        """
+        first_switch, second_switch = None, None
+        prev = None
+
+        stack = []
+        curr = root
+        while stack or curr:
+            while curr:
+                stack.append(curr)
+                curr = curr.left
+
+            curr = stack.pop()
+
+            if prev and prev.val > curr.val:
+                second_switch = curr
+                if not first_switch:
+                    first_switch = prev
+                else:
+                    break
+
+            prev = curr
+
+            curr = curr.right
+
+        first_switch.val, second_switch.val = second_switch.val, first_switch.val
+
+
+
