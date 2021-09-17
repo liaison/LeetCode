@@ -27,6 +27,9 @@ class Solution:
 class Solution:
     def intersect(self, nums1: List[int], nums2: List[int]) -> List[int]:
 
+        # https://www.geeksforgeeks.org/operations-on-python-counter/
+        # Operations on Counter:  +, -, &, |
+        #   addition, subtraction, intersection, union
         counter1 = Counter(nums1)
         counter2 = Counter(nums2)
 
