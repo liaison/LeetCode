@@ -22,3 +22,19 @@ class Solution:
             p2 += 1
 
         return result
+
+
+class Solution:
+    def intersect(self, nums1: List[int], nums2: List[int]) -> List[int]:
+
+        counter1 = Counter(nums1)
+        counter2 = Counter(nums2)
+
+        result = []
+
+        # intersections between the frequency count
+        intersections = counter1 & counter2
+        for key, count in intersections.items():
+            result.extend([key] * count)
+
+        return result
