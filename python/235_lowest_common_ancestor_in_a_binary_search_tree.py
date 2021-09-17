@@ -35,3 +35,28 @@ class Solution:
 
         return earliest_node
 
+
+# Definition for a binary tree node.
+# class TreeNode:
+#     def __init__(self, x):
+#         self.val = x
+#         self.left = None
+#         self.right = None
+
+class SolutionBinarySearch:
+
+    def lowestCommonAncestor(self, root: 'TreeNode', p: 'TreeNode', q: 'TreeNode') -> 'TreeNode':
+
+        curr = root
+
+        while curr:
+            mid_val = curr.val
+            if p.val < mid_val and q.val < mid_val:
+                curr = curr.left
+            elif p.val > mid_val and q.val > mid_val:
+                curr = curr.right
+            else:
+                # middle node that divide the two descendent nodes
+                return curr
+
+
