@@ -17,6 +17,8 @@ class Solution:
                 return False
 
             if node == target:
+                # result = list(path)  WONT WORK !!!
+                # One should operate within the object, but not reassign the pointer
                 result.extend(list(path))
                 return True
 
