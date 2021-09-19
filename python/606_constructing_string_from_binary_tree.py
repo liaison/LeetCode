@@ -46,7 +46,6 @@ class SolutionRefined:
     def tree2str(self, t: TreeNode) -> str:
 
         def node_to_str(node):
-
             if node is None:
                 return ""
 
@@ -55,13 +54,10 @@ class SolutionRefined:
             left_str = node_to_str(node.left)
             right_str = node_to_str(node.right)
 
-            if left_str == "":
-                if right_str != "":
-                    result_list.append("()")
-            else:
+            if len(left_str) > 0 or len(right_str) > 0:
                 result_list.append("(" + left_str + ")")
 
-            if right_str != "":
+            if len(right_str) > 0:
                 result_list.append("(" + right_str + ")")
 
             return "".join(result_list)
