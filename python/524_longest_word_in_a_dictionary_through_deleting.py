@@ -33,3 +33,32 @@ class Solution:
                 elif len(word) == len(max_word) and word < max_word:
                     max_word = word
         return max_word
+
+
+class SolutionTwoPointers:
+    def findLongestWord(self, s: str, dictionary: List[str]) -> str:
+
+        max_len = len(s)
+
+        def is_subsequence(word):
+            p_word, p_str = 0, 0
+            while p_word < len(word):
+                if p_str >= max_len:
+                    return False
+
+                if s[p_str] != word[p_word]:
+                    p_word -= 1
+
+                p_str += 1
+                p_word += 1
+
+            return True
+
+        max_word = ""
+        for word in dictionary:
+            if is_subsequence(word):
+                if len(word) > len(max_word):
+                    max_word = word
+                elif len(word) == len(max_word) and word < max_word:
+                    max_word = word
+        return max_word
