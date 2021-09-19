@@ -1,3 +1,17 @@
+class SolutionSort:
+    def longestWord(self, words: List[str]) -> str:
+
+        word_set = set(words)
+        # sort the words on the length and then the lexical word
+        words.sort(key = lambda s: (-len(s), s))
+
+        # Greedily to find the first word that qualifies
+        for word in words:
+            if all([word[:k] in word_set for k in range(1, len(word))]):
+                return word
+        return ""
+
+
 class Solution:
     def longestWord(self, words: List[str]) -> str:
 
