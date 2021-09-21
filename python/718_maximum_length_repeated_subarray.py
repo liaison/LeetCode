@@ -47,3 +47,24 @@ class Solution:
 
         # the maximum of all common prefixes
         return max([max(row) for row in dp])
+
+
+
+class SolutionDPwithTable:
+    def findLength(self, nums1: List[int], nums2: List[int]) -> int:
+        """
+            Simpler than the DP version with array,
+            but much slower due to the expensive operations in hashtable
+        """
+        nums1_len, nums2_len = len(nums1), len(nums2)
+
+        dp = defaultdict(int)
+        max_prefix = 0
+        for index_1 in range(nums1_len-1, -1, -1):
+            for index_2 in range(nums2_len-1, -1, -1):
+                if nums1[index_1] == nums2[index_2]:
+                    dp[(index_1, index_2)] = dp[(index_1+1, index_2+1)] + 1
+
+                max_prefix = max(max_prefix, dp[(index_1, index_2)])
+
+        return max_prefix
