@@ -34,3 +34,15 @@ class SolutionTLE:
 
         return steps
 
+
+class Solution:
+    def numberOfWeeks(self, milestones: List[int]) -> int:
+        """
+        https://leetcode.com/problems/maximum-number-of-weeks-for-which-you-can-work/discuss/1375390/Python-Solution-with-detailed-explanation-and-proof-and-common-failure-analysis
+        """
+        milestone_sum, max_milestone = sum(milestones), max(milestones)
+
+        if milestone_sum >= 2 * max_milestone:
+            return milestone_sum
+        else:
+            return 2 * (milestone_sum - max_milestone) + 1
