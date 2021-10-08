@@ -19,3 +19,24 @@ class Solution:
 
         return is_palindrome(0, len(s)-1, False)
 
+
+class SolutionDFS:
+    def validPalindrome(self, s: str) -> bool:
+
+        left, right = 0, len(s)-1
+
+        queue = [(left, right, 0)]
+        while queue:
+            left, right, delete_count = queue.pop()
+            if left >= right:
+                return True
+
+            if s[left] == s[right]:
+                queue.append((left+1, right-1, delete_count))
+            else:
+                if delete_count < 1:
+                    queue.append((left+1, right, delete_count+1))
+                    queue.append((left, right-1, delete_count+1))
+
+        return left >= right
+
