@@ -22,7 +22,9 @@ class Solution:
             if not node:
                 return None, None
 
+            # divide and conquer
             if node.left:
+                # chain the left subtree to the current node
                 left_head, left_tail = head_and_tail_of_list(node.left)
                 left_tail.right = node
                 node.left = left_tail
@@ -30,12 +32,14 @@ class Solution:
                 left_head = node
 
             if node.right:
+                # chain the right subtree to the current node
                 right_head, right_tail = head_and_tail_of_list(node.right)
                 node.right = right_head
                 right_head.left = node
             else:
                 right_tail = node
 
+            # return the head and tail of the entire list
             return left_head, right_tail
 
         head, tail = head_and_tail_of_list(root)
