@@ -2,8 +2,21 @@ class Trie:
 
     def __init__(self):
         self.trie = dict()
-        # a special character to mark the count of word
+        # special character to mark the end of word as well as the word count
         self.word_count = "#"
+
+
+    def find_trie_node(self, prefix):
+        """
+            internal method to facilitate other methods.
+            return the located trie node
+        """
+        node = self.trie
+        for char in prefix:
+            if char not in node:
+                return None
+            node = node[char]
+        return node
 
 
     def insert(self, word: str) -> None:
@@ -20,11 +33,10 @@ class Trie:
 
 
     def countWordsEqualTo(self, word: str) -> int:
-        node = self.trie
-        for char in word:
-            if char not in node:
-                return 0
-            node = node[char]
+        node = self.find_trie_node(word)
+        if not node:
+            return 0
+
         if self.word_count in node:
             return node[self.word_count]
         else:
@@ -32,11 +44,9 @@ class Trie:
 
 
     def countWordsStartingWith(self, prefix: str) -> int:
-        node = self.trie
-        for char in prefix:
-            if char not in node:
-                return 0
-            node = node[char]
+        node = self.find_trie_node(prefix)
+        if not node:
+            return 0
 
         total_words = 0
         def dfs(node):
@@ -52,11 +62,9 @@ class Trie:
 
 
     def erase(self, word: str) -> None:
-        node = self.trie
-        for char in word:
-            if char not in node:
-                return
-            node = node[char]
+        node = self.find_trie_node(word)
+        if not node:
+            return
 
         if self.word_count in node:
             if node[self.word_count] > 0:
@@ -69,5 +77,3 @@ class Trie:
 # param_2 = obj.countWordsEqualTo(word)
 # param_3 = obj.countWordsStartingWith(prefix)
 # obj.erase(word)
-
-
