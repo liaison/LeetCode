@@ -2,7 +2,9 @@ class Solution:
     def removeInvalidParentheses(self, s: str) -> List[str]:
 
         def is_valid(expr):
+            """ quick check if the expression is valid """
             balance = 0
+            # the balance should always be >= 0
             for char in expr:
                 if char not in '()':
                     continue
@@ -28,6 +30,7 @@ class Solution:
                 output.append(substr)
                 found = True
 
+            # once found the first qualified elements, stop exploring further
             if found:
                 continue
 
@@ -40,6 +43,4 @@ class Solution:
                     queue.append(new_str)
 
         return output
-
-
 
