@@ -48,4 +48,44 @@ class Solution:
 
 
 
+class SolutionSingleBFS:
+    def wallsAndGates(self, rooms: List[List[int]]) -> None:
+        """
+        Do not return anything, modify rooms in-place instead.
+        """
+        INF = 2147483647
+        rows, cols = len(rooms), len(rooms[0])
+
+        gates = []
+        gate_distance = {}
+
+        queue = deque()
+        visited = set()
+
+        for row in range(rows):
+            for col in range(cols):
+                if rooms[row][col] == 0:
+                    # gate
+                    queue.append((row, col, 0))
+                    visited.add((row, col))
+                elif rooms[row][col] == INF:
+                    # room
+                    gate_distance[(row, col)] = INF
+
+        while queue:
+            row, col, steps = queue.popleft()
+
+            for r_offset, c_offset in [(0, 1), (1, 0), (0, -1), (-1, 0)]:
+                new_row, new_col = row + r_offset, col + c_offset
+                if new_row < 0 or new_row >= rows or new_col < 0 or new_col >= cols:
+                    continue
+                if rooms[new_row][new_col] == INF and (new_row, new_col) not in visited:
+                    visited.add((new_row, new_col))
+                    queue.append((new_row, new_col, steps + 1))
+                    gate_distance[(new_row, new_col)] = steps + 1
+
+        for (row, col), distance in gate_distance.items():
+            rooms[row][col] = distance
+
+
 
