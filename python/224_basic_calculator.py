@@ -63,6 +63,33 @@ class SolutionTLE:
 
 
 
+class Solution:
+    def calculate(self, s: str) -> int:
+        stack, current = [], 0
+
+        for c in '(' + s + ')':
+
+            if c.isdigit():
+                current = 10 * current + int(c)
+            elif c == '(':
+                # start a new expression
+                stack += [0, '+']
+                current = 0
+
+            elif c != ' ':
+                operator, previous = stack.pop(), stack.pop()
+                current = previous + (current if operator == '+' else -current)
+
+                # end of sub-expression
+                if c == ')': continue
+
+                # append the operand along with the next sign
+                stack += [current, c]
+                current = 0
+
+        return current
+
+
 
 
 
