@@ -176,6 +176,85 @@ class SolutionPseudoEnd:
 
 
 
+class SolutionIteration:
+    def calculate(self, s: str) -> int:
+
+        priority_map = {"+": 0, "-": 0, '*': 1, '/': 1,
+                        '(': -1, '!': -1}
+
+        operand_stack = []
+        operator_stack = []
+
+        def evaluate():
+            operand_2 = operand_stack.pop()
+            operand_1 = operand_stack.pop()
+            operator = operator_stack.pop()
+
+            if operator == '+':
+                return operand_1 + operand_2
+            elif operator == '-':
+                return operand_1 - operand_2
+            elif operator == '*':
+                return operand_1 * operand_2
+            else:
+                return math.trunc(operand_1 / operand_2)
+
+        number = 0
+        cursor = 0
+        end = len(s)
+
+        while cursor < end:
+            if s[cursor].isdigit():
+                while cursor < end and s[cursor].isdigit():
+                    number = number * 10 + int(s[cursor])
+                    cursor += 1
+
+                cursor -= 1 # dial back, since it is incremented later
+                operand_stack.append(number)
+                number = 0
+
+            if s[cursor] in ['+', '-', '*', '/', '!']:
+
+                curr_operator = s[cursor]
+
+                while operator_stack:
+                    pre_operator = operator_stack[-1]
+                    if priority_map[curr_operator] > priority_map[pre_operator]:
+                        break
+                    # evaluate the preceding expressions
+                    operand_stack.append(evaluate())
+
+                operator_stack.append(curr_operator)
+
+            elif s[cursor] == '(':
+
+                operator_stack.append("(")
+
+            elif s[cursor] == ')':
+                # evaluate the sub-expression with bracket ()
+                while operator_stack[-1] != "(":
+                    operand_stack.append(evaluate())
+                # pop the artifical '(' operator
+                operator_stack.pop()
+
+
+            cursor += 1
+
+        # evaluate the remaining expressions
+        while operator_stack:
+            operand_stack.append(evaluate())
+
+
+        return operand_stack.pop()
+
+
+
+
+
+
+
+
+
 
 
 
