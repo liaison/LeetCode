@@ -179,8 +179,7 @@ class SolutionPseudoEnd:
 class SolutionIteration:
     def calculate(self, s: str) -> int:
 
-        priority_map = {"+": 0, "-": 0, '*': 1, '/': 1,
-                        '(': -1, '!': -1}
+        priority_map = {"+": 0, "-": 0, '*': 1, '/': 1, '(': -1}
 
         operand_stack = []
         operator_stack = []
@@ -213,7 +212,7 @@ class SolutionIteration:
                 operand_stack.append(number)
                 number = 0
 
-            if s[cursor] in ['+', '-', '*', '/', '!']:
+            elif s[cursor] in ['+', '-', '*', '/']:
 
                 curr_operator = s[cursor]
 
@@ -246,6 +245,13 @@ class SolutionIteration:
 
 
         return operand_stack.pop()
+
+
+
+
+
+
+
 
 
 
