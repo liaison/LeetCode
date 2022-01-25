@@ -91,5 +91,71 @@ class Solution:
 
 
 
+class Solution:
+    def calculate(self, s: str) -> int:
+        operand_stack = []
+        operator_stack = []
+        cursor = 0
+        number = 0
+        end = len(s)
+
+        def evaluate():
+            operand_2 = operand_stack.pop()
+            operand_1 = operand_stack.pop()
+            operator = operator_stack.pop()
+            if operator == '+':
+                return operand_1 + operand_2
+            elif operator == '-':
+                return operand_1 - operand_2
+
+        priority_map = {'+': 0, '-': 0, '(': -1}
+
+        while cursor < end:
+
+            if s[cursor].isdigit():
+                while cursor < end and s[cursor].isdigit():
+                    number = number * 10 + int(s[cursor])
+                    cursor += 1
+
+                cursor -= 1
+                operand_stack.append(number)
+                number = 0
+
+            elif s[cursor] in ['+', '-']:
+                curr_operator = s[cursor]
+                while operator_stack:
+                    prev_operator = operator_stack[-1]
+                    if priority_map[curr_operator] > priority_map[prev_operator]:
+                        break
+                    operand_stack.append(evaluate())
+
+                # convert unary operator '-' to binary by appending a pseudo operand 0
+                #  e.g.  -1 + 1 = 0 - 1 + 1
+                if curr_operator == '-':
+                    prev = cursor - 1
+                    while prev >= 0 and s[prev] == ' ':
+                        prev -= 1
+                    if prev < 0 or s[prev] == '(':
+                        operand_stack.append(0)
+
+                operator_stack.append(curr_operator)
+
+            elif s[cursor] == '(':
+                operator_stack.append(s[cursor])
+
+            elif s[cursor] == ')':
+                while operator_stack[-1] != '(':
+                    operand_stack.append(evaluate())
+
+                operator_stack.pop()
+
+
+            cursor += 1
+
+        while operator_stack:
+            operand_stack.append(evaluate())
+
+        return operand_stack.pop()
+
 
 
