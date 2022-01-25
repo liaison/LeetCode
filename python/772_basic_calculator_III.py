@@ -179,7 +179,7 @@ class SolutionPseudoEnd:
 class SolutionIteration:
     def calculate(self, s: str) -> int:
 
-        priority_map = {"+": 0, "-": 0, '*': 1, '/': 1, '(': -1}
+        precedence = {"+": 0, "-": 0, '*': 1, '/': 1, '(': -1}
 
         operand_stack = []
         operator_stack = []
@@ -204,11 +204,12 @@ class SolutionIteration:
 
         while cursor < end:
             if s[cursor].isdigit():
-                while cursor < end and s[cursor].isdigit():
-                    number = number * 10 + int(s[cursor])
+                # scan through all digits in an operand
+                number = int(s[cursor])
+                while cursor+1 < end and s[cursor+1].isdigit():
+                    number = number * 10 + int(s[cursor+1])
                     cursor += 1
 
-                cursor -= 1 # dial back, since it is incremented later
                 operand_stack.append(number)
                 number = 0
 
@@ -217,8 +218,8 @@ class SolutionIteration:
                 curr_operator = s[cursor]
 
                 while operator_stack:
-                    pre_operator = operator_stack[-1]
-                    if priority_map[curr_operator] > priority_map[pre_operator]:
+                    prev_operator = operator_stack[-1]
+                    if precedence[curr_operator] > precedence[prev_operator]:
                         break
                     # evaluate the preceding expressions
                     operand_stack.append(evaluate())
@@ -245,6 +246,7 @@ class SolutionIteration:
 
 
         return operand_stack.pop()
+
 
 
 
