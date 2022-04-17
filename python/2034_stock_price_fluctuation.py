@@ -59,3 +59,53 @@ class StockPrice:
 # param_2 = obj.current()
 # param_3 = obj.maximum()
 # param_4 = obj.minimum()
+
+
+class StockPriceSortedDict:
+    """
+        SortedDict to keep track of price frequency
+    """
+    def __init__(self):
+        from sortedcontainers import SortedDict
+        self._price_dict = dict()
+        # keep the frequency of prices, ordered by the price
+        self._price_count = SortedDict()
+        self._latest_ts = float("-inf")
+
+    def update(self, timestamp: int, price: int) -> None:
+
+        if timestamp in self._price_dict:
+            prev_price = self._price_dict[timestamp]
+            # decrease the frequency of the previous price
+            self._price_count[prev_price] -= 1
+            if self._price_count[prev_price] == 0:
+                self._price_count.pop(prev_price)
+
+        if price in self._price_count:
+            self._price_count[price] += 1
+        else:
+            self._price_count[price] = 1
+
+        # update the historical price or add new price
+        self._price_dict[timestamp] = price
+        self._latest_ts = max(timestamp, self._latest_ts)
+
+
+    def current(self) -> int:
+        return self._price_dict[self._latest_ts]
+
+
+    def maximum(self) -> int:
+        """ retrieve the maximum price from the _sorted_ dictionary """
+        return self._price_count.peekitem(-1)[0]
+
+    def minimum(self) -> int:
+        return self._price_count.peekitem(0)[0]
+
+
+# Your StockPrice object will be instantiated and called as such:
+# obj = StockPrice()
+# obj.update(timestamp,price)
+# param_2 = obj.current()
+# param_3 = obj.maximum()
+# param_4 = obj.minimum()
