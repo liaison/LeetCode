@@ -17,6 +17,23 @@ class Solution:
 
         return prefix
 
+    def longestCommonPrefix_alt(self, strs: List[str]) -> str:
+
+        def common_prefix(str_a, str_b):
+            min_len = min(len(str_a), len(str_b))
+            index = 0
+            while index < min_len:
+                if str_a[index] != str_b[index]:
+                    break
+                index += 1
+            return str_a[:index]
+
+        curr_prefix = strs[0]
+        for str_index in range(1, len(strs)):
+            curr_prefix = common_prefix(curr_prefix, strs[str_index])
+
+        return curr_prefix
+
 
     def longestCommonPrefix_dict(self, strs: List[str]) -> str:
 
