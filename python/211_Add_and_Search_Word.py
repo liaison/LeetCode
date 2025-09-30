@@ -4,7 +4,7 @@ Design a data structure that supports the following two operations:
 void addWord(word)
 bool search(word)
 search(word) can search a literal word or a regular expression string
-    containing only letters a-z or "." 
+    containing only letters a-z or "."
     A "." means it can represent any one letter.
 
 
@@ -22,7 +22,7 @@ Example:
 
 class TrieNode:
     def __init__(self):
-        self.children = {}        
+        self.children = {}
         self.hasValue = False
 
 
@@ -47,13 +47,13 @@ class WordDictionary:
                 newNode = TrieNode()
                 curr.children[key] = newNode
                 curr = newNode
-        
+
         curr.hasValue = True
 
 
     def search(self, word: str) -> bool:
         """
-        Returns if the word is in the data structure. 
+        Returns if the word is in the data structure.
         A word could contain the dot character '.' to represent any one letter.
         """
         def dfs(node, subword):
@@ -74,9 +74,64 @@ class WordDictionary:
                         return False
             # reach the desired node
             return curr.hasValue
-        
+
         # kick off the recursion
         return dfs(self.root, word)
+
+
+# Your WordDictionary object will be instantiated and called as such:
+# obj = WordDictionary()
+# obj.addWord(word)
+# param_2 = obj.search(word)
+
+
+
+class WordDictionaryTrie:
+
+    def __init__(self):
+        self.trie = dict()
+        self.END = 'END'
+
+    def addWord(self, word: str) -> None:
+
+        node = self.trie
+        for letter in word:
+            if letter in node:
+                node = node[letter]
+            else:
+                newNode = dict()
+                node[letter] = newNode
+                node = newNode
+        # mark the end of the word
+        node[self.END] = {}
+
+
+    def search(self, word: str) -> bool:
+        word_len = len(word)
+
+        def dfs(node, letter_index):
+            if letter_index == word_len:
+                # end of word
+                return (self.END in node)
+
+            letter = word[letter_index]
+
+            if letter == '.':
+                for key in node.keys():
+                    if key == self.END:
+                        continue
+                    if dfs(node[key], letter_index+1):
+                        return True
+
+                return False
+
+            else:
+                if letter not in node:
+                    return False
+                else:
+                    return dfs(node[letter], letter_index + 1)
+
+        return dfs(self.trie, 0)
 
 
 # Your WordDictionary object will be instantiated and called as such:
