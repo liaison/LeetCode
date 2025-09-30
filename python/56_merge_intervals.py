@@ -15,3 +15,27 @@ class Solution:
 
         return merged
 
+
+class SolutionTwoPointers:
+    def merge(self, intervals: List[List[int]]) -> List[List[int]]:
+
+        intervals.sort()
+        ret = []
+        prev_interval = intervals[0]
+        for next_interval in intervals[1:]:
+            next_start, next_end = next_interval
+            prev_start, prev_end = prev_interval
+
+            if prev_end < next_start:
+                ret.append(prev_interval)
+                prev_interval = next_interval
+            else: # prev_end >= next_start
+                # overlapping
+                new_interval = [prev_start, max(prev_end, next_end)]
+                prev_interval = new_interval
+
+        ret.append(prev_interval)
+
+        return ret
+
+
