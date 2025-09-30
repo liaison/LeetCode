@@ -1,6 +1,6 @@
 """
-Given a non-empty string s and a dictionary wordDict containing 
-a list of non-empty words, determine if s can be segmented into 
+Given a non-empty string s and a dictionary wordDict containing
+a list of non-empty words, determine if s can be segmented into
 a space-separated sequence of one or more dictionary words.
 
 Note:
@@ -31,12 +31,12 @@ class SolutionDP(object):
         :rtype: bool
         """
         dp = [False for i in range(len(s)+1)]
-        
+
         # start of the dynamic programming solution.
         dp[0] = True
-        
-        # dp[endIndex]: indicates the viability of substring s[0:endIndex] 
-        
+
+        # dp[endIndex]: indicates the viability of substring s[0:endIndex]
+
         # endIndex marks the end of the substring to check
         for endIndex in range(1, len(s)+1):
             # Check the viability of substring, using the previous intermediate results.
@@ -44,11 +44,11 @@ class SolutionDP(object):
             # We could have some speedup if we check the word from the end of the string,
             #   since the new word might appear when the string grows.
             for beginIndex in reversed(range(0, endIndex)):
-            
+
                 if dp[beginIndex] and s[beginIndex:endIndex] in wordDict:
                     dp[endIndex] = True
                     break
-        
+
         return dp[len(s)]
 
 # ====================================================================
@@ -73,10 +73,10 @@ class Trie:
                 newNode = TrieNode()
                 curr.children[key] = newNode
                 curr = newNode
-            
+
             self.keySet.add(key)
 
-        curr.isWord = True 
+        curr.isWord = True
 
     def containsKey(self, key):
         """ Check if the Trie contains the letter/key """
@@ -94,28 +94,28 @@ class Trie:
             else:
                 # no match at all
                 return 0
-        
+
         return 2 if curr.isWord else 1
 
-    
+
 class Solution:
     def wordBreak(self, s: str, wordDict: List[str]) -> bool:
-        
+
         # construct a word Trie
         wordTrie = Trie()
         for word in wordDict:
             wordTrie.insert(word)
 
         rootTrieNode = wordTrie.getRoot()
-        
-        # Additional quick check, before jumping into recursion. 
+
+        # Additional quick check, before jumping into recursion.
         for i in range(len(s)-1, 0, -1):
             if not wordTrie.containsKey(s[i]):
                 return False
-        
-        # memoization 
+
+        # memoization
         memo = {} # len(s): dfs result
-        
+
         def dfs(trieNode, s):
             """
                 DFS recursion with memoization.
@@ -123,13 +123,13 @@ class Solution:
             """
             nonlocal rootTrieNode
             nonlocal memo
-            
+
             if s == '':
                 return True
-            
+
             if len(s) in memo:
                 return memo[len(s)]
-            
+
             currTrieNode = trieNode
             for index, c in enumerate(s):
                 if c not in currTrieNode.children:
@@ -138,27 +138,49 @@ class Solution:
                     return False
                 else:
                     currTrieNode = currTrieNode.children[c]
-                
+
                 if currTrieNode.isWord:
                     #print(s[index+1:])
                     if dfs(rootTrieNode, s[index+1:]):
                         memo[len(s)-index-1] = True
                         return True
-            
+
             memo[len(s)] = False
             return False
-        
-        
+
+
         return dfs(rootTrieNode, s)
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
+
+
+
+class SolutionMemoDFS:
+    def wordBreak(self, s: str, wordDict: List[str]) -> bool:
+
+        word_set = set(wordDict)
+        limit = len(s)
+
+        @cache
+        def memo_dfs(start_index):
+            """
+                function to determine if we can find the match for the substring starting from `start_index`
+            """
+            if start_index == limit:
+                # match the end of the string
+                return True
+
+            for end_index in range(start_index+1, limit+1):
+                substr = s[start_index:end_index]
+                if substr in word_set:
+                    # one candidate word match, continue the search
+                    if memo_dfs(end_index):
+                        return True
+            return False
+
+        return memo_dfs(0)
+
+
+
+
+
+
+
