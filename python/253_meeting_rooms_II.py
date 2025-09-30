@@ -50,3 +50,35 @@ class Solution:
 
         return len(meeting_rooms)
 
+
+import heapq
+
+class Solution:
+    def minMeetingRoomsConcise(self, intervals: List[List[int]]) -> int:
+
+        intervals.sort()
+
+        meeting_ends = []
+
+        for interval in intervals:
+            start, end = interval
+
+            if len(meeting_ends) == 0:
+                heapq.heappush(meeting_ends, end)
+                continue
+
+            current_meeting_end = meeting_ends[0]
+
+            if current_meeting_end <= start:
+                # vacant this meeting, reuse the meeting room
+                heapq.heappop(meeting_ends)
+
+            heapq.heappush(meeting_ends, end)
+
+        return len(meeting_ends)
+
+
+
+
+
+
