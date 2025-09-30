@@ -48,6 +48,5 @@ class Solution:
 
             heapq.heappush(meeting_rooms, end)
 
-        print(meeting_rooms)
         return len(meeting_rooms)
 
