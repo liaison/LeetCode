@@ -14,7 +14,7 @@ class Solution:
                 if source != target:
                     return False
                 else:
-                    # important check
+                    # important step
                     continue
             else:
                 source_mapping[source] = target
@@ -26,5 +26,25 @@ class Solution:
             else:
                 target_mapping[target] = source
 
+
+        return True
+
+
+    def isIsomorphic_alt(self, s: str, t: str) -> bool:
+        if len(s) != len(t):
+            return False
+
+        source_mapping = {}
+        target_mapping = {}
+
+        for index, letter in enumerate(s):
+            source, target = s[index], t[index]
+
+            if source not in source_mapping and target not in target_mapping:
+                source_mapping[source] = target
+                target_mapping[target] = source
+
+            elif source_mapping.get(source) != target or target_mapping.get(target) != source:
+                return False
 
         return True
