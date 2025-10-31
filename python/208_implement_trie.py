@@ -155,3 +155,51 @@ class TrieDFS:
 # obj.insert(word)
 # param_2 = obj.search(word)
 # param_3 = obj.startsWith(prefix)
+
+
+class TrieDict:
+
+    def __init__(self):
+        self.trie = {}
+        self.marker = "$"
+
+    def insert(self, word: str) -> None:
+
+        curr = self.trie
+        for letter in word:
+            if letter in curr:
+                curr = curr[letter]
+            else:
+                # create new node
+                next_node = {}
+                curr[letter] = next_node
+                curr = next_node
+        # mark the end
+        curr[self.marker] = True
+
+
+    def search(self, word: str) -> bool:
+        curr = self.trie
+        for letter in word:
+            if letter not in curr:
+                return False
+            curr = curr[letter]
+
+        return self.marker in curr
+
+
+    def startsWith(self, prefix: str) -> bool:
+        curr = self.trie
+        for letter in prefix:
+            if letter not in curr:
+                return False
+
+            curr = curr[letter]
+        return True
+
+
+# Your Trie object will be instantiated and called as such:
+# obj = Trie()
+# obj.insert(word)
+# param_2 = obj.search(word)
+# param_3 = obj.startsWith(prefix)
